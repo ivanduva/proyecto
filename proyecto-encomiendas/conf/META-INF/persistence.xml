@@ -6,11 +6,17 @@
     <persistence-unit name="defaultPersistenceUnit" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <non-jta-data-source>DefaultDS</non-jta-data-source>
+        <class>app.model.Cliente</class>
+        <class>app.model.Encomienda</class>
+        <class>app.model.Localidad</class>
+        <class>app.model.Persona</class>
+        <class>app.model.Venta</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"></property>
-            <property name="hibernate.hbm2ddl.auto" value="update"></property>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"></property>
             <property name="hibernate.show_sql" value="true"></property>
             <property name="hibernate.format_sql" value="true"></property>
             <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.DefaultComponentSafeNamingStrategy"></property>
         </properties>
+
     </persistence-unit>
