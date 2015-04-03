@@ -1,11 +1,7 @@
 package repository;
 
 import dao.Persistencia;
-import model.Cliente;
 import model.Encomienda;
-import model.EstadoEncomienda;
-import model.Localidad;
-
 import java.util.Date;
 
 /**
@@ -16,20 +12,35 @@ public class EncomiendaRepositorio extends Repositorio<Encomienda, Long> {
         super(dao);
     }
 
-    public Long registrarEncomienda(Localidad loc, Date fechaEntrega, Cliente remitente, String destinatario,
-                                    String direccionDestinatario){
+    public void registrarEncomienda(Encomienda encomienda){
+
 
     }
 
     public void despacharEncomienda (Long codigoBarra){
 
+        Encomienda encomienda;
+        encomienda = buscarPoId(codigoBarra);
+        encomienda.setEstadoEnCamino();
+        modificar(encomienda);
+
     }
 
     public void entregarEncomienda (Long codigoBarra){
 
+        Encomienda encomienda;
+        encomienda = buscarPoId(codigoBarra);
+        encomienda.setEstadoEntregada();
+        modificar(encomienda);
+
     }
 
     public void recibirEncomienda (Long codigoBarra){
+
+        Encomienda encomienda;
+        encomienda = buscarPoId(codigoBarra);
+        encomienda.setEstadoEnSucursal();
+        modificar(encomienda);
 
     }
 }

@@ -19,5 +19,5 @@ public class Localidad {
     private Long codigoPostal;
 
     @OneToOne
-    private Ubicacion ubicacion;
+    private LatLong ubicacion;
 }
