@@ -10,6 +10,7 @@ public class LatLong {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column (name = "id_lat_long")
     private Long latLongId;
 
     @Column (name = "latitud")

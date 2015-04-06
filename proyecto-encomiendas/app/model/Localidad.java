@@ -10,6 +10,7 @@ public class Localidad {
 
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
+    @Column (name = "id_localidad")
     private Long localidadId;
 
     @Column (name = "nombre")
@@ -19,5 +20,45 @@ public class Localidad {
     private Long codigoPostal;
 
     @OneToOne
+    @JoinColumn (name = "id_lat_long")
     private LatLong ubicacion;
+
+    public Localidad(Long localidadId, String nombre, Long codigoPostal, LatLong ubicacion) {
+        this.localidadId = localidadId;
+        this.nombre = nombre;
+        this.codigoPostal = codigoPostal;
+        this.ubicacion = ubicacion;
+    }
+
+    public Long getLocalidadId() {
+        return localidadId;
+    }
+
+    public void setLocalidadId(Long localidadId) {
+        this.localidadId = localidadId;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Long getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(Long codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public LatLong getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(LatLong ubicacion) {
+        this.ubicacion = ubicacion;
+    }
 }

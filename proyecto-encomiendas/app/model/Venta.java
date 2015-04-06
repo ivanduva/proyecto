@@ -13,6 +13,7 @@ public class Venta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column (name = "id_venta")
     private Long ventaId;
 
     @Column (name = "fecha")
@@ -24,11 +25,16 @@ public class Venta {
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "venta")
     private List<Encomienda> encomiendas;
 
-    public Venta(Long ventaId, Date fecha, BigDecimal valorFinal, List<Encomienda> encomiendas) {
+    @ManyToOne (cascade = CascadeType.ALL)
+    @JoinColumn (name = "id_cliente")
+    private Cliente cliente;
+
+    public Venta(Long ventaId, Date fecha, BigDecimal valorFinal, List<Encomienda> encomiendas, Cliente cliente) {
         this.ventaId = ventaId;
         this.fecha = fecha;
         this.valorFinal = valorFinal;
         this.encomiendas = encomiendas;
+        this.cliente = cliente;
     }
 
     public Long getVentaId() {
@@ -61,5 +67,13 @@ public class Venta {
 
     public void setEncomiendas(List<Encomienda> encomiendas) {
         this.encomiendas = encomiendas;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }

@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,6 +12,7 @@ public class Cliente extends Persona {
 
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
+    @Column (name = "id_cliente")
     private Long clienteId;
 
     @Column (name = "categoria")
@@ -25,18 +27,21 @@ public class Cliente extends Persona {
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "cliente")
     private List<Venta> compras;
 
-    public Cliente(Long clienteId, String categoria, boolean puedeReservar, int puntosViajero) {
-        super();
+    public Cliente(Long clienteId, String email, Date fechaNacimiento, Localidad localidad, String nombre, String telefono, String categoria, boolean puedeReservar, int puntosViajero, List<Venta> compras) {
+        super(email, fechaNacimiento, localidad, nombre, telefono);
         this.clienteId = clienteId;
         this.categoria = categoria;
         this.puedeReservar = puedeReservar;
         this.puntosViajero = puntosViajero;
+        this.compras = compras;
     }
-
-
 
     public Long getClienteId() {
         return clienteId;
+    }
+
+    public void setClienteId(Long clienteId) {
+        this.clienteId = clienteId;
     }
 
     public String getCategoria() {
@@ -53,10 +58,6 @@ public class Cliente extends Persona {
 
     public List<Venta> getCompras() {
         return compras;
-    }
-
-    public void setClienteId(Long clienteId) {
-        this.clienteId = clienteId;
     }
 
     public void setCategoria(String categoria) {

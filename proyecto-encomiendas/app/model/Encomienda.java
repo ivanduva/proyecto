@@ -12,6 +12,7 @@ public class Encomienda {
 
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
+    @Column (name = "id_encomienda")
     private Long encomiendaId;
 
     @Column (name = "destinatario")
@@ -28,11 +29,11 @@ public class Encomienda {
     private EstadoEncomienda estado;
 
     @ManyToOne
-    @JoinColumn (name = "cliente_id")
+    @JoinColumn (name = "id_cliente")
     private Cliente remitente;
 
     @ManyToOne
-    @JoinColumn (name = "localidad_id")
+    @JoinColumn (name = "id_localidad")
     private Localidad localidad;
 
     @Column (name = "tarifa")

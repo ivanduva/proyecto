@@ -1,16 +1,17 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by Ivan on 16/02/2015.
  */
+@Entity
 public class Persona {
 
+    @Id
+    @GeneratedValue (strategy = GenerationType.AUTO)
+    @Column (name = "id_persona")
     private Long personaId;
 
     @Column (name = "email", table = "cliente")
@@ -20,7 +21,7 @@ public class Persona {
     private Date fechaNacimiento;
 
     @ManyToOne
-    @JoinColumn (name = "localidad_id", table = "cliente")
+    @JoinColumn (name = "id_localidad")
     private Localidad localidad;
 
     @Column (name = "nombre", table = "cliente")
@@ -29,8 +30,22 @@ public class Persona {
     @Column (name = "telefono", table = "cliente")
     private String telefono;
 
-    public Persona() {
+    @OneToOne (cascade = CascadeType.ALL)
+    @JoinColumn (name = "id_usuario")
+    private Usuario usuario;
+
+    public Persona(Long personaId, String email, Date fechaNacimiento, Localidad localidad, String nombre,
+                   String telefono) {
         this.personaId = personaId;
+        this.email = email;
+        this.fechaNacimiento = fechaNacimiento;
+        this.localidad = localidad;
+        this.nombre = nombre;
+        this.telefono = telefono;
+    }
+
+    public Persona(String email, Date fechaNacimiento, Localidad localidad, String nombre,
+                   String telefono) {
         this.email = email;
         this.fechaNacimiento = fechaNacimiento;
         this.localidad = localidad;
