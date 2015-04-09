@@ -9,12 +9,8 @@ import java.util.List;
  */
 @Entity
 @Table (name = "cliente")
+@DiscriminatorValue("1")
 public class Cliente extends Persona {
-
-    @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
-    @Column (name = "id_cliente")
-    private Long clienteId;
 
     @Column (name = "categoria")
     private String categoria;
@@ -25,24 +21,15 @@ public class Cliente extends Persona {
     @Column (name = "puntos_viajero")
     private int puntosViajero;
 
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "cliente")
+    @OneToMany (cascade = CascadeType.ALL)
     private List<Venta> compras;
 
-    public Cliente(Long clienteId, String email, Date fechaNacimiento, Localidad localidad, String nombre, String telefono, String categoria, boolean puedeReservar, int puntosViajero, List<Venta> compras) {
-        super(email, fechaNacimiento, localidad, nombre, telefono);
-        this.clienteId = clienteId;
+    public Cliente(Long personaId, String email, Date fechaNacimiento, Localidad localidad, String nombre, String telefono, String categoria, boolean puedeReservar, int puntosViajero, List<Venta> compras) {
+        super(personaId, email, fechaNacimiento, localidad, nombre, telefono);
         this.categoria = categoria;
         this.puedeReservar = puedeReservar;
         this.puntosViajero = puntosViajero;
         this.compras = compras;
-    }
-
-    public Long getClienteId() {
-        return clienteId;
-    }
-
-    public void setClienteId(Long clienteId) {
-        this.clienteId = clienteId;
     }
 
     public String getCategoria() {

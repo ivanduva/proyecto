@@ -7,7 +7,6 @@ import java.util.List;
  * Created by Ivan on 05/04/2015.
  */
 @Entity
-@Table(name = "servicio")
 public class ViajeEncomienda extends Servicio {
 
     @OneToMany (cascade = CascadeType.ALL)

@@ -1,5 +1,7 @@
 package model;
 
+import org.postgresql.geometric.PGpoint;
+
 import javax.persistence.*;
 
 /**
@@ -15,12 +17,12 @@ public class LatLong {
     private Long latLongId;
 
     @Column (name = "latitud")
-    private double latitud;
+    private PGpoint latitud;
 
     @Column (name = "latitud")
-    private double longitud;
+    private PGpoint longitud;
 
-    public LatLong(Long latLongId, double latitud, double longitud) {
+    public LatLong(Long latLongId, PGpoint latitud, PGpoint longitud) {
         this.latLongId = latLongId;
         this.latitud = latitud;
         this.longitud = longitud;
@@ -30,11 +32,11 @@ public class LatLong {
         return latLongId;
     }
 
-    public double getLatitud() {
+    public PGpoint getLatitud() {
         return latitud;
     }
 
-    public double getLongitud() {
+    public PGpoint getLongitud() {
         return longitud;
     }
 
@@ -42,11 +44,11 @@ public class LatLong {
         this.latLongId = latLongId;
     }
 
-    public void setLatitud(double latitud) {
+    public void setLatitud(PGpoint latitud) {
         this.latitud = latitud;
     }
 
-    public void setLongitud(double longitud) {
+    public void setLongitud(PGpoint longitud) {
         this.longitud = longitud;
     }
 }

@@ -8,6 +8,7 @@ import java.util.List;
  */
 @Entity
 @Table (name = "servicio")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public abstract class Servicio {
 
     @Id
