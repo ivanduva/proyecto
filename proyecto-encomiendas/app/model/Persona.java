@@ -7,6 +7,7 @@ import java.util.Date;
  * Created by Ivan on 16/02/2015.
  */
 @Entity
+@Table (name = "persona")
 public class Persona {
 
     @Id
@@ -14,24 +15,22 @@ public class Persona {
     @Column (name = "id_persona")
     private Long personaId;
 
-    @Column (name = "email", table = "cliente")
+    @Column (name = "email")
     private String email;
 
-    @Column (name = "fecha_nacimiento", table = "cliente")
+    @Column (name = "fecha_nacimiento")
     private Date fechaNacimiento;
 
     @ManyToOne
-    @JoinColumn (name = "id_localidad")
     private Localidad localidad;
 
-    @Column (name = "nombre", table = "cliente")
+    @Column (name = "nombre")
     private String nombre;
 
-    @Column (name = "telefono", table = "cliente")
+    @Column (name = "telefono")
     private String telefono;
 
     @OneToOne (cascade = CascadeType.ALL)
-    @JoinColumn (name = "id_usuario")
     private Usuario usuario;
 
     public Persona(Long personaId, String email, Date fechaNacimiento, Localidad localidad, String nombre,

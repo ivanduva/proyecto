@@ -7,7 +7,8 @@ import java.util.Date;
 /**
  * Created by Ivan on 05/04/2015.
  */
-@Entity (name = "franja_horaria")
+@Entity
+@Table(name = "franja_horaria")
 public class FranjaHoraria {
 
     @Id

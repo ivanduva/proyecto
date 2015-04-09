@@ -5,7 +5,8 @@ import javax.persistence.*;
 /**
  * Created by Ivan on 16/02/2015.
  */
-@Entity (name = "lat_long")
+@Entity
+@Table(name = "lat_long")
 public class LatLong {
 
     @Id

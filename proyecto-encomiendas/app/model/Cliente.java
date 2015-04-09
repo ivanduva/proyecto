@@ -8,6 +8,7 @@ import java.util.List;
  * Created by Ivan on 16/02/2015.
  */
 @Entity
+@Table (name = "cliente")
 public class Cliente extends Persona {
 
     @Id

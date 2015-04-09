@@ -3,7 +3,6 @@ package controllers;
 import play.*;
 import play.mvc.*;
 
-import scalaz.syntax.Syntaxes;
 import views.html.*;
 
 public class Application extends Controller {

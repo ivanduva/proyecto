@@ -7,6 +7,7 @@ import java.util.List;
  * Created by Ivan on 05/04/2015.
  */
 @Entity
+@Table (name = "servicio")
 public abstract class Servicio {
 
     @Id

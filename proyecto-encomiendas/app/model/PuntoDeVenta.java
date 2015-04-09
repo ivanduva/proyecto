@@ -6,7 +6,8 @@ import java.util.List;
 /**
  * Created by Ivan on 06/04/2015.
  */
-@Entity (name = "punto_de_venta")
+@Entity 
+@Table(name = "punto_de_venta")
 public class PuntoDeVenta {
 
     @Id
@@ -21,7 +22,6 @@ public class PuntoDeVenta {
     private String email;
 
     @OneToOne
-    @JoinColumn (name = "id_localidad")
     private Localidad localidad;
 
     @Column (name = "nombre")
@@ -34,10 +34,9 @@ public class PuntoDeVenta {
     private String telefono;
 
     @OneToOne (cascade = CascadeType.ALL)
-    @JoinColumn (name = "id_usuario")
     private Usuario usuario;
 
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "punto_de_venta")
+    @OneToMany (cascade = CascadeType.ALL)
     private List<Venta> ventas;
 
     @Column (name = "tipo")

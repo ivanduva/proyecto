@@ -6,6 +6,7 @@ import javax.persistence.*;
  * Created by Ivan on 16/02/2015.
  */
 @Entity
+@Table (name = "localidad")
 public class Localidad {
 
     @Id
@@ -20,7 +21,6 @@ public class Localidad {
     private Long codigoPostal;
 
     @OneToOne
-    @JoinColumn (name = "id_lat_long")
     private LatLong ubicacion;
 
     public Localidad(Long localidadId, String nombre, Long codigoPostal, LatLong ubicacion) {

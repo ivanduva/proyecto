@@ -9,6 +9,7 @@ import java.util.List;
  * Created by Ivan on 16/02/2015.
  */
 @Entity
+@Table (name = "venta")
 public class Venta {
 
     @Id
@@ -22,11 +23,10 @@ public class Venta {
     @Column (name = "valor_final")
     private BigDecimal valorFinal;
 
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "venta")
+    @OneToMany (cascade = CascadeType.ALL)
     private List<Encomienda> encomiendas;
 
     @ManyToOne (cascade = CascadeType.ALL)
-    @JoinColumn (name = "id_cliente")
     private Cliente cliente;
 
     public Venta(Long ventaId, Date fecha, BigDecimal valorFinal, List<Encomienda> encomiendas, Cliente cliente) {

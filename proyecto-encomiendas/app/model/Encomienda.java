@@ -8,6 +8,7 @@ import java.util.Date;
  * Created by Ivan on 15/02/2015.
  */
 @Entity
+@Table (name = "encomienda")
 public class Encomienda {
 
     @Id
@@ -29,11 +30,9 @@ public class Encomienda {
     private EstadoEncomienda estado;
 
     @ManyToOne
-    @JoinColumn (name = "id_cliente")
     private Cliente remitente;
 
     @ManyToOne
-    @JoinColumn (name = "id_localidad")
     private Localidad localidad;
 
     @Column (name = "tarifa")
