@@ -8,8 +8,9 @@ import java.util.List;
  * Created by Ivan on 16/02/2015.
  */
 @Entity
-@Table (name = "cliente")
-@DiscriminatorValue("1")
+//@Table (name = "cliente")
+//@DiscriminatorValue(value = "C")
+//@PrimaryKeyJoinColumn (name = "id_cliente", referencedColumnName = "id_persona")
 public class Cliente extends Persona {
 
     @Column (name = "categoria")

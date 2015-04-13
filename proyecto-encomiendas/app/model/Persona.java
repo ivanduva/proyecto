@@ -8,13 +8,13 @@ import java.util.Date;
  */
 @Entity
 @Table (name = "persona")
-@Inheritance(strategy=InheritanceType.JOINED)
-@DiscriminatorColumn(name="tipo", discriminatorType=DiscriminatorType.INTEGER)
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+//@DiscriminatorColumn (name = "tipo", discriminatorType = DiscriminatorType.STRING)
 public class Persona {
 
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
-    @Column (name = "id_persona", unique = true, nullable = false)
+    @Column (name = "id_persona")
     private Long personaId;
 
     @Column (name = "email")

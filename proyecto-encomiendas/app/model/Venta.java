@@ -26,7 +26,8 @@ public class Venta {
     @OneToMany (cascade = CascadeType.ALL)
     private List<Encomienda> encomiendas;
 
-    @ManyToOne (cascade = CascadeType.ALL)
+    @ManyToOne
+    //@JoinColumn (table = "venta", name = "id_cliente")
     private Cliente cliente;
 
     public Venta(Long ventaId, Date fecha, BigDecimal valorFinal, List<Encomienda> encomiendas, Cliente cliente) {

@@ -30,6 +30,7 @@ public class Encomienda {
     private EstadoEncomienda estado;
 
     @ManyToOne
+    //@JoinColumn (table = "encomienda", name = "id_cliente")
     private Cliente remitente;
 
     @ManyToOne
