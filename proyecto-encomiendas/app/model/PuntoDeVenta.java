@@ -60,6 +60,8 @@ public class PuntoDeVenta extends Model{
         this.tipo = tipo;
     }
 
+
+
     public Long getPuntoId() {
         return puntoId;
     }

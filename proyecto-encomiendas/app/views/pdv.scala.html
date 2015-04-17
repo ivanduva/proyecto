@@ -79,12 +79,12 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <form class="form form-vertical">
+                    <form id="formAgregar" action="@routes.PuntoDeVentaController.agregarPunto()" method="post" class="form form-vertical">
                         <div class="control-group">
                             <label>Nombre del Punto de Venta</label>
 
                             <div class="controls">
-                                <input type="text" class="form-control" placeholder="Ejemplo: Viajes Juan Pérez">
+                                <input name="nombre" type="text" class="form-control" placeholder="Ejemplo: Viajes Juan Pérez">
                             </div>
                         </div>
                         <div class="control-group">
@@ -92,7 +92,10 @@
 
                             <div class="controls">
                                 <select class="form-control">
-                                    <option>options</option>
+
+                                    <option>OFICINA_ADMINISTRATIVA</option>
+                                    <option>PUNTO_EXTERNO</option>
+
                                 </select>
                             </div>
                         </div>
@@ -118,28 +121,28 @@
                             <label>Dirección</label>
 
                             <div class="controls">
-                                <input type="text" class="form-control" placeholder="Ejemplo: Riobamba 432">
+                                <input name="direccion" type="text" class="form-control" placeholder="Ejemplo: Riobamba 432">
                             </div>
                         </div>
                         <div class="control-group">
                             <label>Nombre Responsable</label>
 
                             <div class="controls">
-                                <input type="text" class="form-control" placeholder="Ejemplo: Juan Pérez">
+                                <input name="nombreResponsable" type="text" class="form-control" placeholder="Ejemplo: Juan Pérez">
                             </div>
                         </div>
                         <div class="control-group">
                             <label>E-Mail</label>
 
                             <div class="controls">
-                                <input type="text" class="form-control" placeholder="Ejemplo: ">
+                                <input name="email" type="text" class="form-control" placeholder="Ejemplo: ">
                             </div>
                         </div>
                         <div class="control-group">
                             <label>Teléfono</label>
 
                             <div class="controls">
-                                <input type="text" class="form-control"
+                                <input name="telefono" type="text" class="form-control"
                                        placeholder="[Número de área]-[Número de teléfono]">
                             </div>
                         </div>
@@ -162,7 +165,7 @@
                             <label></label>
 
                             <div class="controls">
-                                <button type="submit" class="btn btn-primary" data-toggle="modal" href="#guardar">
+                                <button type="submit" class="btn btn-primary" id="botonGuardar" data-toggle="modal" href="#guardar" value="botonAgregar">
                                     Guardar
                                 </button>
                             </div>
@@ -196,7 +199,7 @@
             </div>
             <div class="modal-footer">
                 <a href="#" data-dismiss="modal" class="btn">Cancelar</a>
-                <button type="submit" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" id="botonAgregar"
+                <button formmethod="post" type="submit" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" id="botonAgregar"
                         href="#aceptar">Aceptar
                 </button>
             </div>

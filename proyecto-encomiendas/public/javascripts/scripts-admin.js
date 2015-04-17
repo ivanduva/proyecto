@@ -19,6 +19,16 @@ $('[id=agregar]').click(function(){
     $('[id=panelAgregar]').addClass("in");
 });
 
+/*$('[id=botonGuardar]').click(function(){
+    var form= document.getElementById("formAgregar");
+
+    $('[id=guardar]').modal({ backdrop: 'static', keyboard: false })
+        .on('click', '#botonAgregar', function() {
+            form.submit();
+        });
+
+});*/
+
 $('[id=botonAgregar]').click(function(){
     $('[id=panelAgregar]').removeClass("in");
 });

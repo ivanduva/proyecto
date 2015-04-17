@@ -13,7 +13,6 @@ public class PuntoDeVentaRepositorio extends Repositorio<PuntoDeVenta, Long> {
         this.dao = persistenciaDBPuntoDeVenta;
     }
 
-    public void crear (PuntoDeVenta pdv) {
-        dao.create(pdv);
-    }
+
+
 }
