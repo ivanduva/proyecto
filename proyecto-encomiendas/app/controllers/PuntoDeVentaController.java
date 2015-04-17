@@ -15,13 +15,13 @@ import views.html.*;
 public class PuntoDeVentaController extends Controller{
 
 
-    public static Result puntos() { return ok(pdv.render("Admin")); }
+   // public static Result puntos() { return ok(pdv.render("Admin")); }
 
-    public static Result agregarPunto() {
-        PuntoDeVentaRepositorio repositorio = new PuntoDeVentaRepositorio(new PersistenciaDBPuntoDeVenta());
+  //  public static Result agregarPunto() {
+    //    PuntoDeVentaRepositorio repositorio = new PuntoDeVentaRepositorio(new PersistenciaDBPuntoDeVenta());
 
-        PuntoDeVenta punto = Form.form(PuntoDeVenta.class).bindFromRequest().get();
-        repositorio.crear(punto);
-        return redirect(routes.PuntoDeVentaController.puntos());
-    }
+//        PuntoDeVenta punto = Form.form(PuntoDeVenta.class).bindFromRequest().get();
+  //      repositorio.crear(punto);
+    //    return redirect(routes.PuntoDeVentaController.puntos());
+    //}
 }

@@ -1,5 +1,7 @@
 package model;
 
+import play.db.ebean.Model;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -8,7 +10,7 @@ import java.util.List;
  */
 @Entity 
 @Table(name = "punto_de_venta")
-public class PuntoDeVenta {
+public class PuntoDeVenta extends Model{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
