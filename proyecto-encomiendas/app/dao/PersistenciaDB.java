@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Ivan on 16/02/2015.
  */
-public class PersistenciaDB implements Persistencia<T,K>{
+public class PersistenciaDB<T,K> implements Persistencia<T,K>{
     @Override
     public void create(T t) {
         T.save();
