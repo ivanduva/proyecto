@@ -41,9 +41,9 @@ public class PuntoDeVenta extends Model{
     @OneToMany (cascade = CascadeType.ALL)
     private List<Venta> ventas;
 
-    @Column (name = "tipo")
+    @Column (name = "tipo_punto")
     @Enumerated (EnumType.STRING)
-    private TipoPunto tipo;
+    private TipoPunto tipoPunto;
 
     public PuntoDeVenta(Long puntoId, String direccion, String email, Localidad localidad, String nombre,
                         String nombreResponsable, String telefono, Usuario usuario, List<Venta> ventas,
@@ -57,7 +57,7 @@ public class PuntoDeVenta extends Model{
         this.telefono = telefono;
         this.usuario = usuario;
         this.ventas = ventas;
-        this.tipo = tipo;
+        this.tipoPunto = tipo;
     }
 
 
@@ -135,10 +135,10 @@ public class PuntoDeVenta extends Model{
     }
 
     public TipoPunto getTipo() {
-        return tipo;
+        return tipoPunto;
     }
 
     public void setTipo(TipoPunto tipo) {
-        this.tipo = tipo;
+        this.tipoPunto = tipo;
     }
 }

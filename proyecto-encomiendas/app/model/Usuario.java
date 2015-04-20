@@ -1,5 +1,7 @@
 package model;
 
+import play.db.ebean.Model;
+
 import javax.persistence.*;
 
 /**
@@ -7,7 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table (name = "usuario")
-public class Usuario {
+public class Usuario extends Model{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,9 +19,9 @@ public class Usuario {
     @Column (name = "nombre_usuario")
     private String nombreUsuario;
 
-    @Column (name = "tipo")
+    @Column (name = "tipo_usuario")
     @Enumerated (EnumType.STRING)
-    private TipoUsuario tipo;
+    private TipoUsuario tipoUsuario;
 
     @Column (name = "contrasena")
     private String contraseña;
@@ -27,7 +29,7 @@ public class Usuario {
     public Usuario(Long usuarioId, String nombreUsuario, TipoUsuario tipo, String contraseña) {
         this.usuarioId = usuarioId;
         this.nombreUsuario = nombreUsuario;
-        this.tipo = tipo;
+        this.tipoUsuario = tipo;
         this.contraseña = contraseña;
     }
 
@@ -48,11 +50,11 @@ public class Usuario {
     }
 
     public TipoUsuario getTipo() {
-        return tipo;
+        return tipoUsuario;
     }
 
     public void setTipo(TipoUsuario tipo) {
-        this.tipo = tipo;
+        this.tipoUsuario = tipo;
     }
 
     public String getContraseña() {

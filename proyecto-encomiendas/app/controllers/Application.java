@@ -7,6 +7,8 @@ import views.html.*;
 
 public class Application extends Controller {
 
+
+
     public static Result admin() { return ok(admin.render("Admin")); }
 
     public static Result servicios() { return ok(servicios.render("Admin")); }

@@ -8,35 +8,37 @@ import java.util.List;
 /**
  * Created by Ivan on 16/02/2015.
  */
-public class PersistenciaDB<T,K> implements Persistencia<T,K>{
-    @Override
-    public void create(T t) {
-        T.save();
-    }
+public class PersistenciaDB{
 
-    @Override
-    public T get(K k) {
+    //@Override
+    //public void create(T t) {
 
-        T t = new Model.Finder(String.class, T.class).byId(K);
+      //  t.save();
+    //}
 
-        return t;
-    }
+    //@Override
+    //public T get(K k) {
 
-    @Override
-    public void update(T t) {
-        T.update();
-    }
+      //  T t = new Model.Finder(String.class, T.class).byId(k);
 
-    @Override
-    public void delete(T t) {
-        T.delete();
-    }
+        //return t;
+    //}
 
-    @Override
-    public List<T> listAll() {
+//    @Override
+  //  public void update(T t) {
+  //      t.update();
+   // }
 
-        List<T> list = new Model.Finder(String.class, T.class).all();
+//    @Override
+    //public void delete(T t) {
+     //   t.delete();
+    //}
 
-        return list;
-    }
+    //@Override
+    //public List<T> listAll() {
+
+//        List<T> list = new Model.Finder(String.class, T.class).all();
+
+//        return list;
+  //  }
 }

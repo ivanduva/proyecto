@@ -1,6 +1,9 @@
 @(message: String)
 
 @main(title = "Punto de venta") {
+
+<script type='text/javascript' src='@routes.Assets.at("js/pdv.js")'></script>
+
 <div class="col-sm-9">
     <a href="#"><strong><i class="glyphicon glyphicon-flag"></i> Puntos de Venta</strong></a>
     <hr>
@@ -40,33 +43,33 @@
             </div>
 
             <div class="table-responsive collapse" id="tablaLista">
-                <table id="puntosDeVenta" class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Localidad</th>
-                        <th>Tipo</th>
-                        <th>Seleccionar</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td style="cursor:pointer" data-toggle="modal" href="#modificar"><u><font color="blue">Viajes
-                            Juan Pérez</font></u></td>
-                        <td>..</td>
-                        <td>..</td>
-                        <td><input name="cb" id="cb" type="checkbox"></td>
-                    </tr>
-                    <tr>
-                        <td style="cursor:pointer" data-toggle="modal" href="#modificar"><u><font color="blue">..</font></u>
-                        </td>
-                        <td>..</td>
-                        <td>..</td>
-                        <td><input name="cb" id="cb" type="checkbox"></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <hr>
+                    <table id="puntosDeVenta" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Localidad</th>
+                            <th>Dirección</th>
+                            <th>E-Mail</th>
+                            <th>Responsable</th>
+                            <th>Teléfono</th>
+                            <th>Seleccionar</th>
+                        </tr>
+                        </thead>
+                        <tbody id="puntos">
+                       <!-- <tr>
+                            <td style="cursor:pointer" data-toggle="modal" href="#modificar"><u><font color="blue">nombre</font></u></td>
+                            <td>localidad</td>
+                            <td>tipo</td>
+                            <td><input name="cb" id="cb" type="checkbox"></td>
+
+                        </tr> -->
+
+                        </tbody>
+                    </table>
+                    <hr>
+
             </div>
         </div>
         <!--/col-span-12-->
@@ -79,7 +82,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <form id="formAgregar" action="@routes.PuntoDeVentaController.agregarPunto()" method="post" class="form form-vertical">
+                    <form id="formAgregar" action="@routes.PuntoDeVentaController.agregarPunto()" class="form form-vertical">
                         <div class="control-group">
                             <label>Nombre del Punto de Venta</label>
 
@@ -151,21 +154,21 @@
                             <label>Usuario</label>
 
                             <div class="controls">
-                                <input type="text" class="form-control" placeholder="Ejemplo: juanperez123">
+                                <input name="nombreUsuario" type="text" class="form-control" placeholder="Ejemplo: juanperez123">
                             </div>
                         </div>
                         <div class="control-group">
                             <label>Contraseña</label>
 
                             <div class="controls">
-                                <input type="text" class="form-control" placeholder="Mayor a 6 dígitos">
+                                <input name="contraseña" type="text" class="form-control" placeholder="Mayor a 6 dígitos">
                             </div>
                         </div>
                         <div class="control-group">
                             <label></label>
 
                             <div class="controls">
-                                <button type="submit" class="btn btn-primary" id="botonGuardar" data-toggle="modal" href="#guardar" value="botonAgregar">
+                                <button href="#" type="submit" class="btn btn-primary" id="botonGuardar" data-toggle="modal" data-target="#guardar">
                                     Guardar
                                 </button>
                             </div>
@@ -199,7 +202,7 @@
             </div>
             <div class="modal-footer">
                 <a href="#" data-dismiss="modal" class="btn">Cancelar</a>
-                <button formmethod="post" type="submit" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" id="botonAgregar"
+                <button type="submit" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" id="botonAgregar"
                         href="#aceptar">Aceptar
                 </button>
             </div>

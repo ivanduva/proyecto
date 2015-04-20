@@ -62,8 +62,8 @@ create table punto_de_venta (
   nombre_responsable        varchar(255),
   telefono                  varchar(255),
   usuario_id_usuario        bigint,
-  tipo                      varchar(22),
-  constraint ck_punto_de_venta_tipo check (tipo in ('OFICINA_ADMINISTRATIVA','PUNTO_EXTERNO')),
+  tipo_punto                varchar(22),
+  constraint ck_punto_de_venta_tipo_punto check (tipo_punto in ('OFICINA_ADMINISTRATIVA','PUNTO_EXTERNO')),
   constraint pk_punto_de_venta primary key (id_punto_de_venta))
 ;
 
@@ -79,9 +79,9 @@ create table servicio (
 create table usuario (
   id_usuario                bigint not null,
   nombre_usuario            varchar(255),
-  tipo                      varchar(14),
+  tipo_usuario              varchar(14),
   contrasena                varchar(255),
-  constraint ck_usuario_tipo check (tipo in ('CLIENTE','GERENTE','VENDEDOR','EMPLEADO','MECANICO','ADMINISTRATIVO')),
+  constraint ck_usuario_tipo_usuario check (tipo_usuario in ('CLIENTE','GERENTE','VENDEDOR','EMPLEADO','MECANICO','ADMINISTRATIVO')),
   constraint pk_usuario primary key (id_usuario))
 ;
 
