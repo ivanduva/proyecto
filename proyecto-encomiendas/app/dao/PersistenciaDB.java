@@ -1,44 +1,45 @@
 package dao;
 
 
+import com.avaje.ebean.Ebean;
 import play.db.ebean.Model;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 /**
  * Created by Ivan on 16/02/2015.
  */
-public class PersistenciaDB{
+public class PersistenciaDB<T, K> implements Persistencia<T, K> {
 
-    //@Override
-    //public void create(T t) {
+    private Class<T> type;
 
-      //  t.save();
-    //}
+    public PersistenciaDB(Class<T> classType) {
+        type = classType;
+    }
 
-    //@Override
-    //public T get(K k) {
+    @Override
+    public void create(T t) {
+        Ebean.save(t);
+    }
 
-      //  T t = new Model.Finder(String.class, T.class).byId(k);
+    @Override
+    public T get(K k) {
+        return Ebean.find(type, k);
+    }
 
-        //return t;
-    //}
+    @Override
+    public void update(T t) {
+        Ebean.update(t);
+    }
 
-//    @Override
-  //  public void update(T t) {
-  //      t.update();
-   // }
+    @Override
+    public void delete(T t) {
+        Ebean.delete(type, t);
+    }
 
-//    @Override
-    //public void delete(T t) {
-     //   t.delete();
-    //}
-
-    //@Override
-    //public List<T> listAll() {
-
-//        List<T> list = new Model.Finder(String.class, T.class).all();
-
-//        return list;
-  //  }
+    @Override
+    public List<T> listAll() {
+        return Ebean.find(type).findList();
+    }
 }
