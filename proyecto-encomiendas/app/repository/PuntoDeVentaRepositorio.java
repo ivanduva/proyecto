@@ -1,5 +1,6 @@
 package repository;
 
+import dao.PersistenciaDB;
 import dao.PersistenciaDBPuntoDeVenta;
 import model.PuntoDeVenta;
 
@@ -9,16 +10,15 @@ import java.util.List;
  * Created by Ivan on 06/04/2015.
  */
 public class PuntoDeVentaRepositorio extends Repositorio<PuntoDeVenta, Long> {
-    PersistenciaDBPuntoDeVenta dao;
+    PersistenciaDB<PuntoDeVenta, Long> dao;
 
-    public PuntoDeVentaRepositorio(PersistenciaDBPuntoDeVenta persistenciaDBPuntoDeVenta) {
-        this.dao = persistenciaDBPuntoDeVenta;
+    public PuntoDeVentaRepositorio(PersistenciaDBPuntoDeVenta dao) {
+        this.dao = dao;
     }
 
     public void crear(PuntoDeVenta pdv){
         dao.create(pdv);
     }
-
 
     public List<PuntoDeVenta> listarTodo() {
         return dao.listAll();
