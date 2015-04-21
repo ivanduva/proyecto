@@ -8,10 +8,10 @@ import java.util.List;
  * Created by Ivan on 16/02/2015.
  */
 public abstract class Repositorio<T, K> {
-    private Persistencia dao;
+    private Persistencia<T, K> dao;
 
     public Repositorio() {}
-    public Repositorio(Persistencia dao) {
+    public Repositorio(Persistencia<T, K> dao) {
         this.dao = dao;
     }
 
