@@ -22,15 +22,12 @@ import static play.libs.Json.toJson;
 /**
  * Created by Ivan on 13/04/2015.
  */
-public class PuntoDeVentaController extends Controller{
+public class PuntoDeVentaController extends Controller {
 
     static PuntoDeVentaRepositorio repositorioPdv = new PuntoDeVentaRepositorio(new PersistenciaDBPuntoDeVenta());
-    static UsuarioRepositorio repositorioUsuario = new UsuarioRepositorio (new PersistenciaDBUsuario());
-
-   // public static Result puntos() { return ok(pdv.render("Admin")); }
+    static UsuarioRepositorio repositorioUsuario = new UsuarioRepositorio(new PersistenciaDBUsuario());
 
     public static Result agregarPunto() {
-
 
         PuntoDeVenta punto = Form.form(PuntoDeVenta.class).bindFromRequest().get();
         Usuario usuario = Form.form(Usuario.class).bindFromRequest().get();
@@ -39,20 +36,15 @@ public class PuntoDeVentaController extends Controller{
         punto.setUsuario(usuario);
         repositorioPdv.crear(punto);
         return ok(toJson(punto));
-        //return redirect(routes.Application.puntos());
     }
 
-    public static Result listarPuntos () {
+    public static Result listarPuntos() {
         List<PuntoDeVenta> lista = repositorioPdv.listarTodo();
-
 
         return ok(toJson(lista));
     }
 
     public static Result modificarPunto() {
-
-
-
         return ok();
     }
 }

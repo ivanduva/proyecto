@@ -14,10 +14,10 @@ GET     /admin/servicios                    controllers.Application.servicios()
 
 GET     /admin/puntos-de-venta              controllers.Application.puntos()
 
-POST    /admin/puntos-de-venta/agregar      controllers.PuntoDeVentaController.agregarPunto()
+POST    /admin/puntos-de-venta              controllers.PuntoDeVentaController.agregarPunto()
 
-GET     /admin/puntos-de-venta/listar       controllers.PuntoDeVentaController.listarPuntos()
+GET     /admin/puntos-de-venta              controllers.PuntoDeVentaController.listarPuntos()
 
-POST    /admin/puntos-de-venta/modificar    controllers.PuntoDeVentaController.modificarPunto()
+PUT     /admin/puntos-de-venta              controllers.PuntoDeVentaController.modificarPunto()
 
 GET     /admin/personas                     controllers.Application.personas()
