@@ -1,21 +1,19 @@
 package controllers;
 
-import dao.PersistenciaDB;
 import dao.PersistenciaDBPuntoDeVenta;
 import dao.PersistenciaDBUsuario;
-import model.Localidad;
 import model.PuntoDeVenta;
 import model.TipoUsuario;
 import model.Usuario;
-import play.*;
 import play.data.Form;
-import play.mvc.*;
-
+import play.mvc.Controller;
+import play.mvc.Result;
 import repository.PuntoDeVentaRepositorio;
 import repository.UsuarioRepositorio;
-import views.html.*;
+
 
 import java.util.List;
+import views.html.pdv;
 
 import static play.libs.Json.toJson;
 
@@ -39,9 +37,8 @@ public class PuntoDeVentaController extends Controller {
     }
 
     public static Result listarPuntos() {
-        List<PuntoDeVenta> lista = repositorioPdv.listarTodo();
-
-        return ok(toJson(lista));
+        List<PuntoDeVenta> puntoDeVentas = repositorioPdv.listarTodo();
+        return ok(pdv.render(puntoDeVentas));
     }
 
     public static Result modificarPunto() {

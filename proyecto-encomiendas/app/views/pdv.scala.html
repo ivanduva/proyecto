@@ -1,8 +1,6 @@
-@(message: String)
+@(puntosDeVenta: List[model.PuntoDeVenta])
 
 @main(title = "Punto de venta") {
-
-<script type='text/javascript' src='@routes.Assets.at("js/pdv.js")'></script>
 
 <div class="col-sm-9">
     <a href="#"><strong><i class="glyphicon glyphicon-flag"></i> Puntos de Venta</strong></a>
@@ -21,7 +19,7 @@
                     <i class="glyphicon glyphicon-minus"></i>
                     <br> Eliminar Punto/s de Venta
                 </a>
-                <a href="#" class="btn btn-primary col-sm-4" id="listar">
+                <a href="@routes.PuntoDeVentaController.listarPuntos()" class="btn btn-primary col-sm-4" id="listar">
                     <i class="glyphicon glyphicon-list"></i>
                     <br> Listar Puntos de Venta
                 </a>
@@ -32,17 +30,18 @@
         </div>
         <!--/col-->
         <div class="col-md-12">
-            <div class="input-group collapse" id="busqueda" style="max-width:470px;">
+            <div class="input-group collapse in" id="busqueda" style="max-width:470px;">
                 <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
 
                 <div class="input-group-btn">
-                    <button class="btn btn-default btn-primary" type="submit"><i class="glyphicon glyphicon-search"></i>
+                    <button class="btn btn-default btn-primary" type="submit">
+                        <i class="glyphicon glyphicon-search"></i>
                     </button>
                 </div>
                 <hr>
             </div>
 
-            <div class="table-responsive collapse" id="tablaLista">
+            <div class="table-responsive collapse in" id="tablaLista">
                     <table id="puntosDeVenta" class="table table-striped">
                         <thead>
                         <tr>
@@ -58,13 +57,20 @@
                         </tr>
                         </thead>
                         <tbody id="puntos">
-                       <!-- <tr>
-                            <td style="cursor:pointer" data-toggle="modal" href="#modificar"><u><font color="blue">nombre</font></u></td>
-                            <td>localidad</td>
-                            <td>tipo</td>
-                            <td><input name="cb" id="cb" type="checkbox"></td>
+                            @for(puntoDeVenta <- puntosDeVenta) {
 
-                        </tr> -->
+                            <tr>
+                                <td>@puntoDeVenta.getPuntoId()</td>
+                                <td>@puntoDeVenta.getNombre()</td>
+                                <td>@puntoDeVenta.getTipo()</td>
+                                <td>@puntoDeVenta.getLocalidad()</td>
+                                <td>@puntoDeVenta.getDireccion()</td>
+                                <td>@puntoDeVenta.getEmail()</td>
+                                <td>@puntoDeVenta.getNombreResponsable()</td>
+                                <td>@puntoDeVenta.getTelefono()</td>
+                                <td></td>
+                            </tr>
+                            }
 
                         </tbody>
                     </table>
@@ -82,7 +88,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <form id="formAgregar" action="@routes.PuntoDeVentaController.agregarPunto()" class="form form-vertical">
+                    <form id="formAgregar" action="@routes.PuntoDeVentaController.agregarPunto()" class="form form-vertical" method="post">
                         <div class="control-group">
                             <label>Nombre del Punto de Venta</label>
 
