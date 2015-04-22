@@ -1,7 +1,11 @@
 package controllers;
 
-import play.mvc.*;
-import views.html.*;
+import play.mvc.Controller;
+import play.mvc.Result;
+import views.html.admin;
+import views.html.servicios;
+import views.html.personas;
+import views.html.pdv;
 
 public class Application extends Controller {
 
@@ -17,8 +21,8 @@ public class Application extends Controller {
         return ok(personas.render("Admin"));
     }
 
-    public static Result puntos() {
-        return ok(pdv.render("Admin"));
-    }
+//    public static Result puntos() {
+//        return ok(pdv.render("Admin"));
+//    }
 
 }
