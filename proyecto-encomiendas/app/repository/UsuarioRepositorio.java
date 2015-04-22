@@ -11,11 +11,7 @@ public class UsuarioRepositorio extends Repositorio<Usuario, Long> {
 
     PersistenciaDBUsuario dao;
 
-    public UsuarioRepositorio(PersistenciaDBUsuario persistencia) {
-        this.dao = persistencia;
-    }
-
-    public void crear(Usuario usuario){
-        dao.create(usuario);
+    public UsuarioRepositorio(Persistencia<Usuario, Long> dao) {
+        super(dao);
     }
 }

@@ -10,7 +10,6 @@ import java.util.List;
 public abstract class Repositorio<T, K> {
     private Persistencia<T, K> dao;
 
-    public Repositorio() {}
     public Repositorio(Persistencia<T, K> dao) {
         this.dao = dao;
     }
@@ -29,7 +28,7 @@ public abstract class Repositorio<T, K> {
     }
 
     public List<T> listarTodo() {
-        return (List<T>) dao.listAll();
+        return dao.listAll();
     }
 
     public void modificar(T t) {
