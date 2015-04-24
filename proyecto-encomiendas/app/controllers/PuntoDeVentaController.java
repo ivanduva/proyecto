@@ -33,7 +33,7 @@ public class PuntoDeVentaController extends Controller {
         repositorioUsuario.crear(usuario);
         punto.setUsuario(usuario);
         repositorioPdv.crear(punto);
-        return ok(toJson(punto));
+        return listarPuntos();
     }
 
     public static Result listarPuntos() {
