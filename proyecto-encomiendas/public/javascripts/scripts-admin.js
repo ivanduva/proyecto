@@ -14,10 +14,10 @@ $('[id=listar]').click(function(){
 });
 
 $('[id=agregar]').click(function(){
-    $('[id=busqueda]').removeClass("in");
-    $('[id=tablaLista]').removeClass("in");
-    $('[id=panelAgregar]').addClass("in");
-});
+       $('[id=busqueda]').removeClass("in");
+       $('[id=tablaLista]').removeClass("in");
+       $('[id=panelAgregar]').addClass("in");
+   });
 
 /*$('[id=botonGuardar]').click(function(){
     var form= document.getElementById("formAgregar");

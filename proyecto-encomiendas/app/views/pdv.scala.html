@@ -1,6 +1,7 @@
 @(puntosDeVenta: List[model.PuntoDeVenta])
 
-@main(title = "Punto de venta") {
+
+@main(title = "Puntos de venta") {
 
 <div class="col-sm-9">
     <a href="#"><strong><i class="glyphicon glyphicon-flag"></i> Puntos de Venta</strong></a>
@@ -15,10 +16,7 @@
                     <i class="glyphicon glyphicon-plus"></i>
                     <br> Agregar Punto de Venta
                 </a>
-                <a href="#" data-toggle="modal" class="btn btn-primary col-sm-4" id="eliminar">
-                    <i class="glyphicon glyphicon-minus"></i>
-                    <br> Eliminar Punto/s de Venta
-                </a>
+
                 <a href="@routes.PuntoDeVentaController.listarPuntos()" class="btn btn-primary col-sm-4" id="listar">
                     <i class="glyphicon glyphicon-list"></i>
                     <br> Listar Puntos de Venta
@@ -60,7 +58,7 @@
                             @for(puntoDeVenta <- puntosDeVenta) {
 
                             <tr>
-                                <td>@puntoDeVenta.getPuntoId()</td>
+                                <td><font color="blue"><u>@puntoDeVenta.getPuntoId()</u></font></td>
                                 <td>@puntoDeVenta.getNombre()</td>
                                 <td>@puntoDeVenta.getTipo()</td>
                                 <td>@puntoDeVenta.getLocalidad()</td>
@@ -68,12 +66,29 @@
                                 <td>@puntoDeVenta.getEmail()</td>
                                 <td>@puntoDeVenta.getNombreResponsable()</td>
                                 <td>@puntoDeVenta.getTelefono()</td>
-                                <td></td>
+                                <td><input name="cb" id="cb" type="checkbox"></td>
                             </tr>
                             }
 
                         </tbody>
                     </table>
+
+
+                    <div class="col-md-6">
+                        <button href="#" align="right" class="btn btn-primary" id="botonModificar" data-toggle="modal" data-target="#modificar">
+                            Modificar
+                        </button>
+                    </div>
+
+
+
+                    <div class="col-md-6">
+                        <button href="#" align="right" class="btn btn-primary" id="botonEliminar" data-toggle="modal" data-target="#borrar">
+                            Eliminar
+                        </button>
+                    </div>
+
+
                     <hr>
 
             </div>
