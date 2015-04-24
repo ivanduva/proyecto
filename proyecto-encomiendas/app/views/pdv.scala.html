@@ -8,7 +8,7 @@
     <hr>
 
     <div class="row">
-        <!-- center left-->
+        <!-- center left
         <div class="col-md-12">
 
             <div class="btn-group btn-group-justified">
@@ -17,16 +17,16 @@
                     <br> Agregar Punto de Venta
                 </a>
 
-                <a href="@routes.PuntoDeVentaController.listarPuntos()" class="btn btn-primary col-sm-4" id="listar">
-                    <i class="glyphicon glyphicon-list"></i>
-                    <br> Listar Puntos de Venta
-                </a>
+                <!-- <a href="@routes.PuntoDeVentaController.listarPuntos()" class="btn btn-primary col-sm-4" id="listar">
+                     <i class="glyphicon glyphicon-list"></i>
+                     <br> Listar Puntos de Venta
+                 </a>
 
-            </div>
+             </div>
 
-            <hr>
-        </div>
-        <!--/col-->
+             <hr>
+         </div>
+         <!--/col-->
         <div class="col-md-12">
             <div class="input-group collapse in" id="busqueda" style="max-width:470px;">
                 <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
@@ -73,22 +73,27 @@
                         </tbody>
                     </table>
 
+                <div class="col-md-12">
+                    <div class="btn-group btn-group-justified">
 
-                    <div class="col-md-6">
-                        <button href="#" align="right" class="btn btn-primary" id="botonModificar" data-toggle="modal" data-target="#modificar">
-                            Modificar
-                        </button>
+                        <a href="#" class="btn btn-primary col-sm-4" id="agregar">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <br> Agregar Punto de Venta
+                        </a>
+
+                        <a href="#" align="right" class="btn btn-primary" id="botonModificar" data-toggle="modal" data-target="#modificar">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <br>Modificar
+                        </a>
+
+                        <a href="#" align="right" class="btn btn-primary" id="botonEliminar" data-toggle="modal" data-target="#borrar">
+                            <i class="glyphicon glyphicon-minus"></i>
+                            <br>Eliminar
+                        </a>
                     </div>
 
 
-
-                    <div class="col-md-6">
-                        <button href="#" align="right" class="btn btn-primary" id="botonEliminar" data-toggle="modal" data-target="#borrar">
-                            Eliminar
-                        </button>
-                    </div>
-
-
+                </div>
                     <hr>
 
             </div>
