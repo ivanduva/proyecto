@@ -8,7 +8,7 @@ import java.util.Date;
  */
 @Entity
 @Table (name = "persona")
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy=InheritanceType.JOINED)
 //@DiscriminatorColumn (name = "tipo", discriminatorType = DiscriminatorType.STRING)
 public class Persona {
 

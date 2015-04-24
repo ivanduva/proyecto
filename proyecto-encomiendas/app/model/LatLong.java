@@ -1,6 +1,8 @@
 package model;
 
-import org.postgresql.geometric.PGpoint;
+
+import org.hibernate.annotations.Type;
+import org.postgis.Point;
 
 import javax.persistence.*;
 
@@ -17,12 +19,13 @@ public class LatLong {
     private Long latLongId;
 
     @Column (name = "latitud")
-    private PGpoint latitud;
+    @Type(type = "org.hibernatespatial.GeometryUserType")
+    private Point latitud;
 
     @Column (name = "latitud")
-    private PGpoint longitud;
+    private Point longitud;
 
-    public LatLong(Long latLongId, PGpoint latitud, PGpoint longitud) {
+    public LatLong(Long latLongId, Point latitud, Point longitud) {
         this.latLongId = latLongId;
         this.latitud = latitud;
         this.longitud = longitud;
@@ -32,11 +35,11 @@ public class LatLong {
         return latLongId;
     }
 
-    public PGpoint getLatitud() {
+    public Point getLatitud() {
         return latitud;
     }
 
-    public PGpoint getLongitud() {
+    public Point getLongitud() {
         return longitud;
     }
 
@@ -44,11 +47,11 @@ public class LatLong {
         this.latLongId = latLongId;
     }
 
-    public void setLatitud(PGpoint latitud) {
+    public void setLatitud(Point latitud) {
         this.latitud = latitud;
     }
 
-    public void setLongitud(PGpoint longitud) {
+    public void setLongitud(Point longitud) {
         this.longitud = longitud;
     }
 }

@@ -25,8 +25,7 @@ public class Encomienda {
     @Column (name = "fecha_entrega")
     private Date fechaEntrega;
 
-    @Column (name = "estado")
-    @Enumerated (EnumType.STRING)
+    @OneToMany
     private EstadoEncomienda estado;
 
     @ManyToOne
@@ -95,20 +94,8 @@ public class Encomienda {
         this.fechaEntrega = fechaEntrega;
     }
 
-    public void setEstadoEnCamino() {
-        this.estado = EstadoEncomienda.EN_CAMINO;
-    }
-
-    public void setEstadoEnSucursal() {
-        this.estado = EstadoEncomienda.EN_SUCURSAL;
-    }
-
-    public void setEstadoEntregada() {
-        this.estado = EstadoEncomienda.ENTREGADA;
-    }
-
-    public void setEstadoRetrasada() {
-        this.estado = EstadoEncomienda.RETRASADA;
+    public void setEstado(EstadoEncomienda estado) {
+        this.estado = estado;
     }
 
     public void setRemitente(Cliente remitente) {
