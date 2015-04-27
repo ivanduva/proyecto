@@ -62,6 +62,8 @@ $('[id=eliminar]').click(function(){
 
 });
 
+
+
 $('[id=botonBorrar]').click(function(){
 
     var tabla = document.getElementById("puntosDeVenta");
