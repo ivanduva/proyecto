@@ -11,6 +11,8 @@ import javax.persistence.Id;
 /**
  * Created by Ivan on 01/05/2015.
  */
+
+//Se almacena una instancia de esta clase por rol que se cargue
 @Entity
 public class SecurityRole extends Model implements Role {
 

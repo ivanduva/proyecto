@@ -9,6 +9,8 @@ import javax.persistence.*;
 /**
  * Created by Ivan on 01/05/2015.
  */
+
+//Se almacena una instancia de esta clase por permiso que se cargue
 @Entity
 public class UserPermission extends Model implements Permission {
 

@@ -51,6 +51,7 @@ public class Usuario extends Model implements Subject{
     @ManyToMany
     public List<UserPermission> permisos;
 
+    //token para verificar si el usuario está logueado
     private String authToken;
 
 

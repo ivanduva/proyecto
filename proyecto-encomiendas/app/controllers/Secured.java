@@ -32,6 +32,7 @@ public class Secured extends Security.Authenticator {
         return null;
     }
 
+    //Este método redirecciona a la pantalla del login si el usuario ingresa mal
     @Override
     public Result onUnauthorized(Http.Context context) {
 

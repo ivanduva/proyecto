@@ -17,6 +17,7 @@ import java.util.Date;
 /**
  * Created by Ivan on 01/05/2015.
  */
+//Acciones que va a realizar la app al cargar
 public class Global extends GlobalSettings {
 
 
@@ -26,6 +27,7 @@ public class Global extends GlobalSettings {
         SecurityRoleRepositorio repositorioRol = new SecurityRoleRepositorio(new PersistenciaDBSecurityRole());
         UserPermissionRepositorio repositorioPermiso = new UserPermissionRepositorio(new PersistenciaDBUserPermission());
 
+        //Agrega a la base los roles (si no existen en la base)
         if (repositorioRol.conteoDeColumnas() == 0){
 
             for (TipoUsuario name: TipoUsuario.values()){
@@ -36,6 +38,7 @@ public class Global extends GlobalSettings {
             }
         }
 
+        //Agrega a la base los permisos (si no existen en la base)
         if (repositorioPermiso.conteoDeColumnas() == 0){
 
             for (TipoPermiso value : TipoPermiso.values()){
@@ -47,6 +50,7 @@ public class Global extends GlobalSettings {
 
         }
 
+        //Crea un usuario admin
         if (repositorioUsuario.conteoDeColumnas() == 0){
 
             Usuario admin = new Usuario("admin", "admin1234", new Date());

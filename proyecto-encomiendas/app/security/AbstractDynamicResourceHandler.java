@@ -10,6 +10,7 @@ import java.util.Map;
 /**
  * Created by Ivan on 01/05/2015.
  */
+//Sirve para instanciar handlers de MyDynamicResourceHandler
 public class AbstractDynamicResourceHandler implements DynamicResourceHandler {
 
     private static final Map<String, DynamicResourceHandler> HANDLERS = new HashMap<String, DynamicResourceHandler>();
