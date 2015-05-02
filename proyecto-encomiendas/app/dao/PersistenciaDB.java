@@ -50,4 +50,10 @@ public class PersistenciaDB<T, K> implements Persistencia<T, K> {
     public int findRowCount() {
         return 0;
     }
+
+    @Override
+    public T findByAuthToken(String s) {
+        return null;
+    }
+
 }

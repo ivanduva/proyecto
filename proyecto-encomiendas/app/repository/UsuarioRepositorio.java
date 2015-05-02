@@ -11,9 +11,14 @@ public class UsuarioRepositorio extends Repositorio<Usuario, Long> {
 
     PersistenciaDB<Usuario, Long> dao;
 
+
     public UsuarioRepositorio(PersistenciaDBUsuario dao) {
         super(dao);
     }
 
+
+    public Usuario buscarPorToken (String s){
+        return dao.findByAuthToken(s);
+    }
 
 }

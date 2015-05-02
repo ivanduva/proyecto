@@ -1,16 +1,18 @@
-import controllers.Application;
 import dao.PersistenciaDBSecurityRole;
 import dao.PersistenciaDBUserPermission;
 import dao.PersistenciaDBUsuario;
 import model.SecurityRole;
 import model.UserPermission;
 import model.Usuario;
+import play.Application;
 import play.GlobalSettings;
 import repository.SecurityRoleRepositorio;
 import repository.UserPermissionRepositorio;
 import repository.UsuarioRepositorio;
 import security.TipoPermiso;
 import security.TipoUsuario;
+
+import java.util.Date;
 
 /**
  * Created by Ivan on 01/05/2015.
@@ -47,11 +49,13 @@ public class Global extends GlobalSettings {
 
         if (repositorioUsuario.conteoDeColumnas() == 0){
 
-            Usuario admin = new Usuario("admin");
+            Usuario admin = new Usuario("admin", "admin1234", new Date());
             admin.agregarRol(repositorioRol.buscarPorNombre("ADMINISTRATIVO"));
             admin.agregarPermiso(repositorioPermiso.buscarPorNombre(""));
             repositorioUsuario.crear(admin);
         }
+
+        super.onStart(application);
 
     }
 }

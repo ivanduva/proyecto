@@ -36,4 +36,18 @@ public class PersistenciaDBUsuario extends PersistenciaDB<Usuario, Long> {
     public int findRowCount() {
         return find.findRowCount();
     }
+
+    public Usuario findByAuthToken(String s){
+        if (s == null){
+            return null;
+        }
+
+        try {
+            return find.where().eq("authToken", s).findUnique();
+        }
+        catch (Exception e){
+            return null;
+        }
+    }
+
 }
