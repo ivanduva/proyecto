@@ -12,7 +12,7 @@ GET     /admin                              controllers.Application.admin()
 
 GET     /admin/servicios                    controllers.Application.servicios()
 
-#GET     /admin/puntos-de-venta              controllers.Application.puntos()
+#GET     /admin/puntos-de-venta             controllers.Application.puntos()
 
 POST    /admin/puntos-de-venta              controllers.PuntoDeVentaController.agregarPunto()
 
@@ -21,3 +21,7 @@ GET     /admin/puntos-de-venta              controllers.PuntoDeVentaController.l
 PUT     /admin/puntos-de-venta              controllers.PuntoDeVentaController.modificarPunto()
 
 GET     /admin/personas                     controllers.Application.personas()
+
+POST    /login                              controllers.SecurityController.login()
+
+POST    /logout                             controllers.SecurityController.login()
