@@ -26,7 +26,7 @@ public class Encomienda {
     @Column (name = "fecha_entrega")
     private Date fechaEntrega;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<EstadoEncomienda> estados;
 
     @ManyToOne

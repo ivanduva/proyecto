@@ -1,15 +1,19 @@
 package model;
 
+import be.objectify.deadbolt.core.models.Permission;
+import be.objectify.deadbolt.core.models.Role;
+import be.objectify.deadbolt.core.models.Subject;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Ivan on 05/04/2015.
  */
 @Entity
 @Table (name = "usuario")
-public class Usuario extends Model{
+public class Usuario extends Model implements Subject{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,18 +23,15 @@ public class Usuario extends Model{
     @Column (name = "nombre_usuario")
     private String nombreUsuario;
 
-    @Column (name = "tipo_usuario")
-    @Enumerated (EnumType.STRING)
-    private TipoUsuario tipoUsuario;
+    @ManyToMany
+    public List<SecurityRole> roles;
 
-    @Column (name = "contrasena")
-    private String contraseña;
+    @ManyToMany
+    public List<UserPermission> permisos;
 
-    public Usuario(Long usuarioId, String nombreUsuario, TipoUsuario tipo, String contraseña) {
-        this.usuarioId = usuarioId;
+
+    public Usuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
-        this.tipoUsuario = tipo;
-        this.contraseña = contraseña;
     }
 
     public Long getUsuarioId() {
@@ -49,19 +50,27 @@ public class Usuario extends Model{
         this.nombreUsuario = nombreUsuario;
     }
 
-    public TipoUsuario getTipo() {
-        return tipoUsuario;
+    public void agregarRol (SecurityRole rol){
+        this.roles.add(rol);
     }
 
-    public void setTipo(TipoUsuario tipo) {
-        this.tipoUsuario = tipo;
+    public void agregarPermiso (UserPermission permiso){
+        this.permisos.add(permiso);
     }
 
-    public String getContraseña() {
-        return contraseña;
+    @Override
+    public List<? extends Role> getRoles() {
+        return roles;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    @Override
+    public List<? extends Permission> getPermissions() {
+        return permisos;
     }
+
+    @Override
+    public String getIdentifier() {
+        return nombreUsuario;
+    }
+
 }

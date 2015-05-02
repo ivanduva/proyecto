@@ -11,4 +11,6 @@ public interface Persistencia<T, K> {
     public void update(T t);
     public void delete(T t);
     public List<T> listAll();
+    public T findByName(String s);
+    public int findRowCount();
 }

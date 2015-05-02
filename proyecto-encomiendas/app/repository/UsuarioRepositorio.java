@@ -1,6 +1,6 @@
 package repository;
 
-import dao.Persistencia;
+import dao.PersistenciaDB;
 import dao.PersistenciaDBUsuario;
 import model.Usuario;
 
@@ -9,9 +9,11 @@ import model.Usuario;
  */
 public class UsuarioRepositorio extends Repositorio<Usuario, Long> {
 
-    PersistenciaDBUsuario dao;
+    PersistenciaDB<Usuario, Long> dao;
 
-    public UsuarioRepositorio(Persistencia<Usuario, Long> dao) {
+    public UsuarioRepositorio(PersistenciaDBUsuario dao) {
         super(dao);
     }
+
+
 }

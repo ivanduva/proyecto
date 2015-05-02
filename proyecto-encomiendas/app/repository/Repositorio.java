@@ -18,8 +18,16 @@ public abstract class Repositorio<T, K> {
         dao.create(t);
     }
 
-    public T buscarPoId(K k) {
+    public T buscarPorId(K k) {
         return (T) dao.get(k);
+    }
+
+    public T buscarPorNombre(String s){
+        return (T) dao.findByName(s);
+    }
+
+    public int conteoDeColumnas(){
+        return dao.findRowCount();
     }
 
     public void eliminar(K k) {

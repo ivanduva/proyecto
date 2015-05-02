@@ -2,9 +2,7 @@ package dao;
 
 
 import com.avaje.ebean.Ebean;
-import play.db.ebean.Model;
 
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 /**
@@ -41,5 +39,15 @@ public class PersistenciaDB<T, K> implements Persistencia<T, K> {
     @Override
     public List<T> listAll() {
         return Ebean.find(type).findList();
+    }
+
+    @Override
+    public T findByName(String s) {
+        return null;
+    }
+
+    @Override
+    public int findRowCount() {
+        return 0;
     }
 }

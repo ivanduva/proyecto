@@ -12,7 +12,7 @@ GET     /admin                              controllers.Application.admin()
 
 GET     /admin/servicios                    controllers.Application.servicios()
 
-# GET     /admin/puntos-de-venta              controllers.Application.puntos()
+#GET     /admin/puntos-de-venta              controllers.Application.puntos()
 
 POST    /admin/puntos-de-venta              controllers.PuntoDeVentaController.agregarPunto()
 
