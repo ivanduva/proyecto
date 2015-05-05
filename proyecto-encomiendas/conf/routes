@@ -10,6 +10,7 @@ GET     /assets/*file                       controllers.Assets.at(path="/public"
 
 # Punto de ventas
 
+
 POST    /admin/puntos-de-venta              controllers.PuntoDeVentaController.agregarPunto()
 
 GET     /admin/puntos-de-venta              controllers.PuntoDeVentaController.listarPuntos()
@@ -19,3 +20,7 @@ PUT     /admin/puntos-de-venta              controllers.PuntoDeVentaController.m
 GET     /admin/tipo-puntos-de-venta         controllers.PuntoDeVentaController.listarTipoPdv()
 
 GET     /admin/localidad                    controllers.PuntoDeVentaController.listarLocalidades()
+
+POST    /login                              controllers.SecurityController.login()
+
+POST    /logout                             controllers.SecurityController.login()

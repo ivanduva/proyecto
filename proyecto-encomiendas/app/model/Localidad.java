@@ -23,11 +23,9 @@ public class Localidad {
     @OneToOne
     private LatLong ubicacion;
 
-    public Localidad(Long localidadId, String nombre, Long codigoPostal, LatLong ubicacion) {
-        this.localidadId = localidadId;
+    public Localidad(String nombre, Long codigoPostal) {
         this.nombre = nombre;
         this.codigoPostal = codigoPostal;
-        this.ubicacion = ubicacion;
     }
 
     public Long getLocalidadId() {

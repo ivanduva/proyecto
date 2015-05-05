@@ -1,40 +1,53 @@
 package dao;
 
+import com.avaje.ebean.Ebean;
 import model.Usuario;
 import play.db.ebean.Model;
-
-import java.util.List;
 
 /**
  * Created by Ivan on 18/04/2015.
  */
-public class PersistenciaDBUsuario implements Persistencia<Usuario, Long> {
+public class PersistenciaDBUsuario extends PersistenciaDB<Usuario, Long> {
+
+    public static final Model.Finder<Long, Usuario> find = new Model.Finder<Long, Usuario>(Long.class,
+            Usuario.class);
 
     public PersistenciaDBUsuario() {
+        super(Usuario.class);
     }
 
     @Override
     public void create(Usuario usuario) {
-        usuario.save();
+        Ebean.save(usuario);
+        Ebean.saveManyToManyAssociations(usuario, "roles");
+        Ebean.saveManyToManyAssociations(usuario, "permisos");
     }
 
     @Override
-    public Usuario get(Long aLong) {
-        return (Usuario) new Model.Finder(String.class, Usuario.class).byId(aLong);
+    public Usuario findByName(String s) {
+
+        return find.where()
+                .eq("nombre_usuario",
+                        s)
+                .findUnique();
     }
 
     @Override
-    public void update(Usuario usuario) {
-        usuario.update();
+    public int findRowCount() {
+        return find.findRowCount();
     }
 
-    @Override
-    public void delete(Usuario usuario) {
-        usuario.delete();
+    public Usuario findByAuthToken(String s){
+        if (s == null){
+            return null;
+        }
+
+        try {
+            return find.where().eq("authToken", s).findUnique();
+        }
+        catch (Exception e){
+            return null;
+        }
     }
 
-    @Override
-    public List<Usuario> listAll() {
-        return new Model.Finder(String.class, Usuario.class).all();
-    }
 }

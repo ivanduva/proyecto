@@ -1,7 +1,7 @@
 package repository;
 
-import dao.Persistencia;
 import dao.PersistenciaDB;
+import dao.PersistenciaDBLocalidad;
 import model.Localidad;
 
 /**
@@ -9,7 +9,9 @@ import model.Localidad;
  */
 public class LocalidadRepositorio extends Repositorio<Localidad, Long> {
 
-    public LocalidadRepositorio(Persistencia<Localidad, Long> dao) {
+    PersistenciaDB<Localidad, Long> dao;
+
+    public LocalidadRepositorio(PersistenciaDBLocalidad dao) {
         super(dao);
     }
 }

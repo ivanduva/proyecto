@@ -17,6 +17,7 @@ create table encomienda (
 
 create table estado_encomienda (
   id_estado_encomienda      bigint not null,
+  encomienda_id_encomienda  bigint not null,
   nombre                    varchar(11),
   fecha                     timestamp,
   punto_de_venta_id_punto_de_venta bigint,
@@ -71,8 +72,14 @@ create table punto_de_venta (
   telefono                  varchar(255),
   usuario_id_usuario        bigint,
   tipo_punto                varchar(22),
-  constraint ck_punto_de_venta_tipo_punto check (tipo_punto in ('PUNTO EXTERNO','OFICINA ADMINISTRATIVA')),
+  constraint ck_punto_de_venta_tipo_punto check (tipo_punto in ('OFICINA ADMINISTRATIVA','PUNTO EXTERNO')),
   constraint pk_punto_de_venta primary key (id_punto_de_venta))
+;
+
+create table security_role (
+  id                        bigint not null,
+  name                      varchar(255),
+  constraint pk_security_role primary key (id))
 ;
 
 create table servicio (
@@ -84,12 +91,19 @@ create table servicio (
   constraint pk_servicio primary key (id_servicio))
 ;
 
+create table user_permission (
+  id                        bigint not null,
+  permission_value          varchar(255),
+  constraint pk_user_permission primary key (id))
+;
+
 create table usuario (
   id_usuario                bigint not null,
-  nombre_usuario            varchar(255),
-  tipo_usuario              varchar(14),
-  contrasena                varchar(255),
-  constraint ck_usuario_tipo_usuario check (tipo_usuario in ('CLIENTE','GERENTE','VENDEDOR','EMPLEADO','MECANICO','ADMINISTRATIVO')),
+  nombre_usuario            varchar(256) not null,
+  fecha_creacion            timestamp,
+  sha_password              bytea not null,
+  auth_token                varchar(255),
+  constraint uq_usuario_nombre_usuario unique (nombre_usuario),
   constraint pk_usuario primary key (id_usuario))
 ;
 
@@ -102,6 +116,18 @@ create table venta (
   constraint pk_venta primary key (id_venta))
 ;
 
+
+create table usuario_security_role (
+  usuario_id_usuario             bigint not null,
+  security_role_id               bigint not null,
+  constraint pk_usuario_security_role primary key (usuario_id_usuario, security_role_id))
+;
+
+create table usuario_user_permission (
+  usuario_id_usuario             bigint not null,
+  user_permission_id             bigint not null,
+  constraint pk_usuario_user_permission primary key (usuario_id_usuario, user_permission_id))
+;
 create sequence encomienda_seq;
 
 create sequence estado_encomienda_seq;
@@ -116,7 +142,11 @@ create sequence persona_seq;
 
 create sequence punto_de_venta_seq;
 
+create sequence security_role_seq;
+
 create sequence servicio_seq;
+
+create sequence user_permission_seq;
 
 create sequence usuario_seq;
 
@@ -128,24 +158,34 @@ alter table encomienda add constraint fk_encomienda_remitente_2 foreign key (rem
 create index ix_encomienda_remitente_2 on encomienda (remitente_id_persona);
 alter table encomienda add constraint fk_encomienda_localidad_3 foreign key (localidad_id_localidad) references localidad (id_localidad);
 create index ix_encomienda_localidad_3 on encomienda (localidad_id_localidad);
-alter table estado_encomienda add constraint fk_estado_encomienda_puntoDeVe_4 foreign key (punto_de_venta_id_punto_de_venta) references punto_de_venta (id_punto_de_venta);
-create index ix_estado_encomienda_puntoDeVe_4 on estado_encomienda (punto_de_venta_id_punto_de_venta);
-alter table localidad add constraint fk_localidad_ubicacion_5 foreign key (ubicacion_id_lat_long) references lat_long (id_lat_long);
-create index ix_localidad_ubicacion_5 on localidad (ubicacion_id_lat_long);
-alter table persona add constraint fk_persona_localidad_6 foreign key (localidad_id_localidad) references localidad (id_localidad);
-create index ix_persona_localidad_6 on persona (localidad_id_localidad);
-alter table persona add constraint fk_persona_usuario_7 foreign key (usuario_id_usuario) references usuario (id_usuario);
-create index ix_persona_usuario_7 on persona (usuario_id_usuario);
-alter table punto_de_venta add constraint fk_punto_de_venta_localidad_8 foreign key (localidad_id_localidad) references localidad (id_localidad);
-create index ix_punto_de_venta_localidad_8 on punto_de_venta (localidad_id_localidad);
-alter table punto_de_venta add constraint fk_punto_de_venta_usuario_9 foreign key (usuario_id_usuario) references usuario (id_usuario);
-create index ix_punto_de_venta_usuario_9 on punto_de_venta (usuario_id_usuario);
-alter table venta add constraint fk_venta_punto_de_venta_10 foreign key (punto_de_venta_id_punto_de_venta) references punto_de_venta (id_punto_de_venta);
-create index ix_venta_punto_de_venta_10 on venta (punto_de_venta_id_punto_de_venta);
-alter table venta add constraint fk_venta_cliente_11 foreign key (cliente_id_persona) references persona (id_persona);
-create index ix_venta_cliente_11 on venta (cliente_id_persona);
+alter table estado_encomienda add constraint fk_estado_encomienda_encomiend_4 foreign key (encomienda_id_encomienda) references encomienda (id_encomienda);
+create index ix_estado_encomienda_encomiend_4 on estado_encomienda (encomienda_id_encomienda);
+alter table estado_encomienda add constraint fk_estado_encomienda_puntoDeVe_5 foreign key (punto_de_venta_id_punto_de_venta) references punto_de_venta (id_punto_de_venta);
+create index ix_estado_encomienda_puntoDeVe_5 on estado_encomienda (punto_de_venta_id_punto_de_venta);
+alter table localidad add constraint fk_localidad_ubicacion_6 foreign key (ubicacion_id_lat_long) references lat_long (id_lat_long);
+create index ix_localidad_ubicacion_6 on localidad (ubicacion_id_lat_long);
+alter table persona add constraint fk_persona_localidad_7 foreign key (localidad_id_localidad) references localidad (id_localidad);
+create index ix_persona_localidad_7 on persona (localidad_id_localidad);
+alter table persona add constraint fk_persona_usuario_8 foreign key (usuario_id_usuario) references usuario (id_usuario);
+create index ix_persona_usuario_8 on persona (usuario_id_usuario);
+alter table punto_de_venta add constraint fk_punto_de_venta_localidad_9 foreign key (localidad_id_localidad) references localidad (id_localidad);
+create index ix_punto_de_venta_localidad_9 on punto_de_venta (localidad_id_localidad);
+alter table punto_de_venta add constraint fk_punto_de_venta_usuario_10 foreign key (usuario_id_usuario) references usuario (id_usuario);
+create index ix_punto_de_venta_usuario_10 on punto_de_venta (usuario_id_usuario);
+alter table venta add constraint fk_venta_punto_de_venta_11 foreign key (punto_de_venta_id_punto_de_venta) references punto_de_venta (id_punto_de_venta);
+create index ix_venta_punto_de_venta_11 on venta (punto_de_venta_id_punto_de_venta);
+alter table venta add constraint fk_venta_cliente_12 foreign key (cliente_id_persona) references persona (id_persona);
+create index ix_venta_cliente_12 on venta (cliente_id_persona);
 
 
+
+alter table usuario_security_role add constraint fk_usuario_security_role_usua_01 foreign key (usuario_id_usuario) references usuario (id_usuario);
+
+alter table usuario_security_role add constraint fk_usuario_security_role_secu_02 foreign key (security_role_id) references security_role (id);
+
+alter table usuario_user_permission add constraint fk_usuario_user_permission_us_01 foreign key (usuario_id_usuario) references usuario (id_usuario);
+
+alter table usuario_user_permission add constraint fk_usuario_user_permission_us_02 foreign key (user_permission_id) references user_permission (id);
 
 # --- !Downs
 
@@ -163,9 +203,17 @@ drop table if exists persona cascade;
 
 drop table if exists punto_de_venta cascade;
 
+drop table if exists security_role cascade;
+
 drop table if exists servicio cascade;
 
+drop table if exists user_permission cascade;
+
 drop table if exists usuario cascade;
+
+drop table if exists usuario_security_role cascade;
+
+drop table if exists usuario_user_permission cascade;
 
 drop table if exists venta cascade;
 
@@ -183,7 +231,11 @@ drop sequence if exists persona_seq;
 
 drop sequence if exists punto_de_venta_seq;
 
+drop sequence if exists security_role_seq;
+
 drop sequence if exists servicio_seq;
+
+drop sequence if exists user_permission_seq;
 
 drop sequence if exists usuario_seq;
 
