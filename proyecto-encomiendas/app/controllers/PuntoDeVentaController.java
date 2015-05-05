@@ -1,7 +1,6 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import dao.PersistenciaDB;
 import dao.PersistenciaDBLocalidad;
 import dao.PersistenciaDBPuntoDeVenta;
 import dao.PersistenciaDBUsuario;
@@ -9,7 +8,6 @@ import model.Localidad;
 import model.PuntoDeVenta;
 import model.TipoPunto;
 import play.Logger;
-
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -28,7 +26,7 @@ public class PuntoDeVentaController extends Controller {
 
     static PuntoDeVentaRepositorio repositorioPdv = new PuntoDeVentaRepositorio(new PersistenciaDBPuntoDeVenta());
     static UsuarioRepositorio repositorioUsuario = new UsuarioRepositorio(new PersistenciaDBUsuario());
-    static LocalidadRepositorio repositorioLocalidad = new LocalidadRepositorio(new PersistenciaDBLocalidad(Localidad.class));
+    static LocalidadRepositorio repositorioLocalidad = new LocalidadRepositorio(new PersistenciaDBLocalidad());
 
     public static Result agregarPunto() {
 

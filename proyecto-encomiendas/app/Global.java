@@ -1,11 +1,14 @@
+import dao.PersistenciaDBLocalidad;
 import dao.PersistenciaDBSecurityRole;
 import dao.PersistenciaDBUserPermission;
 import dao.PersistenciaDBUsuario;
+import model.Localidad;
 import model.SecurityRole;
 import model.UserPermission;
 import model.Usuario;
 import play.Application;
 import play.GlobalSettings;
+import repository.LocalidadRepositorio;
 import repository.SecurityRoleRepositorio;
 import repository.UserPermissionRepositorio;
 import repository.UsuarioRepositorio;
@@ -26,6 +29,7 @@ public class Global extends GlobalSettings {
         UsuarioRepositorio repositorioUsuario = new UsuarioRepositorio(new PersistenciaDBUsuario());
         SecurityRoleRepositorio repositorioRol = new SecurityRoleRepositorio(new PersistenciaDBSecurityRole());
         UserPermissionRepositorio repositorioPermiso = new UserPermissionRepositorio(new PersistenciaDBUserPermission());
+        LocalidadRepositorio repositorioLocalidad = new LocalidadRepositorio(new PersistenciaDBLocalidad());
 
         //Agrega a la base los roles (si no existen en la base)
         if (repositorioRol.conteoDeColumnas() == 0){
@@ -48,6 +52,11 @@ public class Global extends GlobalSettings {
                 repositorioPermiso.crear(permiso);
             }
 
+        }
+
+        if (repositorioLocalidad.conteoDeColumnas() == 0){
+            Localidad localidad = new Localidad("La Plata", (long) 1900);
+            repositorioLocalidad.crear(localidad);
         }
 
         //Crea un usuario admin

@@ -19,7 +19,7 @@ PUT     /admin/puntos-de-venta              controllers.PuntoDeVentaController.m
 
 GET     /admin/tipo-puntos-de-venta         controllers.PuntoDeVentaController.listarTipoPdv()
 
-GET     /admin/localidad                    controllers.PuntoDeVentaController.listarLocalidades()GET     /admin/personas                     controllers.Application.personas()
+GET     /admin/localidad                    controllers.PuntoDeVentaController.listarLocalidades()
 
 POST    /login                              controllers.SecurityController.login()
 

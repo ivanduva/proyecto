@@ -72,7 +72,7 @@ create table punto_de_venta (
   telefono                  varchar(255),
   usuario_id_usuario        bigint,
   tipo_punto                varchar(22),
-  constraint ck_punto_de_venta_tipo_punto check (tipo_punto in ('PUNTO EXTERNO','OFICINA ADMINISTRATIVA')),
+  constraint ck_punto_de_venta_tipo_punto check (tipo_punto in ('OFICINA ADMINISTRATIVA','PUNTO EXTERNO')),
   constraint pk_punto_de_venta primary key (id_punto_de_venta))
 ;
 
