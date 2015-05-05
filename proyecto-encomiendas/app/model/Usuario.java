@@ -55,10 +55,9 @@ public class Usuario extends Model implements Subject{
     private String authToken;
 
 
-    public Usuario(String nombreUsuario, String password, Date fechaCreacion) {
+    public Usuario(String nombreUsuario, Date fechaCreacion) {
 
         this.nombreUsuario = nombreUsuario;
-        this.password = password;
         this.fechaCreacion = fechaCreacion;
     }
 

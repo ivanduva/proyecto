@@ -7,7 +7,7 @@ import be.objectify.deadbolt.core.models.Permission;
  */
 //Los permisos que va a tener cada usuario (Si los usamos)
 public enum TipoPermiso implements Permission {
-    ;
+    PERMISO_1, PERMISO_2;
 
     @Override
     public String getValue() {

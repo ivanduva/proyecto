@@ -53,9 +53,11 @@ public class Global extends GlobalSettings {
         //Crea un usuario admin
         if (repositorioUsuario.conteoDeColumnas() == 0){
 
-            Usuario admin = new Usuario("admin", "admin1234", new Date());
+            Usuario admin = new Usuario("admin", new Date());
+            admin.setPassword("admin1234");
             admin.agregarRol(repositorioRol.buscarPorNombre("ADMINISTRATIVO"));
-            admin.agregarPermiso(repositorioPermiso.buscarPorNombre(""));
+      //      admin.agregarPermiso(repositorioPermiso.buscarPorNombre("PERMISO_1"));
+        //    admin.agregarPermiso(repositorioPermiso.buscarPorNombre("PERMISO_2"));
             repositorioUsuario.crear(admin);
         }
 
