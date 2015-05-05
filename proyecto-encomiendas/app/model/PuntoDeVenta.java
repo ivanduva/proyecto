@@ -1,6 +1,8 @@
 package model;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import play.db.ebean.Model;
+import play.libs.Json;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,42 +10,46 @@ import java.util.List;
 /**
  * Created by Ivan on 06/04/2015.
  */
-@Entity 
+@Entity
 @Table(name = "punto_de_venta")
-public class PuntoDeVenta extends Model{
+public class PuntoDeVenta extends Model {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_punto_de_venta")
     private Long puntoId;
 
-    @Column (name = "direccion")
+    @Column(name = "direccion")
     private String direccion;
 
-    @Column (name = "email")
+    @Column(name = "email")
     private String email;
 
     @OneToOne
     private Localidad localidad;
 
-    @Column (name = "nombre")
+    @Column(name = "nombre")
     private String nombre;
 
-    @Column (name = "nombre_responsable")
+    @Column(name = "nombre_responsable")
     private String nombreResponsable;
 
-    @Column (name = "telefono")
+    @Column(name = "telefono")
     private String telefono;
 
-    @OneToOne (cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private Usuario usuario;
 
-    @OneToMany (cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Venta> ventas;
 
-    @Column (name = "tipo_punto")
-    @Enumerated (EnumType.STRING)
+    @Column(name = "tipo_punto")
+    @Enumerated(EnumType.STRING)
     private TipoPunto tipoPunto;
+
+
+    public PuntoDeVenta() {
+    }
 
     public PuntoDeVenta(Long puntoId, String direccion, String email, Localidad localidad, String nombre,
                         String nombreResponsable, String telefono, Usuario usuario, List<Venta> ventas,
@@ -60,6 +66,23 @@ public class PuntoDeVenta extends Model{
         this.tipoPunto = tipo;
     }
 
+    public PuntoDeVenta(String direccion, String email, Localidad localidad, String nombre, String nombreResponsable,
+                        String telefono, Usuario usuario, List<Venta> ventas, TipoPunto tipoPunto) {
+        this.direccion = direccion;
+        this.email = email;
+        this.localidad = localidad;
+        this.nombre = nombre;
+        this.nombreResponsable = nombreResponsable;
+        this.telefono = telefono;
+        this.usuario = usuario;
+        this.ventas = ventas;
+        this.tipoPunto = tipoPunto;
+    }
+
+    public static PuntoDeVenta fromJson(JsonNode jsonNode) {
+        PuntoDeVenta punto = Json.fromJson(jsonNode, PuntoDeVenta.class);
+        return punto;
+    }
 
 
     public Long getPuntoId() {

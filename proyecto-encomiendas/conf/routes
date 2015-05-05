@@ -3,16 +3,13 @@
 # ~~~~
 
 # Home page
-GET     /                                   controllers.Application.admin()
+GET     /                                   controllers.Application.index()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                       controllers.Assets.at(path="/public", file)
 
-GET     /admin                              controllers.Application.admin()
+# Punto de ventas
 
-GET     /admin/servicios                    controllers.Application.servicios()
-
-#GET     /admin/puntos-de-venta             controllers.Application.puntos()
 
 POST    /admin/puntos-de-venta              controllers.PuntoDeVentaController.agregarPunto()
 
@@ -20,7 +17,9 @@ GET     /admin/puntos-de-venta              controllers.PuntoDeVentaController.l
 
 PUT     /admin/puntos-de-venta              controllers.PuntoDeVentaController.modificarPunto()
 
-GET     /admin/personas                     controllers.Application.personas()
+GET     /admin/tipo-puntos-de-venta         controllers.PuntoDeVentaController.listarTipoPdv()
+
+GET     /admin/localidad                    controllers.PuntoDeVentaController.listarLocalidades()GET     /admin/personas                     controllers.Application.personas()
 
 POST    /login                              controllers.SecurityController.login()
 
