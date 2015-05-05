@@ -2,7 +2,6 @@ package model;
 
 
 import org.hibernate.annotations.Type;
-import org.postgis.Point;
 
 import javax.persistence.*;
 
@@ -20,12 +19,12 @@ public class LatLong {
 
     @Column (name = "latitud")
     @Type(type = "org.hibernatespatial.GeometryUserType")
-    private Point latitud;
+    private float latitud;
 
     @Column (name = "latitud")
-    private Point longitud;
+    private float longitud;
 
-    public LatLong(Long latLongId, Point latitud, Point longitud) {
+    public LatLong(Long latLongId, float latitud, float longitud) {
         this.latLongId = latLongId;
         this.latitud = latitud;
         this.longitud = longitud;
@@ -35,11 +34,11 @@ public class LatLong {
         return latLongId;
     }
 
-    public Point getLatitud() {
+    public float getLatitud() {
         return latitud;
     }
 
-    public Point getLongitud() {
+    public float getLongitud() {
         return longitud;
     }
 
@@ -47,11 +46,11 @@ public class LatLong {
         this.latLongId = latLongId;
     }
 
-    public void setLatitud(Point latitud) {
+    public void setLatitud(float latitud) {
         this.latitud = latitud;
     }
 
-    public void setLongitud(Point longitud) {
+    public void setLongitud(float longitud) {
         this.longitud = longitud;
     }
 }
