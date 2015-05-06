@@ -13,4 +13,4 @@ dist
 /.project
 /RUNNING_PID
 /.settings
-app/Front/bower_components
+app/assets/front/bower_components
