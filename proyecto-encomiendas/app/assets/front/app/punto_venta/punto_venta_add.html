@@ -1,0 +1,62 @@
+<div class="container" ng-controller="PuntoVentaCreateController as puntoCtrl">
+  <div class="row">
+   <div class="col-md-6 col-md-offset-3">
+      <span class="title-with-button">{{ puntoCtrl.title }}</span>
+      <form class="form-horizontal" action="">
+
+        <input type="text" class="hidden" ng-model="puntoCtrl.punto.puntoId"/>
+
+        <div class="form-group">
+          <label for="nombre" class="col-sm-2 control-label">Nombre</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="nombre" placeholder="Nombre" ng-model="puntoCtrl.punto.nombre"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="tipo" class="col-sm-2 control-label">Tipo</label>
+          <div class="col-sm-10">
+            <select type="text" class="form-control" id="tipo"  ng-model="puntoCtrl.punto.tipo" ng-options="tipo for tipo in puntoCtrl.tipoPDV"></select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="localidad" class="col-sm-2 control-label">Localidad</label>
+          <div class="col-sm-10">
+            <select type="text" class="form-control" id="localidad" ng-model="puntoCtrl.punto.localidad" ng-options="loc as loc.nombre for loc in puntoCtrl.localidades"></select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="direccion" class="col-sm-2 control-label">Direccion</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="direccion" placeholder="Direccion" ng-model="puntoCtrl.punto.direccion"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="col-sm-2 control-label">Email</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="email" placeholder="Email" ng-model="puntoCtrl.punto.email"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="responsable" class="col-sm-2 control-label">Responsable</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="responsable" placeholder="Responsable" ng-model="puntoCtrl.punto.nombreResponsable"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="telefono" class="col-sm-2 control-label">Telefono</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="telefono" placeholder="Telefono" ng-model="puntoCtrl.punto.telefono"/>
+          </div>
+        </div>
+
+        <button class="btn btn-embossed btn-success" ng-click="puntoCtrl.save()">Guardar</button>
+      </form>
+    </div>
+  </div>
+</div>

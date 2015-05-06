@@ -1,0 +1,18 @@
+body {
+  margin-bottom: 15px;
+}
+
+.title-with-button {
+  display: inline-block;
+  font-size: 2.5em;
+  margin-bottom: 15px;
+  margin-right: 20px;
+}
+
+.button-with-title {
+  vertical-align: super;
+}
+
+.table > tbody > tr > td {
+  vertical-align: middle;
+}
