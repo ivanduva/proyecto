@@ -9,6 +9,10 @@
 
     function routeConfiguration($routeProvider) {
         $routeProvider.
+            when('/dashboard', {
+                templateUrl: 'assets/Front/app/dashboard/dashboard.html'
+
+            }).
             when('/punto_venta', {
                 templateUrl: 'assets/Front/app/punto_venta/punto_venta.html',
                 controller:"PuntoVentaListController",

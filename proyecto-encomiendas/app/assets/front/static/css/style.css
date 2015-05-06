@@ -16,3 +16,11 @@ body {
 .table > tbody > tr > td {
   vertical-align: middle;
 }
+
+.ng-invalid.ng-dirty{
+ border-color: red
+}
+
+.ng-valid.ng-dirty{
+  border-color:green
+}

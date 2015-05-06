@@ -49,7 +49,15 @@ public class PuntoDeVentaController extends Controller {
         return ok(toJson(puntoDeVentas));
     }
 
+    public static Result getPunto(Long id) {
+
+        PuntoDeVenta puntoDeVenta = repositorioPdv.buscarPorId(id);
+        return ok(toJson(puntoDeVenta));
+    }
+
     public static Result modificarPunto() {
+
+
         return ok();
     }
 

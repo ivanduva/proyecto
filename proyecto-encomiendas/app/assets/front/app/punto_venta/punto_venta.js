@@ -39,7 +39,7 @@
 
 
         vm.save = function () {
-            if (vm.punto.id === undefined) {
+            if (vm.punto.puntoId === undefined) {
                 dataservice.PuntosVenta().create(vm.punto);
             } else {
                 dataservice.PuntoVenta().update(vm.punto);

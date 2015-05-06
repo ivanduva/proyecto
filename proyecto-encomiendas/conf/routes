@@ -19,6 +19,8 @@ PUT     /admin/puntos-de-venta              controllers.PuntoDeVentaController.m
 
 GET     /admin/tipo-puntos-de-venta         controllers.PuntoDeVentaController.listarTipoPdv()
 
+GET     /admin/puntos-de-venta/:id          controllers.PuntoDeVentaController.getPunto(id: Long)
+
 GET     /admin/localidad                    controllers.PuntoDeVentaController.listarLocalidades()
 
 POST    /login                              controllers.SecurityController.login()
