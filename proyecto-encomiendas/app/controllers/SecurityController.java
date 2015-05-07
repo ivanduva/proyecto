@@ -24,7 +24,7 @@ public class SecurityController extends Controller{
 
     public static Usuario getUser() { return (Usuario) Http.Context.current().args.get("usuario");};
 
-    public static Result login(String nombreUsuario){
+    public static Result login(String nombreUsuario, String contraseña){
 //        Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
 //
   //      if (loginForm.hasErrors()) {
@@ -35,7 +35,7 @@ public class SecurityController extends Controller{
 
         Usuario user = repositorio.buscarPorNombre(nombreUsuario);
 
-        if (user == null) {
+        if ((user == null) || (user.getPassword() != contraseña)) {
             return unauthorized();
         }
         else {

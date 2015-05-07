@@ -26,6 +26,6 @@ GET     /admin/tipo-puntos-de-venta         controllers.PuntoDeVentaController.l
 
 GET     /admin/localidad                    controllers.PuntoDeVentaController.listarLocalidades()
 
-POST    /login/:usuario                     controllers.SecurityController.login(usuario: String)
+POST    /login/:usuario/:pass               controllers.SecurityController.login(usuario: String, pass: String)
 
 POST    /logout                             controllers.SecurityController.logout()

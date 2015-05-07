@@ -5,7 +5,7 @@
 
 create table encomienda (
   id_encomienda             bigint not null,
-  venta_id_venta            bigint not null,
+  viaje_encomienda_id_servicio bigint not null,
   destinatario              varchar(255),
   direccion_destino         varchar(255),
   fecha_entrega             timestamp,
@@ -152,8 +152,8 @@ create sequence usuario_seq;
 
 create sequence venta_seq;
 
-alter table encomienda add constraint fk_encomienda_venta_1 foreign key (venta_id_venta) references venta (id_venta);
-create index ix_encomienda_venta_1 on encomienda (venta_id_venta);
+alter table encomienda add constraint fk_encomienda_servicio_1 foreign key (viaje_encomienda_id_servicio) references servicio (id_servicio);
+create index ix_encomienda_servicio_1 on encomienda (viaje_encomienda_id_servicio);
 alter table encomienda add constraint fk_encomienda_remitente_2 foreign key (remitente_id_persona) references persona (id_persona);
 create index ix_encomienda_remitente_2 on encomienda (remitente_id_persona);
 alter table encomienda add constraint fk_encomienda_localidad_3 foreign key (localidad_id_localidad) references localidad (id_localidad);

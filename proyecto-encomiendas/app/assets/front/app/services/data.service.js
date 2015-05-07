@@ -11,7 +11,8 @@
         return {
             PuntosVenta: puntosVenta,
             TipoPuntoVenta: tipoPuntoVenta,
-            Localidades: localidades
+            Localidades: localidades,
+            /*Login: login*/
         };
 
         function puntosVenta() {
@@ -23,6 +24,12 @@
                 delete: {method: 'DELETE', params: {id: '@id'}}
             });
         }
+
+        /*function login() {
+            return $resource('http://localhost:9000/login/:usuario/:pass', {}, {
+                create: {method 'POST'}
+            });
+        }*/
 
         function tipoPuntoVenta() {
             return $resource('http://localhost:9000/admin/tipo-puntos-de-venta', {}, {
