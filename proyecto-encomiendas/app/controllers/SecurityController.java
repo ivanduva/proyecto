@@ -3,7 +3,6 @@ package controllers;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import dao.PersistenciaDBUsuario;
 import model.Usuario;
-import play.data.Form;
 import play.data.validation.Constraints;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -25,16 +24,16 @@ public class SecurityController extends Controller{
 
     public static Usuario getUser() { return (Usuario) Http.Context.current().args.get("usuario");};
 
-    public static Result login(){
-        Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
+    public static Result login(String nombreUsuario){
+//        Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
+//
+  //      if (loginForm.hasErrors()) {
+    //        return badRequest(loginForm.errorsAsJson());
+      //  }
 
-        if (loginForm.hasErrors()) {
-            return badRequest(loginForm.errorsAsJson());
-        }
+        //Login login = loginForm.get();
 
-        Login login = loginForm.get();
-
-        Usuario user = repositorio.buscarPorNombre(login.emailAddress);
+        Usuario user = repositorio.buscarPorNombre(nombreUsuario);
 
         if (user == null) {
             return unauthorized();

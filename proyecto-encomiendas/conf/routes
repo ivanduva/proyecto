@@ -23,6 +23,6 @@ GET     /admin/puntos-de-venta/:id          controllers.PuntoDeVentaController.g
 
 GET     /admin/localidad                    controllers.PuntoDeVentaController.listarLocalidades()
 
-POST    /login                              controllers.SecurityController.login()
+POST    /login/:usuario                     controllers.SecurityController.login(usuario: String)
 
-POST    /logout                             controllers.SecurityController.login()
+POST    /logout                             controllers.SecurityController.logout()
