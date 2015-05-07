@@ -50,14 +50,22 @@ public class PuntoDeVentaController extends Controller {
     }
 
     public static Result getPunto(Long id) {
-
+        Logger.info("GEEEEEEEEEEEEET\n");
         PuntoDeVenta puntoDeVenta = repositorioPdv.buscarPorId(id);
+        Logger.info(toJson(puntoDeVenta).toString());
         return ok(toJson(puntoDeVenta));
     }
 
-    public static Result modificarPunto() {
+    public static Result modificarPunto(Long id) {
+        JsonNode json = request().body().asJson();
+        PuntoDeVenta puntoDeVenta = Json.fromJson(json, PuntoDeVenta.class);
+        repositorioPdv.modificar(puntoDeVenta);
+        return ok();
+    }
 
-
+    public static Result eliminarPunto(Long id) {
+        Logger.info("ELIMINAAAAAAAAAAAAAAAAAAAR");
+        repositorioPdv.eliminar(id);
         return ok();
     }
 

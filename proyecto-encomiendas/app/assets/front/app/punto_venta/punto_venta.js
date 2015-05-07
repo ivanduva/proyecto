@@ -18,7 +18,7 @@
         };
 
         vm.delete = function (puntoId) {
-            dataservice.PuntoVenta().delete(puntoId);
+            dataservice.PuntosVenta().delete({id: parseInt(puntoId)});
         };
     }
 
@@ -28,21 +28,22 @@
 
         vm.localidades = dataservice.Localidades().query();
         vm.tipoPDV = dataservice.TipoPuntoVenta().query();
+        vm.punto = null;
 
         if ($routeParams.id !== undefined) {
             var id = parseInt($routeParams.id);
-            vm.punto = dataservice.PuntoVenta().show(id);
+            vm.punto = dataservice.PuntosVenta().show({id: id});
             vm.title = "Editar Punto de Venta";
         } else {
             vm.title = "Nuevo Punto de Venta";
         }
 
-
         vm.save = function () {
+            console.log(vm.punto);
             if (vm.punto.puntoId === undefined) {
                 dataservice.PuntosVenta().create(vm.punto);
             } else {
-                dataservice.PuntoVenta().update(vm.punto);
+                dataservice.PuntosVenta().update({id: vm.punto.puntoId}, vm.punto);
             }
             $location.path('/punto_venta');
         };

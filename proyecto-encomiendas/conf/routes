@@ -10,16 +10,19 @@ GET     /assets/*file                       controllers.Assets.at(path="/public"
 
 # Punto de ventas
 
-
 POST    /admin/puntos-de-venta              controllers.PuntoDeVentaController.agregarPunto()
+
+GET     /admin/puntos-de-venta/:id          controllers.PuntoDeVentaController.getPunto(id: Long)
 
 GET     /admin/puntos-de-venta              controllers.PuntoDeVentaController.listarPuntos()
 
-PUT     /admin/puntos-de-venta              controllers.PuntoDeVentaController.modificarPunto()
+PUT     /admin/puntos-de-venta/:id          controllers.PuntoDeVentaController.modificarPunto(id: Long)
+
+DELETE /admin/puntos-de-venta/:id           controllers.PuntoDeVentaController.eliminarPunto(id: Long)
+
+##############################
 
 GET     /admin/tipo-puntos-de-venta         controllers.PuntoDeVentaController.listarTipoPdv()
-
-GET     /admin/puntos-de-venta/:id          controllers.PuntoDeVentaController.getPunto(id: Long)
 
 GET     /admin/localidad                    controllers.PuntoDeVentaController.listarLocalidades()
 
