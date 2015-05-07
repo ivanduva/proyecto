@@ -10,26 +10,26 @@
     function routeConfiguration($routeProvider) {
         $routeProvider.
             when('/dashboard', {
-                templateUrl: 'assets/Front/app/dashboard/dashboard.html'
+                templateUrl: 'assets/front/app/dashboard/dashboard.html'
 
             }).
             when('/punto_venta', {
-                templateUrl: 'assets/Front/app/punto_venta/punto_venta.html',
+                templateUrl: 'assets/front/app/punto_venta/punto_venta.html',
                 controller:"PuntoVentaListController",
                 controllerAs: "vm"
             }).
 
             when('/punto_venta/:id/edit', {
-                templateUrl: 'assets/Front/app/punto_venta/punto_venta_add.html',
+                templateUrl: 'assets/front/app/punto_venta/punto_venta_add.html',
                 controller: "PuntoVentaCreateController",
                 controllerAs: "vm"
             }).
             when('/punto_venta/new', {
-                templateUrl: 'assets/Front/app/punto_venta/punto_venta_add.html',
+                templateUrl: 'assets/front/app/punto_venta/punto_venta_add.html',
                 controller: "PuntoVentaCreateController",
                 controllerAs: "vm"
                 }).
-            otherwise({ redirectTo: '/puntos_venta'});
+            otherwise({ redirectTo: '/dashboard'});
     }
 
     function httpProviderConfiguration($httpProvider) {

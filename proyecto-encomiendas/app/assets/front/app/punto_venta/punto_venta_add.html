@@ -2,6 +2,7 @@
   <div class="row">
    <div class="col-md-6 col-md-offset-3">
       <span class="title-with-button">{{ puntoCtrl.title }}</span>
+     {{ puntoCtrl.punto }}
       <form name="addPDV" class="form-horizontal" action="" ng-submit="addPDV.$valid && puntoCtrl.save()" novalidate>
 
         <input type="text" class="hidden" ng-model="puntoCtrl.punto.puntoId"/>
@@ -23,7 +24,7 @@
         <div class="form-group">
           <label for="localidad" class="col-sm-2 control-label">Localidad</label>
           <div class="col-sm-10">
-            <select type="text" class="form-control" id="localidad" ng-model="puntoCtrl.punto.localidad" ng-options="loc as loc.nombre for loc in puntoCtrl.localidades" required></select>
+            <select type="text" class="form-control" id="localidad" ng-model="puntoCtrl.punto.localidad" ng-options="localidad as localidad.nombre for localidad in puntoCtrl.localidades" required></select>
           </div>
         </div>
 

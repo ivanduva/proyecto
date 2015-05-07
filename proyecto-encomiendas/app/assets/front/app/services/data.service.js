@@ -10,21 +10,15 @@
     function dataservice($resource) {
         return {
             PuntosVenta: puntosVenta,
-            PuntoVenta: puntoVenta,
             TipoPuntoVenta: tipoPuntoVenta,
             Localidades: localidades
         };
 
         function puntosVenta() {
-            return $resource('http://localhost:9000/admin/puntos-de-venta', {}, {
-                query: {method: 'GET', isArray: true},
-                create: {method: 'POST'}
-            });
-        }
-
-        function puntoVenta() {
             return $resource('http://localhost:9000/admin/puntos-de-venta/:id', {}, {
-                show: {method: 'GET'},
+                query: {method: 'GET', isArray: true},
+                create: {method: 'POST'},
+                show: {method: 'GET', params: {id: '@id'}},
                 update: {method: 'PUT', params: {id: '@id'}},
                 delete: {method: 'DELETE', params: {id: '@id'}}
             });
