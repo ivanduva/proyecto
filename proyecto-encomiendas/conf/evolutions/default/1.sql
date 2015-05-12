@@ -5,7 +5,7 @@
 
 create table encomienda (
   id_encomienda             bigint not null,
-  viaje_encomienda_id_servicio bigint not null,
+  venta_id_venta            bigint not null,
   destinatario              varchar(255),
   direccion_destino         varchar(255),
   fecha_entrega             timestamp,
@@ -17,10 +17,10 @@ create table encomienda (
 
 create table estado_encomienda (
   id_estado_encomienda      bigint not null,
-  encomienda_id_encomienda  bigint not null,
   nombre                    varchar(11),
   fecha                     timestamp,
   punto_de_venta_id_punto_de_venta bigint,
+  encomienda_id_encomienda  bigint,
   constraint ck_estado_encomienda_nombre check (nombre in ('EN_CAMINO','EN_SUCURSAL','ENTREGADA','RETRASADA')),
   constraint pk_estado_encomienda primary key (id_estado_encomienda))
 ;
@@ -48,7 +48,7 @@ create table localidad (
 ;
 
 create table persona (
-  dtype                     varchar(10) not null,
+  tipo                      varchar(31) not null,
   id_persona                bigint not null,
   email                     varchar(255),
   fecha_nacimiento          timestamp,
@@ -56,8 +56,12 @@ create table persona (
   nombre                    varchar(255),
   telefono                  varchar(255),
   usuario_id_usuario        bigint,
+  cuit                      varchar(255),
+  dni                       bigint,
+  horario                   varchar(255),
+  cesado                    boolean,
   categoria                 varchar(255),
-  puede_reservar            boolean,
+  puede_reservar            varchar(255),
   puntos_viajero            integer,
   constraint pk_persona primary key (id_persona))
 ;
@@ -152,16 +156,16 @@ create sequence usuario_seq;
 
 create sequence venta_seq;
 
-alter table encomienda add constraint fk_encomienda_servicio_1 foreign key (viaje_encomienda_id_servicio) references servicio (id_servicio);
-create index ix_encomienda_servicio_1 on encomienda (viaje_encomienda_id_servicio);
+alter table encomienda add constraint fk_encomienda_venta_1 foreign key (venta_id_venta) references venta (id_venta);
+create index ix_encomienda_venta_1 on encomienda (venta_id_venta);
 alter table encomienda add constraint fk_encomienda_remitente_2 foreign key (remitente_id_persona) references persona (id_persona);
 create index ix_encomienda_remitente_2 on encomienda (remitente_id_persona);
 alter table encomienda add constraint fk_encomienda_localidad_3 foreign key (localidad_id_localidad) references localidad (id_localidad);
 create index ix_encomienda_localidad_3 on encomienda (localidad_id_localidad);
-alter table estado_encomienda add constraint fk_estado_encomienda_encomiend_4 foreign key (encomienda_id_encomienda) references encomienda (id_encomienda);
-create index ix_estado_encomienda_encomiend_4 on estado_encomienda (encomienda_id_encomienda);
-alter table estado_encomienda add constraint fk_estado_encomienda_puntoDeVe_5 foreign key (punto_de_venta_id_punto_de_venta) references punto_de_venta (id_punto_de_venta);
-create index ix_estado_encomienda_puntoDeVe_5 on estado_encomienda (punto_de_venta_id_punto_de_venta);
+alter table estado_encomienda add constraint fk_estado_encomienda_puntoDeVe_4 foreign key (punto_de_venta_id_punto_de_venta) references punto_de_venta (id_punto_de_venta);
+create index ix_estado_encomienda_puntoDeVe_4 on estado_encomienda (punto_de_venta_id_punto_de_venta);
+alter table estado_encomienda add constraint fk_estado_encomienda_encomiend_5 foreign key (encomienda_id_encomienda) references encomienda (id_encomienda);
+create index ix_estado_encomienda_encomiend_5 on estado_encomienda (encomienda_id_encomienda);
 alter table localidad add constraint fk_localidad_ubicacion_6 foreign key (ubicacion_id_lat_long) references lat_long (id_lat_long);
 create index ix_localidad_ubicacion_6 on localidad (ubicacion_id_lat_long);
 alter table persona add constraint fk_persona_localidad_7 foreign key (localidad_id_localidad) references localidad (id_localidad);

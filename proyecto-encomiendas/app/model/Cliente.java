@@ -9,7 +9,7 @@ import java.util.List;
  */
 @Entity
 //@Table (name = "cliente")
-//@DiscriminatorValue(value = "C")
+@DiscriminatorValue(value = "C")
 //@PrimaryKeyJoinColumn (name = "id_cliente", referencedColumnName = "id_persona")
 public class Cliente extends Persona {
 
@@ -17,7 +17,7 @@ public class Cliente extends Persona {
     private String categoria;
 
     @Column (name = "puede_reservar")
-    private boolean puedeReservar;
+    private String puedeReservar;
 
     @Column (name = "puntos_viajero")
     private int puntosViajero;
@@ -25,7 +25,8 @@ public class Cliente extends Persona {
     @OneToMany (cascade = CascadeType.ALL)
     private List<Venta> compras;
 
-    public Cliente(Long personaId, String email, Date fechaNacimiento, Localidad localidad, String nombre, String telefono, String categoria, boolean puedeReservar, int puntosViajero, List<Venta> compras) {
+    public Cliente(Long personaId, String email, Date fechaNacimiento, Localidad localidad, String nombre,
+                   String telefono, String categoria, String puedeReservar, int puntosViajero, List<Venta> compras) {
         super(personaId, email, fechaNacimiento, localidad, nombre, telefono);
         this.categoria = categoria;
         this.puedeReservar = puedeReservar;
@@ -38,7 +39,11 @@ public class Cliente extends Persona {
     }
 
     public boolean isPuedeReservar() {
-        return puedeReservar;
+        if (puedeReservar == "SI") {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public int getPuntosViajero() {
@@ -57,9 +62,11 @@ public class Cliente extends Persona {
         this.puntosViajero = puntosViajero;
     }
 
-    public void setPuedeReservar(boolean puedeReservar) {
+    public void setPuedeReservar(String puedeReservar) {
         this.puedeReservar = puedeReservar;
     }
+
+    public String getPuedeReservar() { return puedeReservar; }
 
     public void setCompras(List<Venta> compras) {
         this.compras = compras;

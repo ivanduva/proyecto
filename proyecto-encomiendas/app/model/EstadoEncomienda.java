@@ -27,9 +27,14 @@ public class EstadoEncomienda extends Model{
     @OneToOne(cascade = CascadeType.ALL)
     private PuntoDeVenta puntoDeVenta;
 
-    public EstadoEncomienda(Long estadoEncomiendaId, NombreEstadoEncomienda nombre, Date fecha, PuntoDeVenta puntoDeVenta) {
-        EstadoEncomiendaId = estadoEncomiendaId;
-        this.nombre = nombre;
+    @ManyToOne
+    private Encomienda encomienda;
+
+    public EstadoEncomienda (Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public EstadoEncomienda(Date fecha, PuntoDeVenta puntoDeVenta) {
         this.fecha = fecha;
         this.puntoDeVenta = puntoDeVenta;
     }
@@ -62,6 +67,8 @@ public class EstadoEncomienda extends Model{
         this.nombre = NombreEstadoEncomienda.RETRASADA;
     }
 
+    public void setNombre(String s) { this.nombre = NombreEstadoEncomienda.valueOf(s);}
+
     public Date getFecha() {
         return fecha;
     }
@@ -76,5 +83,13 @@ public class EstadoEncomienda extends Model{
 
     public void setPuntoDeVenta(PuntoDeVenta puntoDeVenta) {
         this.puntoDeVenta = puntoDeVenta;
+    }
+
+    public Encomienda getEncomienda() {
+        return encomienda;
+    }
+
+    public void setEncomienda(Encomienda encomienda) {
+        this.encomienda = encomienda;
     }
 }

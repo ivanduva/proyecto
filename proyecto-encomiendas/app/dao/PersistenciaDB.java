@@ -56,4 +56,9 @@ public class PersistenciaDB<T, K> implements Persistencia<T, K> {
         return null;
     }
 
+    @Override
+    public List<T> listSome(String s1, String s2) {
+        return null;
+    }
+
 }

@@ -1,11 +1,8 @@
 package repository;
 
-import dao.Persistencia;
 import dao.PersistenciaDB;
 import dao.PersistenciaDBPuntoDeVenta;
 import model.PuntoDeVenta;
-
-import java.util.List;
 
 /**
  * Created by Ivan on 06/04/2015.
@@ -17,4 +14,5 @@ public class PuntoDeVentaRepositorio extends Repositorio<PuntoDeVenta, Long> {
     public PuntoDeVentaRepositorio(PersistenciaDBPuntoDeVenta dao) {
         super(dao);
     }
+
 }

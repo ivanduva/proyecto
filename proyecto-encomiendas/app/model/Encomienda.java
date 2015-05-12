@@ -114,4 +114,6 @@ public class Encomienda {
     public void setTarifa(BigDecimal tarifa) {
         this.tarifa = tarifa;
     }
+
+    public void agregarEstado(EstadoEncomienda estado) { this.estados.add(estado); }
 }

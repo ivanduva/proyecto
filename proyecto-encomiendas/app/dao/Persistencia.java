@@ -14,4 +14,5 @@ public interface Persistencia<T, K> {
     public T findByName(String s);
     public int findRowCount();
     public T findByAuthToken(String s);
+    public List<T> listSome(String s1, String s2);
 }

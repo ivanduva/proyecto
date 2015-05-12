@@ -1,5 +1,7 @@
 package model;
 
+import play.db.ebean.Model;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,9 +10,9 @@ import java.util.Date;
  */
 @Entity
 @Table (name = "persona")
-@Inheritance(strategy=InheritanceType.JOINED)
-//@DiscriminatorColumn (name = "tipo", discriminatorType = DiscriminatorType.STRING)
-public class Persona {
+@Inheritance
+@DiscriminatorColumn (name = "tipo", discriminatorType = DiscriminatorType.STRING)
+public abstract class Persona extends Model {
 
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
@@ -100,5 +102,13 @@ public class Persona {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

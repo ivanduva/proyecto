@@ -39,6 +39,8 @@ public abstract class Repositorio<T, K> {
         return dao.listAll();
     }
 
+    public List<T> listarAlgunos(String s1, String s2) { return dao.listSome(s1, s2); }
+
     public void modificar(T t) {
         dao.update(t);
     }

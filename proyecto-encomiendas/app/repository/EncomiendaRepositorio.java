@@ -1,6 +1,7 @@
 package repository;
 
-import dao.Persistencia;
+import dao.PersistenciaDB;
+import dao.PersistenciaDBEncomienda;
 import model.Encomienda;
 
 /**
@@ -8,7 +9,9 @@ import model.Encomienda;
  */
 public class EncomiendaRepositorio extends Repositorio<Encomienda, Long> {
 
-    public EncomiendaRepositorio(Persistencia dao) {
+    PersistenciaDB<Encomienda, Long> dao;
+
+    public EncomiendaRepositorio(PersistenciaDBEncomienda dao) {
         super(dao);
     }
 
