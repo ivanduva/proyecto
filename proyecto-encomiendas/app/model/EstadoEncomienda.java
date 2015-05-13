@@ -24,7 +24,7 @@ public class EstadoEncomienda extends Model{
     @Column(name = "fecha")
     private Date fecha;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private PuntoDeVenta puntoDeVenta;
 
     @ManyToOne

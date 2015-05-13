@@ -8,7 +8,7 @@ GET     /                                   controllers.Application.index()
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                       controllers.Assets.at(path="/public", file)
 
-# Punto de ventas
+# Puntos de venta
 
 POST    /admin/puntos-de-venta              controllers.PuntoDeVentaController.agregarPunto()
 
@@ -28,4 +28,47 @@ GET     /admin/localidad                    controllers.PuntoDeVentaController.l
 
 POST    /login/:usuario/:pass               controllers.SecurityController.login(usuario: String, pass: String)
 
-POST    /logout                             controllers.SecurityController.logout()
+POST    /logout                             controllers.SecurityController.logout
+
+##############################
+
+# Personas
+
+POST    /admin/clientes                     controllers.PersonaController.crearCliente()
+
+POST    /admin/empleados                    controllers.PersonaController.crearEmpleado()
+
+# Para cuando el cliente se registra por su cuenta
+POST    /clientes                           controllers.PersonaController.crearCliente()
+
+GET     /admin/personas/:id                 controllers.PersonaController.getPersona(id: Long)
+
+GET     /admin/clientes                     controllers.PersonaController.listarClientes()
+
+GET     /admin/empleados                    controllers.PersonaController.listarEmpleados()
+
+PUT     /admin/personas/:id                 controllers.PersonaController.modificarPersona(id: Long)
+
+PUT     /clientes/:id                       controllers.PersonaController.modificarPersona(id: Long)
+
+PUT     /admin/empleados/:id                controllers.PersonaController.cesarEmpleado(id: Long)
+
+DELETE  /admin/personas/:id                 controllers.PersonaController.eliminarPersona(id: Long)
+
+# Encomiendas
+
+POST    /ventas/encomiendas/:punto          controllers.EncomiendaController.registrarEncomienda(punto: Long)
+
+GET     /ventas/encomiendas/:id             controllers.EncomiendaController.getEncomienda(id: Long)
+
+GET     /ventas/nombre-estados-encomienda   controllers.EncomiendaController.listarEstados()
+
+GET     /ventas/encomiendas/estados/:id     controllers.EncomiendaController.listarHistoricoEstados(id: Long)
+
+PUT     /ventas/encomiendas/despachar/:id   controllers.EncomiendaController.despacharEncomienda(id: Long)
+
+PUT     /ventas/encomiendas/recibir/:id/:punto     controllers.EncomiendaController.recibirEncomienda(id: Long, punto: Long)
+
+PUT     /ventas/encomiendas/entregar/:id    controllers.EncomiendaController.entregarEncomienda(id: Long)
+
+

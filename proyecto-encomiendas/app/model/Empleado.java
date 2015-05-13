@@ -26,7 +26,7 @@ public class Empleado extends Persona {
 
 
     public Empleado(String email, Date fechaNacimiento, Localidad localidad, String nombre, String telefono,
-                    String cuit, Long dni, String horario, boolean cesado) {
+                    String cuit, Long dni, String horario) {
         super(email, fechaNacimiento, localidad, nombre, telefono);
         this.cuit = cuit;
         this.dni = dni;

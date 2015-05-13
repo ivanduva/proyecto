@@ -30,8 +30,8 @@ public abstract class Repositorio<T, K> {
         return dao.findRowCount();
     }
 
-    public void eliminar(K k) {
-        T t = (T) dao.get(k);
+    public void eliminar(T t) {
+       // T t = (T) dao.get(k);
         dao.delete(t);
     }
 

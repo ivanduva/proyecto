@@ -23,7 +23,7 @@ public class Venta {
     @Column (name = "valor_final")
     private BigDecimal valorFinal;
 
-    @OneToMany (cascade = CascadeType.ALL)
+    //@OneToMany (cascade = CascadeType.ALL)
     private List<Encomienda> encomiendas;
 
     @ManyToOne

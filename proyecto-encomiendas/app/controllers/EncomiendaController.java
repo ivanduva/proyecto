@@ -30,11 +30,11 @@ public class EncomiendaController extends Controller {
     static EstadoEncomiendaRepositorio repositorioEstado = new EstadoEncomiendaRepositorio(new PersistenciaDBEstadoEncomienda());
     static PuntoDeVentaRepositorio repositorioPunto = new PuntoDeVentaRepositorio(new PersistenciaDBPuntoDeVenta());
 
-    public static Result registrarEncomienda (String punto) {
+    public static Result registrarEncomienda (Long punto) {
 
         JsonNode json = request().body().asJson();
         Encomienda encomienda = Json.fromJson(json, Encomienda.class);
-        PuntoDeVenta puntoDeVenta = repositorioPunto.buscarPorNombre(punto);
+        PuntoDeVenta puntoDeVenta = repositorioPunto.buscarPorId(punto);
         EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date(), puntoDeVenta);
         estadoEncomienda.setNombreEnSucursal();
         estadoEncomienda.setEncomienda(encomienda);
@@ -68,13 +68,13 @@ public class EncomiendaController extends Controller {
         return ok();
     }
 
-    public static Result recibirEncomienda (Long id, String punto) {
+    public static Result recibirEncomienda (Long id, Long punto) {
 
         Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
         EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date());
         estadoEncomienda.setNombreEnSucursal();
         estadoEncomienda.setEncomienda(encomienda);
-        PuntoDeVenta puntoDeVenta = repositorioPunto.buscarPorNombre(punto);
+        PuntoDeVenta puntoDeVenta = repositorioPunto.buscarPorId(punto);
         estadoEncomienda.setPuntoDeVenta(puntoDeVenta);
 
         repositorioEstado.crear(estadoEncomienda);
@@ -100,7 +100,8 @@ public class EncomiendaController extends Controller {
 
     public static Result eliminarEncomienda (Long id) {
 
-        repositorioEncomienda.eliminar(id);
+        Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
+        repositorioEncomienda.eliminar(encomienda);
         return ok();
     }
 

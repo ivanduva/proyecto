@@ -65,7 +65,8 @@ public class PuntoDeVentaController extends Controller {
 
     public static Result eliminarPunto(Long id) {
         Logger.info("ELIMINAAAAAAAAAAAAAAAAAAAR");
-        repositorioPdv.eliminar(id);
+        PuntoDeVenta punto = repositorioPdv.buscarPorId(id);
+        repositorioPdv.eliminar(punto);
         return ok();
     }
 

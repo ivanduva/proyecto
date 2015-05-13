@@ -15,6 +15,7 @@ import repository.PersonaRepositorio;
 import repository.SecurityRoleRepositorio;
 import repository.UsuarioRepositorio;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -93,14 +94,22 @@ public class PersonaController extends Controller {
     public static Result listarEmpleados() {
 
         //Ya se qué esto no es lo mejor, pero es una solución por ahora
-        List<Persona> empleados = repositorioPersona.listarAlgunos("cesado", "false");
-        return ok(toJson(empleados));
+        List<Persona> empleados = repositorioPersona.listarAlgunos("tipo", "E");
+        List empleadosNoCesados = new ArrayList<Persona>();
+        for (int i = 0; i< empleados.size(); i++) {
+            Empleado empleado = (Empleado) empleados.get(i);
+            if (!( empleado.isCesado())){
+                empleadosNoCesados.add(empleado);
+            }
+        }
+        return ok(toJson(empleadosNoCesados));
     }
 
     public static Result eliminarPersona(Long id) {
 
-        repositorioPersona.eliminar(id);
-        return ok();
+        Persona persona = repositorioPersona.buscarPorId(id);
+        repositorioPersona.eliminar(persona);
+        return ok(toJson(persona));
     }
 
     public static Result cesarEmpleado(Long id) {
@@ -109,7 +118,7 @@ public class PersonaController extends Controller {
         empleado.setCesadoTrue();
         repositorioPersona.modificar(empleado);
 
-        return ok();
+        return ok(toJson(empleado));
     }
 
 }

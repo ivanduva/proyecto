@@ -1,17 +1,8 @@
-import dao.PersistenciaDBLocalidad;
-import dao.PersistenciaDBSecurityRole;
-import dao.PersistenciaDBUserPermission;
-import dao.PersistenciaDBUsuario;
-import model.Localidad;
-import model.SecurityRole;
-import model.UserPermission;
-import model.Usuario;
+import dao.*;
+import model.*;
 import play.Application;
 import play.GlobalSettings;
-import repository.LocalidadRepositorio;
-import repository.SecurityRoleRepositorio;
-import repository.UserPermissionRepositorio;
-import repository.UsuarioRepositorio;
+import repository.*;
 import security.TipoPermiso;
 import security.TipoUsuario;
 
@@ -30,6 +21,8 @@ public class Global extends GlobalSettings {
         SecurityRoleRepositorio repositorioRol = new SecurityRoleRepositorio(new PersistenciaDBSecurityRole());
         UserPermissionRepositorio repositorioPermiso = new UserPermissionRepositorio(new PersistenciaDBUserPermission());
         LocalidadRepositorio repositorioLocalidad = new LocalidadRepositorio(new PersistenciaDBLocalidad());
+        PersonaRepositorio repositorioPersona = new PersonaRepositorio(new PersistenciaDBPersona());
+
 
         //Agrega a la base los roles (si no existen en la base)
         if (repositorioRol.conteoDeColumnas() == 0){
@@ -57,6 +50,9 @@ public class Global extends GlobalSettings {
         if (repositorioLocalidad.conteoDeColumnas() == 0){
             Localidad localidad = new Localidad("La Plata", (long) 1900);
             repositorioLocalidad.crear(localidad);
+            //Empleado empleado = new Empleado("email@email.com", new Date(), localidad, "roberto", "3252353", "34634634", (long) 46, "325nh");
+            //repositorioPersona.crear(empleado);
+
         }
 
         //Crea un usuario admin
@@ -69,6 +65,7 @@ public class Global extends GlobalSettings {
         //    admin.agregarPermiso(repositorioPermiso.buscarPorNombre("PERMISO_2"));
             repositorioUsuario.crear(admin);
         }
+
 
         super.onStart(application);
 

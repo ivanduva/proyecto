@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 public class ViajeEncomienda extends Servicio {
 
-    @OneToMany (cascade = CascadeType.ALL)
+    //@OneToMany (cascade = CascadeType.ALL)
     private List<Encomienda> encomiendas;
 
     public ViajeEncomienda(Long servicioId, String descripcion, String nombre, boolean habilitado, List<FranjaHoraria> franjasHorarias, List<Encomienda> encomiendas) {
