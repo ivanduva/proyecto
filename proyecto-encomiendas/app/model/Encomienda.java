@@ -1,7 +1,6 @@
 package model;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -37,10 +36,10 @@ public class Encomienda {
     private Localidad localidad;
 
     @Column (name = "tarifa")
-    private BigDecimal tarifa;
+    private Long tarifa;
 
     public Encomienda(Long encomiendaId, String destinatario, String direccionDestino, Date fechaEntrega,
-                      List<EstadoEncomienda> estados, Cliente remitente, Localidad localidad, BigDecimal tarifa) {
+                      List<EstadoEncomienda> estados, Cliente remitente, Localidad localidad, Long tarifa) {
         this.encomiendaId = encomiendaId;
         this.destinatario = destinatario;
         this.direccionDestino = direccionDestino;
@@ -107,11 +106,11 @@ public class Encomienda {
         this.localidad = localidad;
     }
 
-    public BigDecimal getTarifa() {
+    public Long getTarifa() {
         return tarifa;
     }
 
-    public void setTarifa(BigDecimal tarifa) {
+    public void setTarifa(Long tarifa) {
         this.tarifa = tarifa;
     }
 

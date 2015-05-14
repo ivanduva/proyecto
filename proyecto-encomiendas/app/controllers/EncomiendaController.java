@@ -2,19 +2,18 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import dao.PersistenciaDBEncomienda;
-import dao.PersistenciaDBEstadoEncomienda;
+import dao.PersistenciaDBPersona;
 import dao.PersistenciaDBPuntoDeVenta;
-import model.Encomienda;
-import model.EstadoEncomienda;
-import model.NombreEstadoEncomienda;
-import model.PuntoDeVenta;
+import dao.PersistenciaDBVenta;
+import model.*;
 import play.Logger;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import repository.EncomiendaRepositorio;
-import repository.EstadoEncomiendaRepositorio;
+import repository.PersonaRepositorio;
 import repository.PuntoDeVentaRepositorio;
+import repository.VentaRepositorio;
 
 import java.util.Date;
 import java.util.List;
@@ -27,21 +26,46 @@ import static play.libs.Json.toJson;
 public class EncomiendaController extends Controller {
 
     static EncomiendaRepositorio repositorioEncomienda = new EncomiendaRepositorio(new PersistenciaDBEncomienda());
-    static EstadoEncomiendaRepositorio repositorioEstado = new EstadoEncomiendaRepositorio(new PersistenciaDBEstadoEncomienda());
     static PuntoDeVentaRepositorio repositorioPunto = new PuntoDeVentaRepositorio(new PersistenciaDBPuntoDeVenta());
+    static VentaRepositorio repositorioVenta = new VentaRepositorio(new PersistenciaDBVenta());
+    static PersonaRepositorio repositorioPersona = new PersonaRepositorio(new PersistenciaDBPersona());
+    static PuntoDeVentaRepositorio repositorioPdv = new PuntoDeVentaRepositorio(new PersistenciaDBPuntoDeVenta());
 
-    public static Result registrarEncomienda (Long punto) {
+    public static Result crearVenta(Long idCliente, Long idPdv) {
+
+        JsonNode json = request().body().asJson();
+        Venta venta = Json.fromJson(json, Venta.class);
+
+        if (idCliente != 0) {
+            Cliente cliente = (Cliente) repositorioPersona.buscarPorId(idCliente);
+            venta.setCliente(cliente);
+        }
+
+        PuntoDeVenta puntoDeVenta = repositorioPdv.buscarPorId(idPdv);
+        venta.setPuntoDeVenta(puntoDeVenta);
+
+        repositorioVenta.crear(venta);
+
+        return ok(toJson(venta));
+    }
+
+    public static Result registrarEncomienda (Long idVenta) {
 
         JsonNode json = request().body().asJson();
         Encomienda encomienda = Json.fromJson(json, Encomienda.class);
-        PuntoDeVenta puntoDeVenta = repositorioPunto.buscarPorId(punto);
-        EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date(), puntoDeVenta);
+        Venta venta = repositorioVenta.buscarPorId(idVenta);
+        EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date(), venta.getPuntoDeVenta());
         estadoEncomienda.setNombreEnSucursal();
-        estadoEncomienda.setEncomienda(encomienda);
         encomienda.agregarEstado(estadoEncomienda);
 
-        repositorioEstado.crear(estadoEncomienda);
-        repositorioEncomienda.crear(encomienda);
+        if (venta.getCliente() != null) {
+            encomienda.setRemitente(venta.getCliente());
+        }
+
+        venta.setFinalizadaFalse();
+
+        venta.agregarEncomienda(encomienda);
+        repositorioVenta.modificar(venta);
 
         return ok(toJson(encomienda));
     }
@@ -59,9 +83,7 @@ public class EncomiendaController extends Controller {
         Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
         EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date());
         estadoEncomienda.setNombreEnCamino();
-        estadoEncomienda.setEncomienda(encomienda);
 
-        repositorioEstado.crear(estadoEncomienda);
         encomienda.agregarEstado(estadoEncomienda);
         repositorioEncomienda.modificar(encomienda);
 
@@ -73,11 +95,9 @@ public class EncomiendaController extends Controller {
         Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
         EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date());
         estadoEncomienda.setNombreEnSucursal();
-        estadoEncomienda.setEncomienda(encomienda);
         PuntoDeVenta puntoDeVenta = repositorioPunto.buscarPorId(punto);
         estadoEncomienda.setPuntoDeVenta(puntoDeVenta);
 
-        repositorioEstado.crear(estadoEncomienda);
         encomienda.agregarEstado(estadoEncomienda);
         repositorioEncomienda.modificar(encomienda);
         return ok();
@@ -89,9 +109,8 @@ public class EncomiendaController extends Controller {
        Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
        EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date());
        estadoEncomienda.setNombreEntregada();
-       estadoEncomienda.setEncomienda(encomienda);
 
-       repositorioEstado.crear(estadoEncomienda);
+
        encomienda.agregarEstado(estadoEncomienda);
        repositorioEncomienda.modificar(encomienda);
 
@@ -116,6 +135,23 @@ public class EncomiendaController extends Controller {
         Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
         List<EstadoEncomienda> historico = encomienda.getEstados();
         return ok(toJson(historico));
+    }
+
+    public static Result finalizarVenta(Long id) {
+
+        Long monto = (long) 0;
+        Venta venta = repositorioVenta.buscarPorId(id);
+        venta.setFecha(new Date());
+
+        for (int i = 0; i<venta.getEncomiendas().size(); i++){
+            monto += venta.getEncomiendas().get(i).getTarifa();
+        }
+        venta.setValorFinal(monto);
+        venta.setFinalizadaTrue();
+
+        repositorioVenta.modificar(venta);
+
+        return ok(toJson(venta));
     }
 
 }

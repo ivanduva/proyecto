@@ -5,7 +5,6 @@ import play.db.ebean.Model;
 import play.libs.Json;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * Created by Ivan on 06/04/2015.
@@ -40,8 +39,8 @@ public class PuntoDeVenta extends Model {
     @OneToOne(cascade = CascadeType.ALL)
     private Usuario usuario;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Venta> ventas;
+    //@OneToMany(cascade = CascadeType.ALL)
+    //private List<Venta> ventas;
 
     @Column(name = "tipo_punto")
     @Enumerated(EnumType.STRING)
@@ -52,7 +51,7 @@ public class PuntoDeVenta extends Model {
     }
 
     public PuntoDeVenta(Long puntoId, String direccion, String email, Localidad localidad, String nombre,
-                        String nombreResponsable, String telefono, Usuario usuario, List<Venta> ventas,
+                        String nombreResponsable, String telefono, Usuario usuario,
                         TipoPunto tipo) {
         this.puntoId = puntoId;
         this.direccion = direccion;
@@ -62,12 +61,12 @@ public class PuntoDeVenta extends Model {
         this.nombreResponsable = nombreResponsable;
         this.telefono = telefono;
         this.usuario = usuario;
-        this.ventas = ventas;
+        //this.ventas = ventas;
         this.tipoPunto = tipo;
     }
 
     public PuntoDeVenta(String direccion, String email, Localidad localidad, String nombre, String nombreResponsable,
-                        String telefono, Usuario usuario, List<Venta> ventas, TipoPunto tipoPunto) {
+                        String telefono, Usuario usuario, TipoPunto tipoPunto) {
         this.direccion = direccion;
         this.email = email;
         this.localidad = localidad;
@@ -75,7 +74,7 @@ public class PuntoDeVenta extends Model {
         this.nombreResponsable = nombreResponsable;
         this.telefono = telefono;
         this.usuario = usuario;
-        this.ventas = ventas;
+       // this.ventas = ventas;
         this.tipoPunto = tipoPunto;
     }
 
@@ -149,13 +148,13 @@ public class PuntoDeVenta extends Model {
         this.usuario = usuario;
     }
 
-    public List<Venta> getVentas() {
-        return ventas;
-    }
+    //public List<Venta> getVentas() {
+    //    return ventas;
+    //}
 
-    public void setVentas(List<Venta> ventas) {
-        this.ventas = ventas;
-    }
+    //public void setVentas(List<Venta> ventas) {
+      //  this.ventas = ventas;
+    //}
 
     public TipoPunto getTipo() {
         return tipoPunto;

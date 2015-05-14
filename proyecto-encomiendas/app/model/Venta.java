@@ -1,7 +1,6 @@
 package model;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -21,16 +20,22 @@ public class Venta {
     private Date fecha;
 
     @Column (name = "valor_final")
-    private BigDecimal valorFinal;
+    private Long valorFinal;
 
-    //@OneToMany (cascade = CascadeType.ALL)
+    @Column (name = "finalizada")
+    private boolean finalizada;
+
+    @OneToMany (cascade = CascadeType.ALL)
     private List<Encomienda> encomiendas;
 
     @ManyToOne
     //@JoinColumn (table = "venta", name = "id_cliente")
     private Cliente cliente;
 
-    public Venta(Long ventaId, Date fecha, BigDecimal valorFinal, List<Encomienda> encomiendas, Cliente cliente) {
+    @ManyToOne
+    private PuntoDeVenta puntoDeVenta;
+
+    public Venta(Long ventaId, Date fecha, Long valorFinal, List<Encomienda> encomiendas, Cliente cliente) {
         this.ventaId = ventaId;
         this.fecha = fecha;
         this.valorFinal = valorFinal;
@@ -46,7 +51,7 @@ public class Venta {
         return fecha;
     }
 
-    public BigDecimal getValorFinal() {
+    public Long getValorFinal() {
         return valorFinal;
     }
 
@@ -62,7 +67,7 @@ public class Venta {
         this.fecha = fecha;
     }
 
-    public void setValorFinal(BigDecimal valorFinal) {
+    public void setValorFinal(Long valorFinal) {
         this.valorFinal = valorFinal;
     }
 
@@ -76,5 +81,29 @@ public class Venta {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public PuntoDeVenta getPuntoDeVenta() {
+        return puntoDeVenta;
+    }
+
+    public void setPuntoDeVenta(PuntoDeVenta puntoDeVenta) {
+        this.puntoDeVenta = puntoDeVenta;
+    }
+
+    public void agregarEncomienda(Encomienda encomienda) {
+        this.encomiendas.add(encomienda);
+    }
+
+    public boolean isFinalizada() {
+        return finalizada;
+    }
+
+    public void setFinalizadaTrue() {
+        this.finalizada = true;
+    }
+
+    public void setFinalizadaFalse() {
+        this.finalizada = false;
     }
 }

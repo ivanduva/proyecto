@@ -57,7 +57,11 @@ DELETE  /admin/personas/:id                 controllers.PersonaController.elimin
 
 # Encomiendas
 
-POST    /ventas/encomiendas/:punto          controllers.EncomiendaController.registrarEncomienda(punto: Long)
+POST    /ventas/:idCliente/:idPdv           controllers.EncomiendaController.crearVenta(idCliente: Long, idPdv: Long)
+
+PUT     /ventas/encomiendas/:idVenta        controllers.EncomiendaController.registrarEncomienda(idVenta: Long)
+
+PUT     /ventas/finalizar/:id               controllers.EncomiendaController.finalizarVenta(id: Long)
 
 GET     /ventas/encomiendas/:id             controllers.EncomiendaController.getEncomienda(id: Long)
 

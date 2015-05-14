@@ -5,21 +5,22 @@
 
 create table encomienda (
   id_encomienda             bigint not null,
+  venta_id_venta            bigint not null,
   destinatario              varchar(255),
   direccion_destino         varchar(255),
   fecha_entrega             timestamp,
   remitente_id_persona      bigint,
   localidad_id_localidad    bigint,
-  tarifa                    decimal(38),
+  tarifa                    bigint,
   constraint pk_encomienda primary key (id_encomienda))
 ;
 
 create table estado_encomienda (
   id_estado_encomienda      bigint not null,
+  encomienda_id_encomienda  bigint not null,
   nombre                    varchar(11),
   fecha                     timestamp,
   punto_de_venta_id_punto_de_venta bigint,
-  encomienda_id_encomienda  bigint,
   constraint ck_estado_encomienda_nombre check (nombre in ('EN_CAMINO','EN_SUCURSAL','ENTREGADA','RETRASADA')),
   constraint pk_estado_encomienda primary key (id_estado_encomienda))
 ;
@@ -112,10 +113,11 @@ create table usuario (
 
 create table venta (
   id_venta                  bigint not null,
-  punto_de_venta_id_punto_de_venta bigint not null,
   fecha                     timestamp,
-  valor_final               decimal(38),
+  valor_final               bigint,
+  finalizada                boolean,
   cliente_id_persona        bigint,
+  punto_de_venta_id_punto_de_venta bigint,
   constraint pk_venta primary key (id_venta))
 ;
 
@@ -155,28 +157,30 @@ create sequence usuario_seq;
 
 create sequence venta_seq;
 
-alter table encomienda add constraint fk_encomienda_remitente_1 foreign key (remitente_id_persona) references persona (id_persona);
-create index ix_encomienda_remitente_1 on encomienda (remitente_id_persona);
-alter table encomienda add constraint fk_encomienda_localidad_2 foreign key (localidad_id_localidad) references localidad (id_localidad);
-create index ix_encomienda_localidad_2 on encomienda (localidad_id_localidad);
-alter table estado_encomienda add constraint fk_estado_encomienda_puntoDeVe_3 foreign key (punto_de_venta_id_punto_de_venta) references punto_de_venta (id_punto_de_venta);
-create index ix_estado_encomienda_puntoDeVe_3 on estado_encomienda (punto_de_venta_id_punto_de_venta);
+alter table encomienda add constraint fk_encomienda_venta_1 foreign key (venta_id_venta) references venta (id_venta);
+create index ix_encomienda_venta_1 on encomienda (venta_id_venta);
+alter table encomienda add constraint fk_encomienda_remitente_2 foreign key (remitente_id_persona) references persona (id_persona);
+create index ix_encomienda_remitente_2 on encomienda (remitente_id_persona);
+alter table encomienda add constraint fk_encomienda_localidad_3 foreign key (localidad_id_localidad) references localidad (id_localidad);
+create index ix_encomienda_localidad_3 on encomienda (localidad_id_localidad);
 alter table estado_encomienda add constraint fk_estado_encomienda_encomiend_4 foreign key (encomienda_id_encomienda) references encomienda (id_encomienda);
 create index ix_estado_encomienda_encomiend_4 on estado_encomienda (encomienda_id_encomienda);
-alter table localidad add constraint fk_localidad_ubicacion_5 foreign key (ubicacion_id_lat_long) references lat_long (id_lat_long);
-create index ix_localidad_ubicacion_5 on localidad (ubicacion_id_lat_long);
-alter table persona add constraint fk_persona_localidad_6 foreign key (localidad_id_localidad) references localidad (id_localidad);
-create index ix_persona_localidad_6 on persona (localidad_id_localidad);
-alter table persona add constraint fk_persona_usuario_7 foreign key (usuario_id_usuario) references usuario (id_usuario);
-create index ix_persona_usuario_7 on persona (usuario_id_usuario);
-alter table punto_de_venta add constraint fk_punto_de_venta_localidad_8 foreign key (localidad_id_localidad) references localidad (id_localidad);
-create index ix_punto_de_venta_localidad_8 on punto_de_venta (localidad_id_localidad);
-alter table punto_de_venta add constraint fk_punto_de_venta_usuario_9 foreign key (usuario_id_usuario) references usuario (id_usuario);
-create index ix_punto_de_venta_usuario_9 on punto_de_venta (usuario_id_usuario);
-alter table venta add constraint fk_venta_punto_de_venta_10 foreign key (punto_de_venta_id_punto_de_venta) references punto_de_venta (id_punto_de_venta);
-create index ix_venta_punto_de_venta_10 on venta (punto_de_venta_id_punto_de_venta);
+alter table estado_encomienda add constraint fk_estado_encomienda_puntoDeVe_5 foreign key (punto_de_venta_id_punto_de_venta) references punto_de_venta (id_punto_de_venta);
+create index ix_estado_encomienda_puntoDeVe_5 on estado_encomienda (punto_de_venta_id_punto_de_venta);
+alter table localidad add constraint fk_localidad_ubicacion_6 foreign key (ubicacion_id_lat_long) references lat_long (id_lat_long);
+create index ix_localidad_ubicacion_6 on localidad (ubicacion_id_lat_long);
+alter table persona add constraint fk_persona_localidad_7 foreign key (localidad_id_localidad) references localidad (id_localidad);
+create index ix_persona_localidad_7 on persona (localidad_id_localidad);
+alter table persona add constraint fk_persona_usuario_8 foreign key (usuario_id_usuario) references usuario (id_usuario);
+create index ix_persona_usuario_8 on persona (usuario_id_usuario);
+alter table punto_de_venta add constraint fk_punto_de_venta_localidad_9 foreign key (localidad_id_localidad) references localidad (id_localidad);
+create index ix_punto_de_venta_localidad_9 on punto_de_venta (localidad_id_localidad);
+alter table punto_de_venta add constraint fk_punto_de_venta_usuario_10 foreign key (usuario_id_usuario) references usuario (id_usuario);
+create index ix_punto_de_venta_usuario_10 on punto_de_venta (usuario_id_usuario);
 alter table venta add constraint fk_venta_cliente_11 foreign key (cliente_id_persona) references persona (id_persona);
 create index ix_venta_cliente_11 on venta (cliente_id_persona);
+alter table venta add constraint fk_venta_puntoDeVenta_12 foreign key (punto_de_venta_id_punto_de_venta) references punto_de_venta (id_punto_de_venta);
+create index ix_venta_puntoDeVenta_12 on venta (punto_de_venta_id_punto_de_venta);
 
 
 

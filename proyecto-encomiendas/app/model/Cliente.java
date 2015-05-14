@@ -1,8 +1,9 @@
 package model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Ivan on 16/02/2015.
@@ -22,16 +23,16 @@ public class Cliente extends Persona {
     @Column (name = "puntos_viajero")
     private int puntosViajero;
 
-    @OneToMany (cascade = CascadeType.ALL)
-    private List<Venta> compras;
+   // @OneToMany (cascade = CascadeType.ALL)
+    //private List<Venta> compras;
 
     public Cliente(Long personaId, String email, Date fechaNacimiento, Localidad localidad, String nombre,
-                   String telefono, String categoria, String puedeReservar, int puntosViajero, List<Venta> compras) {
+                   String telefono, String categoria, String puedeReservar, int puntosViajero) {
         super(personaId, email, fechaNacimiento, localidad, nombre, telefono);
         this.categoria = categoria;
         this.puedeReservar = puedeReservar;
         this.puntosViajero = puntosViajero;
-        this.compras = compras;
+//        this.compras = compras;
     }
 
     public String getCategoria() {
@@ -50,9 +51,9 @@ public class Cliente extends Persona {
         return puntosViajero;
     }
 
-    public List<Venta> getCompras() {
-        return compras;
-    }
+    //public List<Venta> getCompras() {
+      //  return compras;
+    //}
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
@@ -68,7 +69,7 @@ public class Cliente extends Persona {
 
     public String getPuedeReservar() { return puedeReservar; }
 
-    public void setCompras(List<Venta> compras) {
-        this.compras = compras;
-    }
+   // public void setCompras(List<Venta> compras) {
+     //   this.compras = compras;
+    //}
 }

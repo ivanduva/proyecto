@@ -96,7 +96,7 @@ public class PersonaController extends Controller {
         //Ya se qué esto no es lo mejor, pero es una solución por ahora
         List<Persona> empleados = repositorioPersona.listarAlgunos("tipo", "E");
         List empleadosNoCesados = new ArrayList<Persona>();
-        for (int i = 0; i< empleados.size(); i++) {
+        for (int i = 0; i<= empleados.size(); i++) {
             Empleado empleado = (Empleado) empleados.get(i);
             if (!( empleado.isCesado())){
                 empleadosNoCesados.add(empleado);

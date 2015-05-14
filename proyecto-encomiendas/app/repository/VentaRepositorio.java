@@ -1,6 +1,7 @@
 package repository;
 
-import dao.Persistencia;
+import dao.PersistenciaDB;
+import dao.PersistenciaDBVenta;
 import model.Venta;
 
 /**
@@ -8,7 +9,9 @@ import model.Venta;
  */
 public class VentaRepositorio extends Repositorio<Venta, Long> {
 
-    public VentaRepositorio(Persistencia<Venta, Long> dao) {
+    PersistenciaDB<Venta, Long> dao;
+
+    public VentaRepositorio(PersistenciaDBVenta dao) {
         super(dao);
     }
 }
