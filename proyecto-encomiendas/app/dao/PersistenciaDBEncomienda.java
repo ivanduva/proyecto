@@ -7,7 +7,9 @@ import model.Encomienda;
  */
 public class PersistenciaDBEncomienda extends PersistenciaDB<Encomienda, Long> {
 
+
     public PersistenciaDBEncomienda() {
         super(Encomienda.class);
     }
+
 }

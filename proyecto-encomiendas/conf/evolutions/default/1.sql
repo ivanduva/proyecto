@@ -27,6 +27,7 @@ create table estado_encomienda (
 
 create table franja_horaria (
   id_franja_horaria         bigint not null,
+  servicio_id_servicio      bigint not null,
   dia                       timestamp,
   hora_fin                  time,
   hora_inicio               time,
@@ -87,7 +88,7 @@ create table security_role (
 ;
 
 create table servicio (
-  dtype                     varchar(10) not null,
+  tipo                      varchar(31) not null,
   id_servicio               bigint not null,
   descripcion               varchar(255),
   nombre                    varchar(255),
@@ -167,20 +168,22 @@ alter table estado_encomienda add constraint fk_estado_encomienda_encomiend_4 fo
 create index ix_estado_encomienda_encomiend_4 on estado_encomienda (encomienda_id_encomienda);
 alter table estado_encomienda add constraint fk_estado_encomienda_puntoDeVe_5 foreign key (punto_de_venta_id_punto_de_venta) references punto_de_venta (id_punto_de_venta);
 create index ix_estado_encomienda_puntoDeVe_5 on estado_encomienda (punto_de_venta_id_punto_de_venta);
-alter table localidad add constraint fk_localidad_ubicacion_6 foreign key (ubicacion_id_lat_long) references lat_long (id_lat_long);
-create index ix_localidad_ubicacion_6 on localidad (ubicacion_id_lat_long);
-alter table persona add constraint fk_persona_localidad_7 foreign key (localidad_id_localidad) references localidad (id_localidad);
-create index ix_persona_localidad_7 on persona (localidad_id_localidad);
-alter table persona add constraint fk_persona_usuario_8 foreign key (usuario_id_usuario) references usuario (id_usuario);
-create index ix_persona_usuario_8 on persona (usuario_id_usuario);
-alter table punto_de_venta add constraint fk_punto_de_venta_localidad_9 foreign key (localidad_id_localidad) references localidad (id_localidad);
-create index ix_punto_de_venta_localidad_9 on punto_de_venta (localidad_id_localidad);
-alter table punto_de_venta add constraint fk_punto_de_venta_usuario_10 foreign key (usuario_id_usuario) references usuario (id_usuario);
-create index ix_punto_de_venta_usuario_10 on punto_de_venta (usuario_id_usuario);
-alter table venta add constraint fk_venta_cliente_11 foreign key (cliente_id_persona) references persona (id_persona);
-create index ix_venta_cliente_11 on venta (cliente_id_persona);
-alter table venta add constraint fk_venta_puntoDeVenta_12 foreign key (punto_de_venta_id_punto_de_venta) references punto_de_venta (id_punto_de_venta);
-create index ix_venta_puntoDeVenta_12 on venta (punto_de_venta_id_punto_de_venta);
+alter table franja_horaria add constraint fk_franja_horaria_servicio_6 foreign key (servicio_id_servicio) references servicio (id_servicio);
+create index ix_franja_horaria_servicio_6 on franja_horaria (servicio_id_servicio);
+alter table localidad add constraint fk_localidad_ubicacion_7 foreign key (ubicacion_id_lat_long) references lat_long (id_lat_long);
+create index ix_localidad_ubicacion_7 on localidad (ubicacion_id_lat_long);
+alter table persona add constraint fk_persona_localidad_8 foreign key (localidad_id_localidad) references localidad (id_localidad);
+create index ix_persona_localidad_8 on persona (localidad_id_localidad);
+alter table persona add constraint fk_persona_usuario_9 foreign key (usuario_id_usuario) references usuario (id_usuario);
+create index ix_persona_usuario_9 on persona (usuario_id_usuario);
+alter table punto_de_venta add constraint fk_punto_de_venta_localidad_10 foreign key (localidad_id_localidad) references localidad (id_localidad);
+create index ix_punto_de_venta_localidad_10 on punto_de_venta (localidad_id_localidad);
+alter table punto_de_venta add constraint fk_punto_de_venta_usuario_11 foreign key (usuario_id_usuario) references usuario (id_usuario);
+create index ix_punto_de_venta_usuario_11 on punto_de_venta (usuario_id_usuario);
+alter table venta add constraint fk_venta_cliente_12 foreign key (cliente_id_persona) references persona (id_persona);
+create index ix_venta_cliente_12 on venta (cliente_id_persona);
+alter table venta add constraint fk_venta_puntoDeVenta_13 foreign key (punto_de_venta_id_punto_de_venta) references punto_de_venta (id_punto_de_venta);
+create index ix_venta_puntoDeVenta_13 on venta (punto_de_venta_id_punto_de_venta);
 
 
 

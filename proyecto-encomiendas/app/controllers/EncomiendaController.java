@@ -15,6 +15,7 @@ import repository.PersonaRepositorio;
 import repository.PuntoDeVentaRepositorio;
 import repository.VentaRepositorio;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -152,6 +153,28 @@ public class EncomiendaController extends Controller {
         repositorioVenta.modificar(venta);
 
         return ok(toJson(venta));
+    }
+
+    public static Result generarOrden(Long punto) {
+
+        List<Venta> ventas = repositorioVenta.listarTodo();
+        List<Encomienda> encomiendas = new ArrayList<Encomienda>();
+        int k = 0;
+
+        for (int i = 0; i<ventas.size(); i++) {
+            if (ventas.get(i).getPuntoDeVenta().getPuntoId() == punto) {
+                for (int j = 0; j<ventas.get(i).getEncomiendas().size(); j++) {
+                    for (k = 0; k<ventas.get(i).getEncomiendas().get(j).getEstados().size()-1; k++);
+                        if ((ventas.get(i).getEncomiendas().get(j).getEstados().get(k).getNombre()
+                                == NombreEstadoEncomienda.EN_SUCURSAL) &&
+                                (ventas.get(i).getEncomiendas().get(j).getEstados().get(k).getPuntoDeVenta().getPuntoId() == punto)) {
+                            encomiendas.add(ventas.get(i).getEncomiendas().get(j));
+                        }
+                }
+            }
+        }
+
+        return ok(toJson(encomiendas));
     }
 
 }
