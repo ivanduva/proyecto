@@ -1,0 +1,49 @@
+<div class="col-md-6">
+    <div class="container" ng-controller="ClienteListController as clienteCtrl">
+        <span class="title-with-button">Clientes</span>
+        <button class="btn btn-embossed btn-success btn-hg button-with-title" onclick="window.location.href='#/admin/clientes/new'">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Localidad</th>
+                <th>E-mail</th>
+                <th>Categoría</th>
+                <th>Telefono</th>
+                <th>¿Puede Reservar?</th>
+                <th>Puntos de Viajero</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="cliente in clienteCtrl.clientes">
+                <td>{{ cliente.personaId }}</td>
+                <td>{{ cliente.nombre }}</td>
+                <td>{{ cliente.fechaNacimiento }}</td>
+                <td>{{ cliente.localidad.nombre }}</td>
+                <td>{{ cliente.email }}</td>
+                <td>{{ cliente.categoria }}</td>
+                <td>{{ cliente.telefono }}</td>
+                <td>{{ cliente.puedeReservar }}</td>
+                <td>{{ cliente.puntosViajero }}</td>
+                <td>
+                    <button class="btn btn-embossed btn-info btn-lg" ng-click="clienteCtrl.edit(cliente.personaId)">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-embossed btn-danger btn-lg" ng-click="clienteCtrl.delete(cliente.personaId)">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

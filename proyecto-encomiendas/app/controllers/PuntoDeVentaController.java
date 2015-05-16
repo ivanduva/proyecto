@@ -3,7 +3,6 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import dao.PersistenciaDBLocalidad;
 import dao.PersistenciaDBPuntoDeVenta;
-import dao.PersistenciaDBUsuario;
 import model.Localidad;
 import model.PuntoDeVenta;
 import model.TipoPunto;
@@ -13,8 +12,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import repository.LocalidadRepositorio;
 import repository.PuntoDeVentaRepositorio;
-import repository.UsuarioRepositorio;
 
+import java.util.Date;
 import java.util.List;
 
 import static play.libs.Json.toJson;
@@ -25,7 +24,7 @@ import static play.libs.Json.toJson;
 public class PuntoDeVentaController extends Controller {
 
     static PuntoDeVentaRepositorio repositorioPdv = new PuntoDeVentaRepositorio(new PersistenciaDBPuntoDeVenta());
-    static UsuarioRepositorio repositorioUsuario = new UsuarioRepositorio(new PersistenciaDBUsuario());
+    //static UsuarioRepositorio repositorioUsuario = new UsuarioRepositorio(new PersistenciaDBUsuario());
     static LocalidadRepositorio repositorioLocalidad = new LocalidadRepositorio(new PersistenciaDBLocalidad());
 
     public static Result agregarPunto() {
@@ -40,6 +39,7 @@ public class PuntoDeVentaController extends Controller {
         JsonNode json = request().body().asJson();
         Logger.info(json.toString() + "\n");
         PuntoDeVenta puntoDeVenta = Json.fromJson(json, PuntoDeVenta.class);
+        puntoDeVenta.getUsuario().setFechaCreacion(new Date());
         repositorioPdv.crear(puntoDeVenta);
         return ok(toJson(puntoDeVenta));
     }

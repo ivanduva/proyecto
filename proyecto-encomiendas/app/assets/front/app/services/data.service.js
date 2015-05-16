@@ -12,6 +12,8 @@
             PuntosVenta: puntosVenta,
             TipoPuntoVenta: tipoPuntoVenta,
             Localidades: localidades,
+            Clientes: clientes,
+            Empleados: empleados,
             /*Login: login*/
         };
 
@@ -42,5 +44,24 @@
                 query: {method: 'GET', isArray: true}
             });
         }
+
+        function clientes() {
+            return $resource('http://localhost:9000/admin/clientes/:id', {}, {
+                query: {method: 'GET', isArray: true},
+                create: {method: 'POST'},
+                show: {method: 'GET', params: {id: '@id'}},
+                update: {method: 'PUT', params: {id: '@id'}},
+                delete: {method: 'DELETE', params: {id: '@id'}}
+            });
+        }
+
+        function empleados() {
+                    return $resource('http://localhost:9000/admin/empleados/:id', {}, {
+                        query: {method: 'GET', isArray: true},
+                        create: {method: 'POST'},
+                        show: {method: 'GET', params: {id: '@id'}},
+                        update: {method: 'PUT', params: {id: '@id'}},
+                    });
+                }
     }
 }());

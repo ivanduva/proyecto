@@ -15,8 +15,8 @@
       </div>
       <div class="collapse navbar-collapse" id="navbar-collapse-01">
         <ul class="nav navbar-nav">
-          <li><a href="#/dashboard">Home</a></li>
-          <li><a href="#/punto_venta">Puntos de Venta</a></li>
+          <li><a href="#/admin/dashboard">Home</a></li>
+          <li><a href="#/admin/punto_venta">Puntos de Venta</a></li>
         </ul>
           <ul class="nav navbar-nav navbar-right">
               <li><a href="#/login">Login</a></li>
@@ -34,10 +34,10 @@
         <ul class="nav nav-stacked">
             <li class="nav-header"> <a data-toggle="collapse" data-target="#userMenu">Opciones <i class="glyphicon glyphicon-chevron-down"></i></a>
                 <ul class="nav nav-stacked collapse in" id="userMenu">
-                    <li class="active"> <a href="#/dashboard"><i class="glyphicon glyphicon-home"></i> Home</a></li>
+                    <li class="active"> <a href="#/admin/dashboard"><i class="glyphicon glyphicon-home"></i> Home</a></li>
                     <li><a href="#"><i class="glyphicon glyphicon-road"></i> Servicios</a></li>
-                    <li><a href="#"><i class="glyphicon glyphicon-user"></i> Personas</a></li>
-                    <li><a href="#/punto_venta"><i class="glyphicon glyphicon-flag" ng-controller="PuntoVentaListController as puntoCtrl"></i> Puntos de Venta</a></li>
+                    <li><a href="#/admin/personas"><i class="glyphicon glyphicon-user"></i> Personas</a></li>
+                    <li><a href="#/admin/punto_venta"><i class="glyphicon glyphicon-flag" ng-controller="PuntoVentaListController as puntoCtrl"></i> Puntos de Venta</a></li>
                     <li><a href="#"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
                 </ul>
             </li>
@@ -78,5 +78,14 @@
     <!-- Punto de venta -->
     <script src='@routes.Assets.at("front/app/punto_venta/punto_venta.module.js")'></script>
     <script src='@routes.Assets.at("front/app/punto_venta/punto_venta.js")'></script>
+
+    <!-- Clientes -->
+    <script src='@routes.Assets.at("front/app/clientes/clientes.module.js")'></script>
+    <script src='@routes.Assets.at("front/app/clientes/clientes.js")'></script>
+
+    <!-- Empleados -->
+    <script src='@routes.Assets.at("front/app/empleados/empleados.module.js")'></script>
+    <script src='@routes.Assets.at("front/app/empleados/empleados.js")'></script>
+
 </body>
 </html>

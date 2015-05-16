@@ -41,7 +41,9 @@ POST    /admin/empleados                    controllers.PersonaController.crearE
 # Para cuando el cliente se registra por su cuenta
 POST    /clientes                           controllers.PersonaController.crearCliente()
 
-GET     /admin/personas/:id                 controllers.PersonaController.getPersona(id: Long)
+GET     /admin/clientes/:id                 controllers.PersonaController.getPersona(id: Long)
+
+GET     /admin/empleados/:id                controllers.PersonaController.getPersona(id: Long)
 
 GET     /admin/clientes                     controllers.PersonaController.listarClientes()
 

@@ -6,19 +6,19 @@
         .controller('LoginController', LoginController)
         .controller('LoginCreateController', LoginCreateController);
 
-    LoginController.$inject = ['$location', 'dataservice'];
-    function LoginController ($location, dataservice) {
+    LoginController.$inject = ['$scope', '$location', 'dataservice'];
+    function LoginController ($scope, $location, dataservice) {
         var vm = this;
 
 
-        vm.opciones=true;
+        $scope.opciones=true;
 
         /* Esta función era para hacer un ng-show en el index asi se ocultan las barras */
         vm.show = function(){
-            if (vm.opciones === true){
-                vm.opciones = false;
+            if ($scope.opciones === true){
+                $scope.opciones = false;
             } else {
-                vm.opciones = true;
+                $scope.opciones = true;
             }
         };
 

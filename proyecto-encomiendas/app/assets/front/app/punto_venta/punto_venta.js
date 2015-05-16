@@ -14,17 +14,27 @@
         vm.puntosDeVenta = dataservice.PuntosVenta().query();
 
         vm.edit = function (puntoId) {
-            $location.path('/punto_venta/' + puntoId + '/edit');
+            $location.path('/admin/punto_venta/' + puntoId + '/edit');
         };
 
         vm.delete = function (puntoId) {
             dataservice.PuntosVenta().delete({id: parseInt(puntoId)});
+
         };
     }
 
     PuntoVentaCreateController.$inject = ['$scope', '$routeParams', '$location', 'dataservice'];
     function PuntoVentaCreateController($scope, $routeParams, $location, dataservice) {
         var vm = this;
+
+        $scope.inputType = 'password';
+
+        $scope.hideShowPassword = function(){
+            if ($scope.inputType == 'password')
+              $scope.inputType = 'text';
+            else
+              $scope.inputType = 'password';
+          };
 
         vm.localidades = dataservice.Localidades().query();
         vm.tipoPDV = dataservice.TipoPuntoVenta().query();
@@ -45,7 +55,7 @@
             } else {
                 dataservice.PuntosVenta().update({id: vm.punto.puntoId}, vm.punto);
             }
-            $location.path('/punto_venta');
+            $location.path('/admin/punto_venta');
         };
     }
 }());
