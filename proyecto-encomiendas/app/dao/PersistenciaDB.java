@@ -33,7 +33,7 @@ public class PersistenciaDB<T, K> implements Persistencia<T, K> {
 
     @Override
     public void delete(T t) {
-        Ebean.delete(type, t);
+        Ebean.delete(t);
     }
 
     @Override

@@ -106,7 +106,7 @@ create table usuario (
   id_usuario                bigint not null,
   nombre_usuario            varchar(256) not null,
   fecha_creacion            timestamp,
-  sha_password              bytea not null,
+  password                  varchar(255),
   auth_token                varchar(255),
   constraint uq_usuario_nombre_usuario unique (nombre_usuario),
   constraint pk_usuario primary key (id_usuario))

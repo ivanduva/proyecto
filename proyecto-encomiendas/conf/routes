@@ -47,13 +47,17 @@ GET     /admin/clientes                     controllers.PersonaController.listar
 
 GET     /admin/empleados                    controllers.PersonaController.listarEmpleados()
 
-PUT     /admin/personas/:id                 controllers.PersonaController.modificarPersona(id: Long)
+PUT     /admin/empleados/:id                controllers.PersonaController.modificarEmpleado(id: Long)
 
-PUT     /clientes/:id                       controllers.PersonaController.modificarPersona(id: Long)
+PUT     /admin/clientes/:id                 controllers.PersonaController.modificarCliente(id: Long)
+
+PUT     /clientes/:id                       controllers.PersonaController.modificarCliente(id: Long)
 
 PUT     /admin/empleados/:id                controllers.PersonaController.cesarEmpleado(id: Long)
 
-DELETE  /admin/personas/:id                 controllers.PersonaController.eliminarPersona(id: Long)
+DELETE  /admin/clientes/:id                 controllers.PersonaController.eliminarCliente(id: Long)
+
+DELETE  /clientes/:id                       controllers.PersonaController.eliminarCliente(id: Long)
 
 # Encomiendas
 

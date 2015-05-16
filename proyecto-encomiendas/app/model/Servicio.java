@@ -9,6 +9,7 @@ import java.util.List;
 @Entity
 @Table (name = "servicio")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn (name = "tipo", discriminatorType = DiscriminatorType.STRING)
 public abstract class Servicio {
 
     @Id
@@ -25,7 +26,7 @@ public abstract class Servicio {
     @Column (name = "habilitado")
     private boolean habilitado;
 
-    @Column (name = "franjas_horarias")
+    @OneToMany (cascade = CascadeType.ALL)
     private List<FranjaHoraria> franjasHorarias;
 
     public Servicio(Long servicioId, String descripcion, String nombre, boolean habilitado, List<FranjaHoraria> franjasHorarias) {

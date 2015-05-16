@@ -3,17 +3,14 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import dao.PersistenciaDBPersona;
 import dao.PersistenciaDBSecurityRole;
-import dao.PersistenciaDBUsuario;
 import model.Cliente;
 import model.Empleado;
 import model.Persona;
-import model.Usuario;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import repository.PersonaRepositorio;
 import repository.SecurityRoleRepositorio;
-import repository.UsuarioRepositorio;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,7 +23,7 @@ import static play.libs.Json.toJson;
  */
 public class PersonaController extends Controller {
 
-    static UsuarioRepositorio repositorioUsuario = new UsuarioRepositorio(new PersistenciaDBUsuario());
+    //static UsuarioRepositorio repositorioUsuario = new UsuarioRepositorio(new PersistenciaDBUsuario());
     static PersonaRepositorio repositorioPersona = new PersonaRepositorio(new PersistenciaDBPersona());
     static SecurityRoleRepositorio repositorioRol = new SecurityRoleRepositorio(new PersistenciaDBSecurityRole());
 
@@ -36,18 +33,18 @@ public class PersonaController extends Controller {
 
         JsonNode json = request().body().asJson();
         Cliente cliente = Json.fromJson(json, Cliente.class);
-        Usuario usuario = Json.fromJson(json, Usuario.class);
-        usuario.setFechaCreacion(new Date());
-        usuario.agregarRol(repositorioRol.buscarPorNombre("CLIENTE"));
+        //Usuario usuario = Json.fromJson(json, Usuario.class);
+        cliente.getUsuario().setFechaCreacion(new Date());
+        cliente.getUsuario().agregarRol(repositorioRol.buscarPorNombre("CLIENTE"));
 
         if (cliente.getPuedeReservar() == null) {
             cliente.setPuedeReservar("NO");
         }
         cliente.setPuntosViajero(0);
-        cliente.setUsuario(usuario);
+        //cliente.setUsuario(usuario);
 
         repositorioPersona.crear(cliente);
-        repositorioUsuario.crear(usuario);
+        //repositorioUsuario.crear(usuario);
 
         return ok(toJson(cliente));
     }
@@ -56,14 +53,14 @@ public class PersonaController extends Controller {
 
         JsonNode json = request().body().asJson();
         Empleado empleado = Json.fromJson(json, Empleado.class);
-        Usuario usuario = Json.fromJson(json, Usuario.class);
-        usuario.setFechaCreacion(new Date());
-        usuario.agregarRol(repositorioRol.buscarPorNombre("EMPLEADO"));
+        //Usuario usuario = Json.fromJson(json, Usuario.class);
+        empleado.getUsuario().setFechaCreacion(new Date());
+        empleado.getUsuario().agregarRol(repositorioRol.buscarPorNombre("EMPLEADO"));
         empleado.setCesadoFalse();
-        empleado.setUsuario(usuario);
+        //empleado.setUsuario(usuario);
 
         repositorioPersona.crear(empleado);
-        repositorioUsuario.crear(usuario);
+        //repositorioUsuario.crear(usuario);
 
         return ok(toJson(empleado));
     }
@@ -75,11 +72,20 @@ public class PersonaController extends Controller {
         return ok(toJson(persona));
     }
 
-    public static Result modificarPersona(Long id) {
+    public static Result modificarCliente(Long id) {
 
         JsonNode json = request().body().asJson();
-        Persona persona = Json.fromJson(json, Persona.class);
-        repositorioPersona.modificar(persona);
+        Cliente cliente = Json.fromJson(json, Cliente.class);
+        repositorioPersona.modificar(cliente);
+
+        return ok();
+    }
+
+    public static Result modificarEmpleado(Long id) {
+
+        JsonNode json = request().body().asJson();
+        Empleado empleado = Json.fromJson(json, Empleado.class);
+        repositorioPersona.modificar(empleado);
 
         return ok();
     }
@@ -96,7 +102,7 @@ public class PersonaController extends Controller {
         //Ya se qué esto no es lo mejor, pero es una solución por ahora
         List<Persona> empleados = repositorioPersona.listarAlgunos("tipo", "E");
         List empleadosNoCesados = new ArrayList<Persona>();
-        for (int i = 0; i<= empleados.size(); i++) {
+        for (int i = 0; i< empleados.size(); i++) {
             Empleado empleado = (Empleado) empleados.get(i);
             if (!( empleado.isCesado())){
                 empleadosNoCesados.add(empleado);
@@ -105,11 +111,11 @@ public class PersonaController extends Controller {
         return ok(toJson(empleadosNoCesados));
     }
 
-    public static Result eliminarPersona(Long id) {
+    public static Result eliminarCliente(Long id) {
 
-        Persona persona = repositorioPersona.buscarPorId(id);
-        repositorioPersona.eliminar(persona);
-        return ok(toJson(persona));
+        Cliente cliente = (Cliente) repositorioPersona.buscarPorId(id);
+        repositorioPersona.eliminar(cliente);
+        return ok();
     }
 
     public static Result cesarEmpleado(Long id) {
@@ -118,7 +124,7 @@ public class PersonaController extends Controller {
         empleado.setCesadoTrue();
         repositorioPersona.modificar(empleado);
 
-        return ok(toJson(empleado));
+        return ok();
     }
 
 }

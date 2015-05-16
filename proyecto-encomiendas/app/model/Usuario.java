@@ -3,14 +3,10 @@ package model;
 import be.objectify.deadbolt.core.models.Permission;
 import be.objectify.deadbolt.core.models.Role;
 import be.objectify.deadbolt.core.models.Subject;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 
@@ -35,17 +31,17 @@ public class Usuario extends Model implements Subject{
     @Column (name = "fecha_creacion")
     private Date fechaCreacion;
 
-    @Column(length = 64, nullable = false)
-    private byte[] shaPassword;
+    //@Column(length = 64, nullable = false)
+    //private byte[] shaPassword;
 
-    @Transient
+    //@Transient
     @Constraints.Required
     @Constraints.MinLength(6)
     @Constraints.MaxLength(256)
-    @JsonIgnore
+    //@JsonIgnore
     private String password;
 
-    @ManyToMany
+    @ManyToMany (cascade = CascadeType.ALL)
     public List<SecurityRole> roles;
 
     @ManyToMany
@@ -108,17 +104,17 @@ public class Usuario extends Model implements Subject{
         return nombreUsuario;
     }
 
-    public static byte[] getSha512(String value) {
-        try {
-            return MessageDigest.getInstance("SHA-512").digest(value.getBytes("UTF-8"));
-        }
-        catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-        catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    //public static byte[] getSha512(String value) {
+      //  try {
+        //    return MessageDigest.getInstance("SHA-512").digest(value.getBytes("UTF-8"));
+        //}
+        //catch (NoSuchAlgorithmException e) {
+          //  throw new RuntimeException(e);
+        //}
+        //catch (UnsupportedEncodingException e) {
+          //  throw new RuntimeException(e);
+        //}
+    //}
 
     public String getPassword() {
         return password;
@@ -126,7 +122,7 @@ public class Usuario extends Model implements Subject{
 
     public void setPassword(String password) {
         this.password = password;
-        shaPassword = getSha512(password);
+        //shaPassword = getSha512(password);
     }
 
     public Date getFechaCreacion() {
