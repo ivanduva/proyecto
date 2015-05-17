@@ -69,6 +69,8 @@ public class Cliente extends Persona {
 
     public String getPuedeReservar() { return puedeReservar; }
 
+    public void aumentarPuntosViajero(int pts) { this.puntosViajero += pts; }
+
    // public void setCompras(List<Venta> compras) {
      //   this.compras = compras;
     //}

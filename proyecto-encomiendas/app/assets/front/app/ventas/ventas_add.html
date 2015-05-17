@@ -1,0 +1,28 @@
+<div class="container" ng-controller="VentaCreateController as ventaCtrl">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <span class="title-with-button">{{ ventaCtrl.title }}</span>
+            {{ ventaCtrl.venta }}
+            <form name="addVenta" class="form-horizontal" action="" ng-submit="addVenta.$valid && ventaCtrl.save()" novalidate>
+
+                <input type="text" class="hidden" ng-model="ventaCtrl.venta.ventaId"/>
+
+                <div class="form-group">
+                    <label for="puntoDeVenta" class="col-sm-2 control-label">Punto de Venta</label>
+                    <div class="col-sm-10">
+                        <select type="text" class="form-control" id="puntoDeVenta" ng-model="ventaCtrl.venta.puntoDeVenta" ng-options="puntoDeVenta as puntoDeVenta.nombre for puntoDeVenta in ventaCtrl.puntos" required></select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cliente" class="col-sm-2 control-label">Cliente</label>
+                    <div class="col-sm-10">
+                        <select type="text" class="form-control" id="cliente" ng-model="ventaCtrl.venta.cliente" ng-options="cliente as cliente.nombre for cliente in ventaCtrl.clientes" required></select>
+                    </div>
+                </div>
+
+                <button class="btn btn-embossed btn-success" type="submit" value="Submit">Agregar Encomienda</button>
+            </form>
+        </div>
+    </div>
+</div>

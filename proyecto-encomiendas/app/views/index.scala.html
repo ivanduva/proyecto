@@ -15,12 +15,11 @@
       </div>
       <div class="collapse navbar-collapse" id="navbar-collapse-01">
         <ul class="nav navbar-nav">
-          <li><a href="#/admin/dashboard">Home</a></li>
-          <li><a href="#/admin/punto_venta">Puntos de Venta</a></li>
+          <li><a href="#/dashboard">Home</a></li>
         </ul>
           <ul class="nav navbar-nav navbar-right">
               <li><a href="#/login">Login</a></li>
-              <li><a href="#">Registrarse</a></li>
+              <li><a href="#/public/clientes/new">Registrarse</a></li>
           </ul>
       </div><!-- /.navbar-collapse -->
     </nav><!-- /navbar -->
@@ -86,6 +85,14 @@
     <!-- Empleados -->
     <script src='@routes.Assets.at("front/app/empleados/empleados.module.js")'></script>
     <script src='@routes.Assets.at("front/app/empleados/empleados.js")'></script>
+
+    <!-- Encomiendas -->
+    <script src='@routes.Assets.at("front/app/encomiendas/encomiendas.module.js")'></script>
+    <script src='@routes.Assets.at("front/app/encomiendas/encomiendas.js")'></script>
+
+    <!-- Ventas -->
+    <script src='@routes.Assets.at("front/app/ventas/ventas.module.js")'></script>
+    <script src='@routes.Assets.at("front/app/ventas/ventas.js")'></script>
 
 </body>
 </html>

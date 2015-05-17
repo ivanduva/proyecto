@@ -14,6 +14,8 @@
             Localidades: localidades,
             Clientes: clientes,
             Empleados: empleados,
+            EmpleadosCesados: empleadosCesados,
+            Ventas: ventas,
             /*Login: login*/
         };
 
@@ -56,12 +58,25 @@
         }
 
         function empleados() {
-                    return $resource('http://localhost:9000/admin/empleados/:id', {}, {
-                        query: {method: 'GET', isArray: true},
-                        create: {method: 'POST'},
-                        show: {method: 'GET', params: {id: '@id'}},
-                        update: {method: 'PUT', params: {id: '@id'}},
-                    });
-                }
+            return $resource('http://localhost:9000/admin/empleados/:id', {}, {
+                query: {method: 'GET', isArray: true},
+                create: {method: 'POST'},
+                show: {method: 'GET', params: {id: '@id'}},
+                update: {method: 'PUT', params: {id: '@id'}}
+            });
+        }
+
+        function empleadosCesados() {
+            return $resource('http://localhost:9000/admin/empleados/cesar/:id', {}, {
+                update: {method: 'PUT', params: {id: '@id'}}
+            });
+        }
+
+        function ventas() {
+            return $resource('http://localhost:9000/ventas/:id', {}, {
+                create: {method: 'POST'},
+                update: {method: 'PUT', params: {id: '@id'}}
+            });
+        }
     }
 }());

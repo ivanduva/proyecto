@@ -3,6 +3,7 @@ package model;
 import be.objectify.deadbolt.core.models.Permission;
 import be.objectify.deadbolt.core.models.Role;
 import be.objectify.deadbolt.core.models.Subject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
@@ -50,6 +51,8 @@ public class Usuario extends Model implements Subject{
     //token para verificar si el usuario está logueado
     private String authToken;
 
+    @JsonIgnore
+    private String identifier;
 
     public Usuario(String nombreUsuario, Date fechaCreacion) {
 

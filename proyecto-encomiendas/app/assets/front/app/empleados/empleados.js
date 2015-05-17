@@ -18,23 +18,15 @@
         };
 
         vm.cesar = function (personaId) {
-            dataservice.Empleados().update({id: parseInt(personaId)});
+            dataservice.EmpleadosCesados().update({id: parseInt(personaId)});
 
         };
+
+        /*vm.alta = function (personaId) {
+            dataservice.EmpleadosCesados().update({id: parseInt(personaId)});
+        };*/
     }
 
-    EmpleadoCesadoListController.$inject = ['$location', 'dataservice'];
-    function EmpleadoCesadoListController($location, dataservice) {
-        var vm = this
-
-        vm.empleados = dataservice.Empleados().query();
-
-        vm.alta = function (personaId) {
-          dataservice.Empleados().update({id: parseInt(personaId)});
-        };
-
-
-    }
 
     EmpleadoCreateController.$inject = ['$scope', '$routeParams', '$location', 'dataservice'];
     function EmpleadoCreateController($scope, $routeParams, $location, dataservice) {

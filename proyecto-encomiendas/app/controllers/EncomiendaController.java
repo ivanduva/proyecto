@@ -32,29 +32,29 @@ public class EncomiendaController extends Controller {
     static PersonaRepositorio repositorioPersona = new PersonaRepositorio(new PersistenciaDBPersona());
     static PuntoDeVentaRepositorio repositorioPdv = new PuntoDeVentaRepositorio(new PersistenciaDBPuntoDeVenta());
 
-    public static Result crearVenta(Long idCliente, Long idPdv) {
+    public static Result crearVenta() {
 
         JsonNode json = request().body().asJson();
         Venta venta = Json.fromJson(json, Venta.class);
+        //venta.getCliente().aumentarPuntosViajero(10);
+        //if (id != 0) {
+          //  Cliente cliente = (Cliente) repositorioPersona.buscarPorId(id);
+            //venta.setCliente(cliente);
+        //}
 
-        if (idCliente != 0) {
-            Cliente cliente = (Cliente) repositorioPersona.buscarPorId(idCliente);
-            venta.setCliente(cliente);
-        }
-
-        PuntoDeVenta puntoDeVenta = repositorioPdv.buscarPorId(idPdv);
-        venta.setPuntoDeVenta(puntoDeVenta);
+        //PuntoDeVenta puntoDeVenta = repositorioPdv.buscarPorId(idPdv);
+        //venta.setPuntoDeVenta(puntoDeVenta);
 
         repositorioVenta.crear(venta);
 
         return ok(toJson(venta));
     }
 
-    public static Result registrarEncomienda (Long idVenta) {
+    public static Result registrarEncomienda (Long id) {
 
         JsonNode json = request().body().asJson();
         Encomienda encomienda = Json.fromJson(json, Encomienda.class);
-        Venta venta = repositorioVenta.buscarPorId(idVenta);
+        Venta venta = repositorioVenta.buscarPorId(id);
         EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date(), venta.getPuntoDeVenta());
         estadoEncomienda.setNombreEnSucursal();
         encomienda.agregarEstado(estadoEncomienda);

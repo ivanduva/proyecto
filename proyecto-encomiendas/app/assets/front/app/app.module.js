@@ -3,21 +3,39 @@
     'use strict';
 
     angular
-        .module('app', ['ngRoute', 'ngResource', 'ngRoute', 'app.punto_venta', 'app.clientes', 'app.empleados'])
+        .module('app', ['ngRoute', 'ngResource', 'ngRoute', 'app.punto_venta', 'app.clientes', 'app.empleados', 'app.encomiendas', 'app.ventas'])
         .config(['$routeProvider', routeConfiguration])
         .config(['$httpProvider', httpProviderConfiguration]);
 
     function routeConfiguration($routeProvider) {
         $routeProvider.
 
+            when('/dashboard', {
+                templateUrl: 'assets/front/app/dashboard/dashboard.html'
+            }).
 
             when('/admin/dashboard', {
                 templateUrl: 'assets/front/app/dashboard/admin_dashboard.html'
+            }).
 
+            when('/public/dashboard', {
+                templateUrl: 'assets/front/app/dashboard/public_dashboard.html'
+            }).
+
+            when('/emp/dashboard', {
+                templateUrl: 'assets/front/app/dashboard/emp_dashboard.html'
             }).
 
             when('/admin/personas', {
                 templateUrl: 'assets/front/app/dashboard/admin_personas_dashboard.html'
+            }).
+
+            when('/emp/encomiendas', {
+                templateUrl: 'assets/front/app/dashboard/emp_encomiendas_dashboard.html'
+            }).
+
+            when('/emp/ventas', {
+                templateUrl: 'assets/front/app/dashboard/emp_ventas_dashboard.html'
             }).
 
             when('/login', {
@@ -64,6 +82,12 @@
                 controllerAs: "vm"
             }).
 
+            when('/public/clientes/new', {
+                templateUrl: '/assets/front/app/clientes/clientes_add.html',
+                controller: "ClienteCreateController",
+                controllerAs: "vm"
+            }).
+
             /*EMPLEADOS*/
 
             when('/admin/empleados', {
@@ -84,7 +108,15 @@
                 controllerAs: "vm"
             }).
 
-            otherwise({ redirectTo: '/admin/dashboard'});
+            /*VENTAS*/
+
+            when('/emp/ventas/new', {
+                templateUrl: '/assets/front/app/ventas/ventas_add.html',
+                controller: "VentaCreateController",
+                controllerAs: "vm"
+            }).
+
+            otherwise({ redirectTo: '/dashboard'});
     }
 
     function httpProviderConfiguration($httpProvider) {

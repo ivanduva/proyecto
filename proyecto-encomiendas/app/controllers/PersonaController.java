@@ -35,7 +35,7 @@ public class PersonaController extends Controller {
         Cliente cliente = Json.fromJson(json, Cliente.class);
         //Usuario usuario = Json.fromJson(json, Usuario.class);
         cliente.getUsuario().setFechaCreacion(new Date());
-        cliente.getUsuario().agregarRol(repositorioRol.buscarPorNombre("CLIENTE"));
+        cliente.getUsuario().agregarRol(repositorioRol.buscarPorId((long) 1));
 
         if (cliente.getPuedeReservar() == null) {
             cliente.setPuedeReservar("NO");
@@ -55,7 +55,7 @@ public class PersonaController extends Controller {
         Empleado empleado = Json.fromJson(json, Empleado.class);
         //Usuario usuario = Json.fromJson(json, Usuario.class);
         empleado.getUsuario().setFechaCreacion(new Date());
-        empleado.getUsuario().agregarRol(repositorioRol.buscarPorNombre("EMPLEADO"));
+        empleado.getUsuario().agregarRol(repositorioRol.buscarPorId((long) 4));
         empleado.setCesadoFalse();
         //empleado.setUsuario(usuario);
 
@@ -122,6 +122,15 @@ public class PersonaController extends Controller {
 
         Empleado empleado = (Empleado) repositorioPersona.buscarPorId(id);
         empleado.setCesadoTrue();
+        repositorioPersona.modificar(empleado);
+
+        return ok();
+    }
+
+    public static Result rehabilitarEmpleado(Long id) {
+
+        Empleado empleado = (Empleado) repositorioPersona.buscarPorId(id);
+        empleado.setCesadoFalse();
         repositorioPersona.modificar(empleado);
 
         return ok();

@@ -27,7 +27,7 @@ create table estado_encomienda (
 
 create table franja_horaria (
   id_franja_horaria         bigint not null,
-  servicio_id_servicio      bigint not null,
+  viaje_encomienda_id_servicio bigint not null,
   dia                       timestamp,
   hora_fin                  time,
   hora_inicio               time,
@@ -108,6 +108,7 @@ create table usuario (
   fecha_creacion            timestamp,
   password                  varchar(255),
   auth_token                varchar(255),
+  identifier                varchar(255),
   constraint uq_usuario_nombre_usuario unique (nombre_usuario),
   constraint pk_usuario primary key (id_usuario))
 ;
@@ -168,8 +169,8 @@ alter table estado_encomienda add constraint fk_estado_encomienda_encomiend_4 fo
 create index ix_estado_encomienda_encomiend_4 on estado_encomienda (encomienda_id_encomienda);
 alter table estado_encomienda add constraint fk_estado_encomienda_puntoDeVe_5 foreign key (punto_de_venta_id_punto_de_venta) references punto_de_venta (id_punto_de_venta);
 create index ix_estado_encomienda_puntoDeVe_5 on estado_encomienda (punto_de_venta_id_punto_de_venta);
-alter table franja_horaria add constraint fk_franja_horaria_servicio_6 foreign key (servicio_id_servicio) references servicio (id_servicio);
-create index ix_franja_horaria_servicio_6 on franja_horaria (servicio_id_servicio);
+alter table franja_horaria add constraint fk_franja_horaria_servicio_6 foreign key (viaje_encomienda_id_servicio) references servicio (id_servicio);
+create index ix_franja_horaria_servicio_6 on franja_horaria (viaje_encomienda_id_servicio);
 alter table localidad add constraint fk_localidad_ubicacion_7 foreign key (ubicacion_id_lat_long) references lat_long (id_lat_long);
 create index ix_localidad_ubicacion_7 on localidad (ubicacion_id_lat_long);
 alter table persona add constraint fk_persona_localidad_8 foreign key (localidad_id_localidad) references localidad (id_localidad);

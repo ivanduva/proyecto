@@ -55,7 +55,9 @@ PUT     /admin/clientes/:id                 controllers.PersonaController.modifi
 
 PUT     /clientes/:id                       controllers.PersonaController.modificarCliente(id: Long)
 
-PUT     /admin/empleados/:id                controllers.PersonaController.cesarEmpleado(id: Long)
+PUT     /admin/empleados/cesar/:id          controllers.PersonaController.cesarEmpleado(id: Long)
+
+PUT     /admin/empleados/rehabilitar/:id    controllers.PersonaController.rehabilitarEmpleado(id: Long)
 
 DELETE  /admin/clientes/:id                 controllers.PersonaController.eliminarCliente(id: Long)
 
@@ -63,9 +65,9 @@ DELETE  /clientes/:id                       controllers.PersonaController.elimin
 
 # Encomiendas
 
-POST    /ventas/:idCliente/:idPdv           controllers.EncomiendaController.crearVenta(idCliente: Long, idPdv: Long)
+POST    /ventas                             controllers.EncomiendaController.crearVenta()
 
-PUT     /ventas/encomiendas/:idVenta        controllers.EncomiendaController.registrarEncomienda(idVenta: Long)
+PUT     /ventas/:id                         controllers.EncomiendaController.registrarEncomienda(id: Long)
 
 PUT     /ventas/finalizar/:id               controllers.EncomiendaController.finalizarVenta(id: Long)
 

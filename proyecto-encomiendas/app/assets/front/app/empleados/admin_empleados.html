@@ -1,6 +1,6 @@
 <div class="col-md-6">
     <div class="container" ng-controller="EmpleadoListController as empleadoCtrl">
-        <span class="title-with-button">Empleados</span>
+        <span class="title-with-button">Empleados Activos</span>
         <button class="btn btn-embossed btn-success btn-hg button-with-title" onclick="window.location.href='#/admin/empleados/new'">
             <span class="glyphicon glyphicon-plus"></span>
         </button>
@@ -47,3 +47,45 @@
         </table>
     </div>
 </div>
+
+<!--<div class="col-md-6">
+    <div class="container" ng-controller="EmpleadoCesadoListController as empleadoCesadoCtrl">
+        <span class="title-with-button">Empleados Cesados</span>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Localidad</th>
+                <th>E-mail</th>
+                <th>Horario</th>
+                <th>Telefono</th>
+                <th>CUIT</th>
+                <th>DNI</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="empleado in empleadoCesadoCtrl.empleados">
+                <td>{{ empleado.personaId }}</td>
+                <td>{{ empleado.nombre }}</td>
+                <td>{{ empleado.fechaNacimiento }}</td>
+                <td>{{ empleado.localidad.nombre }}</td>
+                <td>{{ empleado.email }}</td>
+                <td>{{ empleado.horario }}</td>
+                <td>{{ empleado.telefono }}</td>
+                <td>{{ empleado.cuit }}</td>
+                <td>{{ empleado.dni }}</td>
+                <td>
+                    <button class="btn btn-embossed btn-info btn-lg" ng-click="empleadoCesadoCtrl.alta(empleado.personaId)">
+                        <span aria-hidden="true">Alta</span>
+                    </button>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>-->
