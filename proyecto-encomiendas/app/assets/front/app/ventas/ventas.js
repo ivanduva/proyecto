@@ -51,6 +51,16 @@
             vm.encomienda = vm.venta.encomiendas.splice(index, 1);
         }
 
+        vm.getTotal = function () {
+            return vm.venta.encomiendas
+                .map(function (encomienda) {
+                    return encomienda.tarifa;
+                })
+                .reduce(function (prev, current, index, array) {
+                    return prev + current;
+                });
+        }
+
         function onPuntosDeVentaLoad (data) {
             vm.puntos = data;
             vm.venta.puntoDeVenta = data[0];
