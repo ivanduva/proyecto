@@ -26,7 +26,7 @@
             <tr ng-repeat="empleado in vm.empleados">
                 <td>{{ empleado.personaId }}</td>
                 <td>{{ empleado.nombre }}</td>
-                <td>{{ empleado.fechaNacimiento }}</td>
+                <td>{{ empleado.fechaNacimiento | date: "yyyy-mm-dd"}}</td>
                 <td>{{ empleado.localidad.nombre }}</td>
                 <td>{{ empleado.email }}</td>
                 <td>{{ empleado.horario }}</td>

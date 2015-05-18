@@ -26,7 +26,8 @@
         }
 
         function onSuccessQuery(data) {
-            vm.clientes = data;
+            vm.empleados = data;
+            console.log(data);
         }
 
         /*vm.alta = function (personaId) {
@@ -57,7 +58,7 @@
 
         if ($routeParams.id !== undefined) {
             var id = parseInt($routeParams.id);
-            dataservice.Empleados().show({id: id}, onSuccessGet, onFail);
+            dataservice.Empleados().get({id: id}, onSuccessGet, onFail);
             vm.title = "Editar Empleado";
         } else {
             vm.title = "Nuevo Empleado";
@@ -79,7 +80,8 @@
         }
 
         function onSuccessGet (data) {
-            vm.cliente = data;
+            vm.empleado = data;
+            vm.empleado.fechaNacimiento = new Date(vm.empleado.fechaNacimiento);
         }
 
         function onSuccessSave (data) {
