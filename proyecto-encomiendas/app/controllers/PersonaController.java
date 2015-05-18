@@ -12,7 +12,6 @@ import play.mvc.Result;
 import repository.PersonaRepositorio;
 import repository.SecurityRoleRepositorio;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -73,7 +72,7 @@ public class PersonaController extends Controller {
 
             return ok(toJson(persona));
 
-        } catch (EntityNotFoundException e) {
+        } catch (NullPointerException e) {
             return notFound();
         }
     }
@@ -99,7 +98,7 @@ public class PersonaController extends Controller {
 
             return ok();
 
-        } catch (EntityNotFoundException e) {
+        } catch (NullPointerException e) {
             return notFound();
         }
     }
@@ -125,7 +124,7 @@ public class PersonaController extends Controller {
 
             return ok();
 
-        } catch (EntityNotFoundException e) {
+        } catch (NullPointerException e) {
             return notFound();
         }
     }
@@ -158,7 +157,7 @@ public class PersonaController extends Controller {
             repositorioPersona.eliminar(cliente);
             return ok();
 
-        } catch (EntityNotFoundException e) {
+        } catch (NullPointerException e) {
             return notFound();
         }
     }
@@ -172,7 +171,7 @@ public class PersonaController extends Controller {
 
             return ok();
 
-        } catch (EntityNotFoundException e) {
+        } catch (NullPointerException e) {
             return notFound();
         }
     }
@@ -186,7 +185,7 @@ public class PersonaController extends Controller {
 
             return ok();
 
-        } catch (EntityNotFoundException e) {
+        } catch (NullPointerException e) {
             return notFound();
         }
     }

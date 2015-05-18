@@ -15,7 +15,6 @@ import repository.PersonaRepositorio;
 import repository.PuntoDeVentaRepositorio;
 import repository.VentaRepositorio;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,7 +57,7 @@ public class EncomiendaController extends Controller {
             Venta venta = repositorioVenta.buscarPorId(id);
             return ok(toJson(venta));
 
-        } catch (EntityNotFoundException e) {
+        } catch (NullPointerException e) {
             return notFound();
         }
 
@@ -86,7 +85,7 @@ public class EncomiendaController extends Controller {
 
             return ok(toJson(encomienda));
 
-        } catch (EntityNotFoundException e) {
+        } catch (NullPointerException e) {
             return notFound();
         }
 
@@ -101,7 +100,7 @@ public class EncomiendaController extends Controller {
             Logger.info(toJson(encomienda).toString());
             return ok(toJson(encomienda));
 
-        } catch (EntityNotFoundException e) {
+        } catch (NullPointerException e) {
             return notFound();
         }
 
@@ -121,7 +120,7 @@ public class EncomiendaController extends Controller {
 
             return ok();
 
-        } catch (EntityNotFoundException e) {
+        } catch (NullPointerException e) {
             return notFound();
         }
 
@@ -141,7 +140,7 @@ public class EncomiendaController extends Controller {
             repositorioEncomienda.modificar(encomienda);
             return ok();
 
-        } catch (EntityNotFoundException e) {
+        } catch (NullPointerException e) {
             return notFound();
         }
 
@@ -160,7 +159,7 @@ public class EncomiendaController extends Controller {
 
            return ok();
 
-       } catch (EntityNotFoundException e) {
+       } catch (NullPointerException e) {
            return notFound();
        }
    }
@@ -185,7 +184,7 @@ public class EncomiendaController extends Controller {
             List<EstadoEncomienda> historico = encomienda.getEstados();
             return ok(toJson(historico));
 
-        } catch (EntityNotFoundException e) {
+        } catch (NullPointerException e) {
             return notFound();
         }
     }
@@ -207,7 +206,7 @@ public class EncomiendaController extends Controller {
 
             return ok(toJson(venta));
 
-        } catch (EntityNotFoundException e) {
+        } catch (NullPointerException e) {
             return notFound();
         }
     }

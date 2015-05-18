@@ -56,10 +56,10 @@ public class PuntoDeVentaController extends Controller {
             Logger.info("GEEEEEEEEEEEEET\n");
             PuntoDeVenta puntoDeVenta = repositorioPdv.buscarPorId(id);
 
-            Logger.info(toJson(puntoDeVenta).toString());
+            //geLogger.info(toJson(puntoDeVenta).toString());
             return ok(toJson(puntoDeVenta));
 
-        } catch (EntityNotFoundException e) {
+        } catch (NullPointerException e) {
             return notFound();
         }
     }
@@ -82,7 +82,7 @@ public class PuntoDeVentaController extends Controller {
             repositorioPdv.modificar(puntoDeVenta);
             return ok();
 
-        } catch (EntityNotFoundException e) {
+        } catch (NullPointerException e) {
             return notFound();
         }
     }
@@ -95,7 +95,7 @@ public class PuntoDeVentaController extends Controller {
             repositorioPdv.eliminar(punto);
             return ok();
 
-        } catch (EntityNotFoundException e) {
+        } catch (NullPointerException e) {
             return notFound();
         }
     }
