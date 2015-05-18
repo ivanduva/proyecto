@@ -12,10 +12,10 @@ import java.util.Date;
 //@PrimaryKeyJoinColumn(name = "legajo", referencedColumnName = "id_persona")
 public class Empleado extends Persona {
 
-    @Column(name = "cuit")
+    @Column(name = "cuit", unique=true)
     private String cuit;
 
-    @Column(name = "dni")
+    @Column(name = "dni", unique=true)
     private Long dni;
 
     @Column(name = "horario")

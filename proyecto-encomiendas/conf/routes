@@ -71,6 +71,8 @@ PUT     /ventas/:id                         controllers.EncomiendaController.reg
 
 PUT     /ventas/finalizar/:id               controllers.EncomiendaController.finalizarVenta(id: Long)
 
+GET     /ventas/:id                         controllers.EncomiendaController.getVenta(id: Long)
+
 GET     /ventas/encomiendas/orden/:punto    controllers.EncomiendaController.generarOrden(punto: Long)
 
 GET     /ventas/encomiendas/:id             controllers.EncomiendaController.getEncomienda(id: Long)

@@ -64,6 +64,9 @@ create table persona (
   categoria                 varchar(255),
   puede_reservar            varchar(255),
   puntos_viajero            integer,
+  constraint uq_persona_email unique (email),
+  constraint uq_persona_cuit unique (cuit),
+  constraint uq_persona_dni unique (dni),
   constraint pk_persona primary key (id_persona))
 ;
 
@@ -78,6 +81,7 @@ create table punto_de_venta (
   usuario_id_usuario        bigint,
   tipo_punto                varchar(22),
   constraint ck_punto_de_venta_tipo_punto check (tipo_punto in ('OFICINA ADMINISTRATIVA','PUNTO EXTERNO')),
+  constraint uq_punto_de_venta_nombre unique (nombre),
   constraint pk_punto_de_venta primary key (id_punto_de_venta))
 ;
 

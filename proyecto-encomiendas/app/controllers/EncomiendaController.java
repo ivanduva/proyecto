@@ -58,7 +58,8 @@ public class EncomiendaController extends Controller {
             return ok(toJson(venta));
 
         } catch (NullPointerException e) {
-            return notFound();
+            String mensaje = "404 Error: Entidad no encontrada";
+            return notFound(toJson(mensaje));
         }
 
     }
@@ -86,7 +87,8 @@ public class EncomiendaController extends Controller {
             return ok(toJson(encomienda));
 
         } catch (NullPointerException e) {
-            return notFound();
+            String mensaje = "404 Error: Entidad no encontrada";
+            return notFound(toJson(mensaje));
         }
 
 
@@ -101,7 +103,8 @@ public class EncomiendaController extends Controller {
             return ok(toJson(encomienda));
 
         } catch (NullPointerException e) {
-            return notFound();
+            String mensaje = "404 Error: Entidad no encontrada";
+            return notFound(toJson(mensaje));
         }
 
 
@@ -118,10 +121,11 @@ public class EncomiendaController extends Controller {
             encomienda.agregarEstado(estadoEncomienda);
             repositorioEncomienda.modificar(encomienda);
 
-            return ok();
+            return ok(toJson(encomienda));
 
         } catch (NullPointerException e) {
-            return notFound();
+            String mensaje = "404 Error: Entidad no encontrada";
+            return notFound(toJson(mensaje));
         }
 
 
@@ -138,10 +142,11 @@ public class EncomiendaController extends Controller {
 
             encomienda.agregarEstado(estadoEncomienda);
             repositorioEncomienda.modificar(encomienda);
-            return ok();
+            return ok(toJson(encomienda));
 
         } catch (NullPointerException e) {
-            return notFound();
+            String mensaje = "404 Error: Entidad no encontrada";
+            return notFound(toJson(mensaje));
         }
 
     }
@@ -157,10 +162,11 @@ public class EncomiendaController extends Controller {
            encomienda.agregarEstado(estadoEncomienda);
            repositorioEncomienda.modificar(encomienda);
 
-           return ok();
+           return ok(toJson(encomienda));
 
        } catch (NullPointerException e) {
-           return notFound();
+           String mensaje = "404 Error: Entidad no encontrada";
+           return notFound(toJson(mensaje));
        }
    }
 
@@ -185,7 +191,8 @@ public class EncomiendaController extends Controller {
             return ok(toJson(historico));
 
         } catch (NullPointerException e) {
-            return notFound();
+            String mensaje = "404 Error: Entidad no encontrada";
+            return notFound(toJson(mensaje));
         }
     }
 
@@ -207,7 +214,8 @@ public class EncomiendaController extends Controller {
             return ok(toJson(venta));
 
         } catch (NullPointerException e) {
-            return notFound();
+            String mensaje = "404 Error: Entidad no encontrada";
+            return notFound(toJson(mensaje));
         }
     }
 

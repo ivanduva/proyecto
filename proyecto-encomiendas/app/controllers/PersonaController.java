@@ -12,6 +12,7 @@ import play.mvc.Result;
 import repository.PersonaRepositorio;
 import repository.SecurityRoleRepositorio;
 
+import javax.persistence.PersistenceException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,38 +32,48 @@ public class PersonaController extends Controller {
     //registra el ADMIN o el VENDEDOR, puede elegir si "Puede reservar". Si se registra el cliente por su cuenta, no.
     public static Result crearCliente() {
 
-        JsonNode json = request().body().asJson();
-        Cliente cliente = Json.fromJson(json, Cliente.class);
-        //Usuario usuario = Json.fromJson(json, Usuario.class);
-        cliente.getUsuario().setFechaCreacion(new Date());
-        cliente.getUsuario().agregarRol(repositorioRol.buscarPorId((long) 1));
+        try {
+            JsonNode json = request().body().asJson();
+            Cliente cliente = Json.fromJson(json, Cliente.class);
+            //Usuario usuario = Json.fromJson(json, Usuario.class);
+            cliente.getUsuario().setFechaCreacion(new Date());
+            cliente.getUsuario().agregarRol(repositorioRol.buscarPorId((long) 1));
 
-        if (cliente.getPuedeReservar() == null) {
-            cliente.setPuedeReservar("NO");
+            if (cliente.getPuedeReservar() == null) {
+                cliente.setPuedeReservar("NO");
+            }
+            cliente.setPuntosViajero(0);
+            //cliente.setUsuario(usuario);
+
+            repositorioPersona.crear(cliente);
+            //repositorioUsuario.crear(usuario);
+
+            return ok(toJson(cliente));
+        } catch (PersistenceException e) {
+
+            return badRequest(toJson("400 Error: Datos duplicados"));
         }
-        cliente.setPuntosViajero(0);
-        //cliente.setUsuario(usuario);
-
-        repositorioPersona.crear(cliente);
-        //repositorioUsuario.crear(usuario);
-
-        return ok(toJson(cliente));
     }
 
     public static Result crearEmpleado() {
 
-        JsonNode json = request().body().asJson();
-        Empleado empleado = Json.fromJson(json, Empleado.class);
-        //Usuario usuario = Json.fromJson(json, Usuario.class);
-        empleado.getUsuario().setFechaCreacion(new Date());
-        empleado.getUsuario().agregarRol(repositorioRol.buscarPorId((long) 4));
-        empleado.setCesadoFalse();
-        //empleado.setUsuario(usuario);
+        try {
+            JsonNode json = request().body().asJson();
+            Empleado empleado = Json.fromJson(json, Empleado.class);
+            //Usuario usuario = Json.fromJson(json, Usuario.class);
+            empleado.getUsuario().setFechaCreacion(new Date());
+            empleado.getUsuario().agregarRol(repositorioRol.buscarPorId((long) 4));
+            empleado.setCesadoFalse();
+            //empleado.setUsuario(usuario);
 
-        repositorioPersona.crear(empleado);
-        //repositorioUsuario.crear(usuario);
+            repositorioPersona.crear(empleado);
+            //repositorioUsuario.crear(usuario);
 
-        return ok(toJson(empleado));
+            return ok(toJson(empleado));
+        } catch (PersistenceException e) {
+
+            return badRequest(toJson("400 Error: Datos duplicados"));
+        }
     }
 
     public static Result getPersona(Long id) {
@@ -73,7 +84,8 @@ public class PersonaController extends Controller {
             return ok(toJson(persona));
 
         } catch (NullPointerException e) {
-            return notFound();
+            String mensaje = "404 Error: Entidad no encontrada";
+            return notFound(toJson(mensaje));
         }
     }
 
@@ -96,10 +108,11 @@ public class PersonaController extends Controller {
 
             repositorioPersona.modificar(cliente);
 
-            return ok();
+            return ok(toJson(cliente));
 
         } catch (NullPointerException e) {
-            return notFound();
+            String mensaje = "404 Error: Entidad no encontrada";
+            return notFound(toJson(mensaje));
         }
     }
 
@@ -122,10 +135,11 @@ public class PersonaController extends Controller {
 
             repositorioPersona.modificar(empleado);
 
-            return ok();
+            return ok(toJson(empleado));
 
         } catch (NullPointerException e) {
-            return notFound();
+            String mensaje = "404 Error: Entidad no encontrada";
+            return notFound(toJson(mensaje));
         }
     }
 
@@ -155,10 +169,11 @@ public class PersonaController extends Controller {
         try {
             Cliente cliente = (Cliente) repositorioPersona.buscarPorId(id);
             repositorioPersona.eliminar(cliente);
-            return ok();
+            return ok(toJson(cliente));
 
         } catch (NullPointerException e) {
-            return notFound();
+            String mensaje = "404 Error: Entidad no encontrada";
+            return notFound(toJson(mensaje));
         }
     }
 
@@ -169,10 +184,11 @@ public class PersonaController extends Controller {
             empleado.setCesadoTrue();
             repositorioPersona.modificar(empleado);
 
-            return ok();
+            return ok(toJson(empleado));
 
         } catch (NullPointerException e) {
-            return notFound();
+            String mensaje = "404 Error: Entidad no encontrada";
+            return notFound(toJson(mensaje));
         }
     }
 
@@ -183,10 +199,11 @@ public class PersonaController extends Controller {
             empleado.setCesadoFalse();
             repositorioPersona.modificar(empleado);
 
-            return ok();
+            return ok(toJson(empleado));
 
         } catch (NullPointerException e) {
-            return notFound();
+            String mensaje = "404 Error: Entidad no encontrada";
+            return notFound(toJson(mensaje));
         }
     }
 

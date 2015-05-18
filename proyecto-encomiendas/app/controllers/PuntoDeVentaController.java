@@ -13,7 +13,7 @@ import play.mvc.Result;
 import repository.LocalidadRepositorio;
 import repository.PuntoDeVentaRepositorio;
 
-import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceException;
 import java.util.Date;
 import java.util.List;
 
@@ -30,19 +30,17 @@ public class PuntoDeVentaController extends Controller {
 
     public static Result agregarPunto() {
 
-//        PuntoDeVenta punto = Json.fromJson(request().body().asJson());
-//        Usuario usuario = Form.form(Usuario.class).bindFromRequest().get();
-//        usuario.setTipo(TipoUsuario.VENDEDOR);
-//        repositorioUsuario.crear(usuario);
-//        punto.setUsuario(usuario);
-//        repositorioPdv.crear(punto);
+        try {
+            JsonNode json = request().body().asJson();
+            Logger.info(json.toString() + "\n");
+            PuntoDeVenta puntoDeVenta = Json.fromJson(json, PuntoDeVenta.class);
+            puntoDeVenta.getUsuario().setFechaCreacion(new Date());
+            repositorioPdv.crear(puntoDeVenta);
+            return ok(toJson(puntoDeVenta));
+        } catch (PersistenceException e) {
 
-        JsonNode json = request().body().asJson();
-        Logger.info(json.toString() + "\n");
-        PuntoDeVenta puntoDeVenta = Json.fromJson(json, PuntoDeVenta.class);
-        puntoDeVenta.getUsuario().setFechaCreacion(new Date());
-        repositorioPdv.crear(puntoDeVenta);
-        return ok(toJson(puntoDeVenta));
+            return badRequest(toJson("400 Error: Datos duplicados"));
+        }
     }
 
     public static Result listarPuntos() {
@@ -60,7 +58,8 @@ public class PuntoDeVentaController extends Controller {
             return ok(toJson(puntoDeVenta));
 
         } catch (NullPointerException e) {
-            return notFound();
+            String mensaje = "404 Error: Entidad no encontrada";
+            return notFound(toJson(mensaje));
         }
     }
 
@@ -80,10 +79,11 @@ public class PuntoDeVentaController extends Controller {
             puntoDeVenta.setLocalidad(puntoDeVentaJson.getLocalidad());
 
             repositorioPdv.modificar(puntoDeVenta);
-            return ok();
+            return ok(toJson(puntoDeVenta));
 
         } catch (NullPointerException e) {
-            return notFound();
+            String mensaje = "404 Error: Entidad no encontrada";
+            return notFound(toJson(mensaje));
         }
     }
 
@@ -93,10 +93,11 @@ public class PuntoDeVentaController extends Controller {
             Logger.info("ELIMINAAAAAAAAAAAAAAAAAAAR");
             PuntoDeVenta punto = repositorioPdv.buscarPorId(id);
             repositorioPdv.eliminar(punto);
-            return ok();
+            return ok(toJson(punto));
 
         } catch (NullPointerException e) {
-            return notFound();
+            String mensaje = "404 Error: Entidad no encontrada";
+            return notFound(toJson(mensaje));
         }
     }
 

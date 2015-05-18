@@ -27,7 +27,7 @@ public class PuntoDeVenta extends Model {
     @OneToOne
     private Localidad localidad;
 
-    @Column(name = "nombre")
+    @Column(name = "nombre", unique=true)
     private String nombre;
 
     @Column(name = "nombre_responsable")
