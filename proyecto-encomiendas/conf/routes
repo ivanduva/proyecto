@@ -67,9 +67,9 @@ DELETE  /clientes/:id                       controllers.PersonaController.elimin
 
 POST    /ventas                             controllers.EncomiendaController.crearVenta()
 
-PUT     /ventas/:id                         controllers.EncomiendaController.registrarEncomienda(id: Long)
+# PUT     /ventas/:id                         controllers.EncomiendaController.registrarEncomienda(id: Long)
 
-PUT     /ventas/finalizar/:id               controllers.EncomiendaController.finalizarVenta(id: Long)
+# PUT     /ventas/finalizar/:id               controllers.EncomiendaController.finalizarVenta(id: Long)
 
 GET     /ventas/:id                         controllers.EncomiendaController.getVenta(id: Long)
 

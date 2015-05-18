@@ -34,16 +34,20 @@ public class EncomiendaController extends Controller {
 
     public static Result crearVenta() {
 
+        Long monto = (long) 0;
         JsonNode json = request().body().asJson();
         Venta venta = Json.fromJson(json, Venta.class);
+        venta.setFecha(new Date());
         //venta.getCliente().aumentarPuntosViajero(10);
-        //if (id != 0) {
-          //  Cliente cliente = (Cliente) repositorioPersona.buscarPorId(id);
-            //venta.setCliente(cliente);
-        //}
+        for (int i=0; i<venta.getEncomiendas().size(); i++) {
+            EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date(), venta.getPuntoDeVenta());
+            estadoEncomienda.setNombreEnSucursal();
+            venta.getEncomiendas().get(i).agregarEstado(estadoEncomienda);
+            venta.getEncomiendas().get(i).setRemitente(venta.getCliente());
+            monto += venta.getEncomiendas().get(i).getTarifa();
+        }
 
-        //PuntoDeVenta puntoDeVenta = repositorioPdv.buscarPorId(idPdv);
-        //venta.setPuntoDeVenta(puntoDeVenta);
+        venta.setValorFinal(monto);
 
         repositorioVenta.crear(venta);
 
@@ -58,41 +62,39 @@ public class EncomiendaController extends Controller {
             return ok(toJson(venta));
 
         } catch (NullPointerException e) {
-            String mensaje = "404 Error: Entidad no encontrada";
-            return notFound(toJson(mensaje));
+            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
 
     }
 
-    public static Result registrarEncomienda (Long id) {
+    //public static Result registrarEncomienda (Long id) {
 
-        JsonNode json = request().body().asJson();
-        Encomienda encomienda = Json.fromJson(json, Encomienda.class);
+        //JsonNode json = request().body().asJson();
+        //Encomienda encomienda = Json.fromJson(json, Encomienda.class);
 
-        try {
-            Venta venta = repositorioVenta.buscarPorId(id);
-            EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date(), venta.getPuntoDeVenta());
-            estadoEncomienda.setNombreEnSucursal();
-            encomienda.agregarEstado(estadoEncomienda);
+        //try {
+        //    Venta venta = repositorioVenta.buscarPorId(id);
+      //      EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date(), venta.getPuntoDeVenta());
+    //        estadoEncomienda.setNombreEnSucursal();
+  //          encomienda.agregarEstado(estadoEncomienda);
+//
+    //        if (venta.getCliente() != null) {
+  //              encomienda.setRemitente(venta.getCliente());
+//            }
 
-            if (venta.getCliente() != null) {
-                encomienda.setRemitente(venta.getCliente());
-            }
+            //venta.setFinalizadaFalse();
 
-            venta.setFinalizadaFalse();
+            //venta.agregarEncomienda(encomienda);
+            //repositorioVenta.modificar(venta);
 
-            venta.agregarEncomienda(encomienda);
-            repositorioVenta.modificar(venta);
+          //  return ok(toJson(encomienda));
 
-            return ok(toJson(encomienda));
-
-        } catch (NullPointerException e) {
-            String mensaje = "404 Error: Entidad no encontrada";
-            return notFound(toJson(mensaje));
-        }
+        //} catch (NullPointerException e) {
+        //    return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
+      //  }
 
 
-    }
+    //}
 
     public static Result getEncomienda (Long id) {
 
@@ -103,8 +105,7 @@ public class EncomiendaController extends Controller {
             return ok(toJson(encomienda));
 
         } catch (NullPointerException e) {
-            String mensaje = "404 Error: Entidad no encontrada";
-            return notFound(toJson(mensaje));
+            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
 
 
@@ -124,8 +125,7 @@ public class EncomiendaController extends Controller {
             return ok(toJson(encomienda));
 
         } catch (NullPointerException e) {
-            String mensaje = "404 Error: Entidad no encontrada";
-            return notFound(toJson(mensaje));
+            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
 
 
@@ -145,8 +145,7 @@ public class EncomiendaController extends Controller {
             return ok(toJson(encomienda));
 
         } catch (NullPointerException e) {
-            String mensaje = "404 Error: Entidad no encontrada";
-            return notFound(toJson(mensaje));
+            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
 
     }
@@ -165,8 +164,7 @@ public class EncomiendaController extends Controller {
            return ok(toJson(encomienda));
 
        } catch (NullPointerException e) {
-           String mensaje = "404 Error: Entidad no encontrada";
-           return notFound(toJson(mensaje));
+           return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
        }
    }
 
@@ -191,33 +189,31 @@ public class EncomiendaController extends Controller {
             return ok(toJson(historico));
 
         } catch (NullPointerException e) {
-            String mensaje = "404 Error: Entidad no encontrada";
-            return notFound(toJson(mensaje));
+            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
     }
 
-    public static Result finalizarVenta(Long id) {
+    //public static Result finalizarVenta(Long id) {
 
-        try {
-            Long monto = (long) 0;
-            Venta venta = repositorioVenta.buscarPorId(id);
-            venta.setFecha(new Date());
+        //try {
+            //Long monto = (long) 0;
+            //Venta venta = repositorioVenta.buscarPorId(id);
+            //venta.setFecha(new Date());
 
-            for (int i = 0; i < venta.getEncomiendas().size(); i++) {
-                monto += venta.getEncomiendas().get(i).getTarifa();
-            }
-            venta.setValorFinal(monto);
-            venta.setFinalizadaTrue();
+            //for (int i = 0; i < venta.getEncomiendas().size(); i++) {
+              //  monto += venta.getEncomiendas().get(i).getTarifa();
+            //}
+            //venta.setValorFinal(monto);
+            //venta.setFinalizadaTrue();
 
-            repositorioVenta.modificar(venta);
+            //repositorioVenta.modificar(venta);
 
-            return ok(toJson(venta));
+          //  return ok(toJson(venta));
 
-        } catch (NullPointerException e) {
-            String mensaje = "404 Error: Entidad no encontrada";
-            return notFound(toJson(mensaje));
-        }
-    }
+        //} catch (NullPointerException e) {
+      //      return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
+    //    }
+  //  }
 
     public static Result generarOrden(Long punto) {
 

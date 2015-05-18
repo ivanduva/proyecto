@@ -22,9 +22,6 @@ public class Venta {
     @Column (name = "valor_final")
     private Long valorFinal;
 
-    @Column (name = "finalizada")
-    private boolean finalizada;
-
     @OneToMany (cascade = CascadeType.ALL)
     private List<Encomienda> encomiendas;
 
@@ -95,15 +92,4 @@ public class Venta {
         this.encomiendas.add(encomienda);
     }
 
-    public boolean isFinalizada() {
-        return finalizada;
-    }
-
-    public void setFinalizadaTrue() {
-        this.finalizada = true;
-    }
-
-    public void setFinalizadaFalse() {
-        this.finalizada = false;
-    }
 }

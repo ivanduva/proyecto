@@ -39,7 +39,7 @@ public class PuntoDeVentaController extends Controller {
             return ok(toJson(puntoDeVenta));
         } catch (PersistenceException e) {
 
-            return badRequest(toJson("400 Error: Datos duplicados"));
+            return badRequest(toJson("{status: 400, mensaje: 'Datos duplicados'}"));
         }
     }
 
@@ -58,8 +58,7 @@ public class PuntoDeVentaController extends Controller {
             return ok(toJson(puntoDeVenta));
 
         } catch (NullPointerException e) {
-            String mensaje = "404 Error: Entidad no encontrada";
-            return notFound(toJson(mensaje));
+            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
     }
 
@@ -82,8 +81,7 @@ public class PuntoDeVentaController extends Controller {
             return ok(toJson(puntoDeVenta));
 
         } catch (NullPointerException e) {
-            String mensaje = "404 Error: Entidad no encontrada";
-            return notFound(toJson(mensaje));
+            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
     }
 
@@ -96,8 +94,7 @@ public class PuntoDeVentaController extends Controller {
             return ok(toJson(punto));
 
         } catch (NullPointerException e) {
-            String mensaje = "404 Error: Entidad no encontrada";
-            return notFound(toJson(mensaje));
+            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
     }
 

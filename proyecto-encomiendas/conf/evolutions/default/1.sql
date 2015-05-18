@@ -121,7 +121,6 @@ create table venta (
   id_venta                  bigint not null,
   fecha                     timestamp,
   valor_final               bigint,
-  finalizada                boolean,
   cliente_id_persona        bigint,
   punto_de_venta_id_punto_de_venta bigint,
   constraint pk_venta primary key (id_venta))

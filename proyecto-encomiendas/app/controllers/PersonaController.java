@@ -51,7 +51,7 @@ public class PersonaController extends Controller {
             return ok(toJson(cliente));
         } catch (PersistenceException e) {
 
-            return badRequest(toJson("400 Error: Datos duplicados"));
+            return badRequest(toJson("{status: 400, mensaje: 'Datos duplicados'}"));
         }
     }
 
@@ -72,7 +72,7 @@ public class PersonaController extends Controller {
             return ok(toJson(empleado));
         } catch (PersistenceException e) {
 
-            return badRequest(toJson("400 Error: Datos duplicados"));
+            return badRequest(toJson("{status: 400, mensaje: 'Datos duplicados'}"));
         }
     }
 
@@ -84,8 +84,7 @@ public class PersonaController extends Controller {
             return ok(toJson(persona));
 
         } catch (NullPointerException e) {
-            String mensaje = "404 Error: Entidad no encontrada";
-            return notFound(toJson(mensaje));
+            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
     }
 
@@ -111,8 +110,7 @@ public class PersonaController extends Controller {
             return ok(toJson(cliente));
 
         } catch (NullPointerException e) {
-            String mensaje = "404 Error: Entidad no encontrada";
-            return notFound(toJson(mensaje));
+            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
     }
 
@@ -138,8 +136,7 @@ public class PersonaController extends Controller {
             return ok(toJson(empleado));
 
         } catch (NullPointerException e) {
-            String mensaje = "404 Error: Entidad no encontrada";
-            return notFound(toJson(mensaje));
+            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
     }
 
@@ -172,8 +169,7 @@ public class PersonaController extends Controller {
             return ok(toJson(cliente));
 
         } catch (NullPointerException e) {
-            String mensaje = "404 Error: Entidad no encontrada";
-            return notFound(toJson(mensaje));
+            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
     }
 
@@ -187,8 +183,7 @@ public class PersonaController extends Controller {
             return ok(toJson(empleado));
 
         } catch (NullPointerException e) {
-            String mensaje = "404 Error: Entidad no encontrada";
-            return notFound(toJson(mensaje));
+            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
     }
 
@@ -202,8 +197,7 @@ public class PersonaController extends Controller {
             return ok(toJson(empleado));
 
         } catch (NullPointerException e) {
-            String mensaje = "404 Error: Entidad no encontrada";
-            return notFound(toJson(mensaje));
+            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
     }
 
