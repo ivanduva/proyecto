@@ -11,7 +11,7 @@
     function EmpleadoListController($location, dataservice) {
         var vm = this;
 
-        vm.empleados = dataservice.Empleados().query();
+        dataservice.Empleados().query(onSuccessQuery, onFail);
 
         vm.edit = function (personaId) {
             $location.path('/admin/empleados/' + personaId + '/edit');
@@ -19,8 +19,15 @@
 
         vm.cesar = function (personaId) {
             dataservice.EmpleadosCesados().update({id: parseInt(personaId)});
-
         };
+
+        function onSuccessDelete(data) {
+            console.log(data);
+        }
+
+        function onSuccessQuery(data) {
+            vm.clientes = data;
+        }
 
         /*vm.alta = function (personaId) {
             dataservice.EmpleadosCesados().update({id: parseInt(personaId)});
@@ -28,38 +35,70 @@
     }
 
 
-    EmpleadoCreateController.$inject = ['$scope', '$routeParams', '$location', 'dataservice'];
-    function EmpleadoCreateController($scope, $routeParams, $location, dataservice) {
+    EmpleadoCreateController.$inject = ['$routeParams', '$location', 'dataservice'];
+    function EmpleadoCreateController($routeParams, $location, dataservice) {
         var vm = this;
 
-        $scope.inputType = 'password';
+        vm.inputType = 'password';
+        vm.showPassText = "Mostrar";
 
-        $scope.hideShowPassword = function(){
-            if ($scope.inputType == 'password')
-              $scope.inputType = 'text';
-            else
-              $scope.inputType = 'password';
-          };
+        vm.togglePassword = function() {
+            if (vm.inputType == 'password') {
+                vm.inputType = 'text';
+                vm.showPassText = "Ocultar";
+            } else {
+                vm.inputType = 'password';
+                vm.showPassText = "Mostrar";
+            }
+        };
 
-        vm.localidades = dataservice.Localidades().query();
+        dataservice.Localidades().query(onLocalidadesLoad, onFail);
         vm.empleado = null;
 
         if ($routeParams.id !== undefined) {
             var id = parseInt($routeParams.id);
-            vm.empleado = dataservice.Empleados().show({id: id});
+            dataservice.Empleados().show({id: id}, onSuccessGet, onFail);
             vm.title = "Editar Empleado";
         } else {
             vm.title = "Nuevo Empleado";
         }
 
         vm.save = function () {
-            console.log(vm.empleado);
+
             if (vm.empleado.personaId === undefined) {
-                dataservice.Empleados().create(vm.empleado);
+                dataservice.Empleados().save(vm.empleado, onSuccessSave, onFail);
             } else {
-                dataservice.Empleados().update({id: vm.empleado.personaId}, vm.empleado);
+                dataservice.Empleados().update({id: vm.empleado.personaId}, vm.empleado, onSuccessUpdate, onFail);
             }
             $location.path('/admin/empleados');
         };
+
+        function onLocalidadesLoad(data) {
+            vm.localidades = data;
+            vm.localidad = data[0].localidadId;
+        }
+
+        function onSuccessGet (data) {
+            vm.cliente = data;
+        }
+
+        function onSuccessSave (data) {
+            console.log(data);
+        }
+
+        function onSuccessUpdate(data) {
+            console.log(data);
+        }
+    }
+
+    function onFail (data) {
+        console.log(data);
+    }
+
+
+    function searchById(id, array, idAttr) {
+        return array.map(function getIds(entity) {
+            return entity[idAttr];
+        }).indexOf(id);
     }
 }());
