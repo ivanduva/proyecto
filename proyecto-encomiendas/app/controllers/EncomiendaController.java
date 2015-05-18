@@ -15,6 +15,7 @@ import repository.PersonaRepositorio;
 import repository.PuntoDeVentaRepositorio;
 import repository.VentaRepositorio;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,72 +51,118 @@ public class EncomiendaController extends Controller {
         return ok(toJson(venta));
     }
 
+    public static Result getVenta(Long id) {
+
+
+        try {
+            Venta venta = repositorioVenta.buscarPorId(id);
+            return ok(toJson(venta));
+
+        } catch (EntityNotFoundException e) {
+            return notFound();
+        }
+
+    }
+
     public static Result registrarEncomienda (Long id) {
 
         JsonNode json = request().body().asJson();
         Encomienda encomienda = Json.fromJson(json, Encomienda.class);
-        Venta venta = repositorioVenta.buscarPorId(id);
-        EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date(), venta.getPuntoDeVenta());
-        estadoEncomienda.setNombreEnSucursal();
-        encomienda.agregarEstado(estadoEncomienda);
 
-        if (venta.getCliente() != null) {
-            encomienda.setRemitente(venta.getCliente());
+        try {
+            Venta venta = repositorioVenta.buscarPorId(id);
+            EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date(), venta.getPuntoDeVenta());
+            estadoEncomienda.setNombreEnSucursal();
+            encomienda.agregarEstado(estadoEncomienda);
+
+            if (venta.getCliente() != null) {
+                encomienda.setRemitente(venta.getCliente());
+            }
+
+            venta.setFinalizadaFalse();
+
+            venta.agregarEncomienda(encomienda);
+            repositorioVenta.modificar(venta);
+
+            return ok(toJson(encomienda));
+
+        } catch (EntityNotFoundException e) {
+            return notFound();
         }
 
-        venta.setFinalizadaFalse();
 
-        venta.agregarEncomienda(encomienda);
-        repositorioVenta.modificar(venta);
-
-        return ok(toJson(encomienda));
     }
 
     public static Result getEncomienda (Long id) {
 
-        Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
-        Logger.info(toJson(encomienda).toString());
-        return ok(toJson(encomienda));
+
+        try {
+            Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
+            Logger.info(toJson(encomienda).toString());
+            return ok(toJson(encomienda));
+
+        } catch (EntityNotFoundException e) {
+            return notFound();
+        }
+
+
 
     }
 
     public static Result despacharEncomienda (Long id) {
 
-        Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
-        EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date());
-        estadoEncomienda.setNombreEnCamino();
+        try {
+            Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
+            EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date());
+            estadoEncomienda.setNombreEnCamino();
 
-        encomienda.agregarEstado(estadoEncomienda);
-        repositorioEncomienda.modificar(encomienda);
+            encomienda.agregarEstado(estadoEncomienda);
+            repositorioEncomienda.modificar(encomienda);
 
-        return ok();
+            return ok();
+
+        } catch (EntityNotFoundException e) {
+            return notFound();
+        }
+
+
     }
 
     public static Result recibirEncomienda (Long id, Long punto) {
 
-        Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
-        EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date());
-        estadoEncomienda.setNombreEnSucursal();
-        PuntoDeVenta puntoDeVenta = repositorioPunto.buscarPorId(punto);
-        estadoEncomienda.setPuntoDeVenta(puntoDeVenta);
+        try {
+            Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
+            EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date());
+            estadoEncomienda.setNombreEnSucursal();
+            PuntoDeVenta puntoDeVenta = repositorioPunto.buscarPorId(punto);
+            estadoEncomienda.setPuntoDeVenta(puntoDeVenta);
 
-        encomienda.agregarEstado(estadoEncomienda);
-        repositorioEncomienda.modificar(encomienda);
-        return ok();
+            encomienda.agregarEstado(estadoEncomienda);
+            repositorioEncomienda.modificar(encomienda);
+            return ok();
+
+        } catch (EntityNotFoundException e) {
+            return notFound();
+        }
 
     }
 
    public static Result entregarEncomienda (Long id) {
 
-       Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
-       EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date());
-       estadoEncomienda.setNombreEntregada();
+       try {
+           Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
+           EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date());
+           estadoEncomienda.setNombreEntregada();
 
 
-       encomienda.agregarEstado(estadoEncomienda);
-       repositorioEncomienda.modificar(encomienda);
+           encomienda.agregarEstado(estadoEncomienda);
+           repositorioEncomienda.modificar(encomienda);
 
-       return ok();
+           return ok();
+
+       } catch (EntityNotFoundException e) {
+           return notFound();
+       }
    }
 
     public static Result eliminarEncomienda (Long id) {
@@ -133,26 +180,36 @@ public class EncomiendaController extends Controller {
 
     public static Result listarHistoricoEstados(Long id) {
 
-        Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
-        List<EstadoEncomienda> historico = encomienda.getEstados();
-        return ok(toJson(historico));
+        try {
+            Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
+            List<EstadoEncomienda> historico = encomienda.getEstados();
+            return ok(toJson(historico));
+
+        } catch (EntityNotFoundException e) {
+            return notFound();
+        }
     }
 
     public static Result finalizarVenta(Long id) {
 
-        Long monto = (long) 0;
-        Venta venta = repositorioVenta.buscarPorId(id);
-        venta.setFecha(new Date());
+        try {
+            Long monto = (long) 0;
+            Venta venta = repositorioVenta.buscarPorId(id);
+            venta.setFecha(new Date());
 
-        for (int i = 0; i<venta.getEncomiendas().size(); i++){
-            monto += venta.getEncomiendas().get(i).getTarifa();
+            for (int i = 0; i < venta.getEncomiendas().size(); i++) {
+                monto += venta.getEncomiendas().get(i).getTarifa();
+            }
+            venta.setValorFinal(monto);
+            venta.setFinalizadaTrue();
+
+            repositorioVenta.modificar(venta);
+
+            return ok(toJson(venta));
+
+        } catch (EntityNotFoundException e) {
+            return notFound();
         }
-        venta.setValorFinal(monto);
-        venta.setFinalizadaTrue();
-
-        repositorioVenta.modificar(venta);
-
-        return ok(toJson(venta));
     }
 
     public static Result generarOrden(Long punto) {

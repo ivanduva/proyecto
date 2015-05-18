@@ -12,6 +12,7 @@ import play.mvc.Result;
 import repository.PersonaRepositorio;
 import repository.SecurityRoleRepositorio;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -67,27 +68,66 @@ public class PersonaController extends Controller {
 
     public static Result getPersona(Long id) {
 
-        Persona persona = repositorioPersona.buscarPorId(id);
+        try {
+            Persona persona = repositorioPersona.buscarPorId(id);
 
-        return ok(toJson(persona));
+            return ok(toJson(persona));
+
+        } catch (EntityNotFoundException e) {
+            return notFound();
+        }
     }
 
     public static Result modificarCliente(Long id) {
 
-        JsonNode json = request().body().asJson();
-        Cliente cliente = Json.fromJson(json, Cliente.class);
-        repositorioPersona.modificar(cliente);
+        try {
+            Cliente cliente = (Cliente) repositorioPersona.buscarPorId(id);
+            JsonNode json = request().body().asJson();
+            Cliente clienteJson = Json.fromJson(json, Cliente.class);
 
-        return ok();
+            cliente.setEmail(clienteJson.getEmail());
+            cliente.setFechaNacimiento(clienteJson.getFechaNacimiento());
+            cliente.setLocalidad(clienteJson.getLocalidad());
+            cliente.setNombre(clienteJson.getNombre());
+            cliente.setTelefono(clienteJson.getTelefono());
+            cliente.setCategoria(clienteJson.getCategoria());
+            cliente.setPuedeReservar(clienteJson.getPuedeReservar());
+            cliente.setPuntosViajero(clienteJson.getPuntosViajero());
+            cliente.setUsuario(clienteJson.getUsuario());
+
+            repositorioPersona.modificar(cliente);
+
+            return ok();
+
+        } catch (EntityNotFoundException e) {
+            return notFound();
+        }
     }
 
     public static Result modificarEmpleado(Long id) {
 
-        JsonNode json = request().body().asJson();
-        Empleado empleado = Json.fromJson(json, Empleado.class);
-        repositorioPersona.modificar(empleado);
+        try {
+            Empleado empleado = (Empleado) repositorioPersona.buscarPorId(id);
+            JsonNode json = request().body().asJson();
+            Empleado empleadoJson = Json.fromJson(json, Empleado.class);
 
-        return ok();
+            empleado.setEmail(empleadoJson.getEmail());
+            empleado.setFechaNacimiento(empleadoJson.getFechaNacimiento());
+            empleado.setLocalidad(empleadoJson.getLocalidad());
+            empleado.setNombre(empleadoJson.getNombre());
+            empleado.setTelefono(empleadoJson.getTelefono());
+            empleado.setCuit(empleadoJson.getCuit());
+            empleado.setDni(empleadoJson.getDni());
+            empleado.setHorario(empleadoJson.getHorario());
+            empleado.setUsuario(empleado.getUsuario());
+
+            repositorioPersona.modificar(empleado);
+
+            return ok();
+
+        } catch (EntityNotFoundException e) {
+            return notFound();
+        }
     }
 
     public static Result listarClientes() {
@@ -113,27 +153,42 @@ public class PersonaController extends Controller {
 
     public static Result eliminarCliente(Long id) {
 
-        Cliente cliente = (Cliente) repositorioPersona.buscarPorId(id);
-        repositorioPersona.eliminar(cliente);
-        return ok();
+        try {
+            Cliente cliente = (Cliente) repositorioPersona.buscarPorId(id);
+            repositorioPersona.eliminar(cliente);
+            return ok();
+
+        } catch (EntityNotFoundException e) {
+            return notFound();
+        }
     }
 
     public static Result cesarEmpleado(Long id) {
 
-        Empleado empleado = (Empleado) repositorioPersona.buscarPorId(id);
-        empleado.setCesadoTrue();
-        repositorioPersona.modificar(empleado);
+        try {
+            Empleado empleado = (Empleado) repositorioPersona.buscarPorId(id);
+            empleado.setCesadoTrue();
+            repositorioPersona.modificar(empleado);
 
-        return ok();
+            return ok();
+
+        } catch (EntityNotFoundException e) {
+            return notFound();
+        }
     }
 
     public static Result rehabilitarEmpleado(Long id) {
 
-        Empleado empleado = (Empleado) repositorioPersona.buscarPorId(id);
-        empleado.setCesadoFalse();
-        repositorioPersona.modificar(empleado);
+        try {
+            Empleado empleado = (Empleado) repositorioPersona.buscarPorId(id);
+            empleado.setCesadoFalse();
+            repositorioPersona.modificar(empleado);
 
-        return ok();
+            return ok();
+
+        } catch (EntityNotFoundException e) {
+            return notFound();
+        }
     }
 
 }

@@ -13,6 +13,7 @@ import play.mvc.Result;
 import repository.LocalidadRepositorio;
 import repository.PuntoDeVentaRepositorio;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Date;
 import java.util.List;
 
@@ -50,24 +51,53 @@ public class PuntoDeVentaController extends Controller {
     }
 
     public static Result getPunto(Long id) {
-        Logger.info("GEEEEEEEEEEEEET\n");
-        PuntoDeVenta puntoDeVenta = repositorioPdv.buscarPorId(id);
-        Logger.info(toJson(puntoDeVenta).toString());
-        return ok(toJson(puntoDeVenta));
+
+        try {
+            Logger.info("GEEEEEEEEEEEEET\n");
+            PuntoDeVenta puntoDeVenta = repositorioPdv.buscarPorId(id);
+
+            Logger.info(toJson(puntoDeVenta).toString());
+            return ok(toJson(puntoDeVenta));
+
+        } catch (EntityNotFoundException e) {
+            return notFound();
+        }
     }
 
     public static Result modificarPunto(Long id) {
-        JsonNode json = request().body().asJson();
-        PuntoDeVenta puntoDeVenta = Json.fromJson(json, PuntoDeVenta.class);
-        repositorioPdv.modificar(puntoDeVenta);
-        return ok();
+
+        try {
+            PuntoDeVenta puntoDeVenta = repositorioPdv.buscarPorId(id);
+            JsonNode json = request().body().asJson();
+            PuntoDeVenta puntoDeVentaJson = Json.fromJson(json, PuntoDeVenta.class);
+
+            puntoDeVenta.setDireccion(puntoDeVentaJson.getDireccion());
+            puntoDeVenta.setEmail(puntoDeVentaJson.getEmail());
+            puntoDeVenta.setNombre(puntoDeVentaJson.getNombre());
+            puntoDeVenta.setNombreResponsable(puntoDeVentaJson.getNombreResponsable());
+            puntoDeVenta.setTipo(puntoDeVentaJson.getTipo());
+            puntoDeVenta.setTelefono(puntoDeVentaJson.getTelefono());
+            puntoDeVenta.setLocalidad(puntoDeVentaJson.getLocalidad());
+
+            repositorioPdv.modificar(puntoDeVenta);
+            return ok();
+
+        } catch (EntityNotFoundException e) {
+            return notFound();
+        }
     }
 
     public static Result eliminarPunto(Long id) {
-        Logger.info("ELIMINAAAAAAAAAAAAAAAAAAAR");
-        PuntoDeVenta punto = repositorioPdv.buscarPorId(id);
-        repositorioPdv.eliminar(punto);
-        return ok();
+
+        try {
+            Logger.info("ELIMINAAAAAAAAAAAAAAAAAAAR");
+            PuntoDeVenta punto = repositorioPdv.buscarPorId(id);
+            repositorioPdv.eliminar(punto);
+            return ok();
+
+        } catch (EntityNotFoundException e) {
+            return notFound();
+        }
     }
 
     // TODO: sacar a controlador de localidades
