@@ -1,77 +1,80 @@
-<div class="container" ng-controller="PuntoVentaCreateController as puntoCtrl">
   <div class="row">
-   <div class="col-md-6 col-md-offset-3">
-      <span class="title-with-button">{{ puntoCtrl.title }}</span>
-     {{ puntoCtrl.punto }}
-      <form name="addPDV" class="form-horizontal" action="" ng-submit="addPDV.$valid && puntoCtrl.save()" novalidate>
+   <div class="col-md-8 col-md-offset-2">
+      <span class="title-with-button">{{ vm.title }}</span>
+     {{ vm.punto }}
+      <form name="addPDV" class="form-horizontal" action="" ng-submit="addPDV.$valid && vm.save()" novalidate>
 
-        <input type="text" class="hidden" ng-model="puntoCtrl.punto.puntoId"/>
+        <input type="text" class="hidden" ng-model="vm.punto.puntoId"/>
 
         <div class="form-group">
-          <label for="nombre" class="col-sm-2 control-label">Nombre</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="nombre" placeholder="Nombre" ng-model="puntoCtrl.punto.nombre" required/>
+          <label for="nombre" class="col-sm-3 control-label">Nombre</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="nombre" placeholder="Nombre" ng-model="vm.punto.nombre" required/>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="tipo" class="col-sm-2 control-label">Tipo</label>
-          <div class="col-sm-10">
-            <select type="text" class="form-control" id="tipo"  ng-model="puntoCtrl.punto.tipo" ng-options="tipo for tipo in puntoCtrl.tipoPDV" required></select>
+          <label for="tipo" class="col-sm-3 control-label">Tipo</label>
+          <div class="col-sm-8">
+            <select type="text" class="form-control" id="tipo" ng-model="vm.tipo" ng-options="tipo as vm.makeReadable(tipo) for tipo in vm.tipoPDV" required>
+            </select>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="localidad" class="col-sm-2 control-label">Localidad</label>
-          <div class="col-sm-10">
-            <select type="text" class="form-control" id="localidad" ng-model="puntoCtrl.punto.localidad" ng-options="localidad as localidad.nombre for localidad in puntoCtrl.localidades" required></select>
+          <label for="localidad" class="col-sm-3 control-label">Localidad</label>
+          <div class="col-sm-8">
+            <select type="text" class="form-control" id="localidad" ng-model="vm.localidad" ng-options="localidad.localidadId as localidad.nombre for localidad in vm.localidades" required>
+            </select>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="direccion" class="col-sm-2 control-label">Direccion</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="direccion" placeholder="Direccion" ng-model="puntoCtrl.punto.direccion" required/>
+          <label for="direccion" class="col-sm-3 control-label">Direccion</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="direccion" placeholder="Direccion" ng-model="vm.punto.direccion" required/>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="email" class="col-sm-2 control-label">Email</label>
-          <div class="col-sm-10">
-            <input type="email" class="form-control ng-pristine ng-invalid" id="email" placeholder="Email" ng-model="puntoCtrl.punto.email" required/>
+          <label for="email" class="col-sm-3 control-label">Email</label>
+          <div class="col-sm-8">
+            <input type="email" class="form-control ng-pristine ng-invalid" id="email" placeholder="Email" ng-model="vm.punto.email" required/>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="responsable" class="col-sm-2 control-label">Responsable</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="responsable" placeholder="Responsable" ng-model="puntoCtrl.punto.nombreResponsable" required/>
+          <label for="responsable" class="col-sm-3 control-label">Responsable</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="responsable" placeholder="Responsable" ng-model="vm.punto.nombreResponsable" required/>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="telefono" class="col-sm-2 control-label">Telefono</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="telefono" placeholder="Telefono" ng-model="puntoCtrl.punto.telefono"/>
+          <label for="telefono" class="col-sm-3 control-label">Telefono</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="telefono" placeholder="Telefono" ng-model="vm.punto.telefono"/>
           </div>
         </div>
 
           <hr>
 
         <div class="form-group">
-            <label for="nombreUsuario" class="col-sm-2 control-label">Nombre Usuario</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="nombreUsuario" placeholder="Nombre Usuario" ng-model="puntoCtrl.punto.usuario.nombreUsuario" required/>
+            <label for="nombreUsuario" class="col-sm-3 control-label">Nombre Usuario</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="nombreUsuario" placeholder="Nombre Usuario" ng-model="vm.punto.usuario.nombreUsuario" required/>
             </div>
         </div>
 
         <div class="form-group">
-            <label for="password" class="col-sm-2 control-label">Contraseña</label>
-            <div class="col-sm-10">
-                <input type="{{inputType}}" class="form-control ng-pristine ng-invalid" id="password" placeholder="Contraseña" ng-model="puntoCtrl.punto.usuario.password" required/>
-                <input type="checkbox" id="checkbox" ng-model="passwordCheckbox" ng-click="hideShowPassword()" />
-                <label for="checkbox" ng-if="passwordCheckbox">Ocultar contraseña</label>
-                <label for="checkbox" ng-if="!passwordCheckbox">Mostrar contraseña</label>
+            <label for="password" class="col-sm-3 control-label">Contraseña</label>
+            <div class="col-sm-8">
+                <input type="{{ vm.inputType }}" class="form-control ng-pristine ng-invalid" id="password" placeholder="Contraseña" ng-model="vm.punto.usuario.password" required/>
+
+
+                <label>
+                  <input type="checkbox" ng-click="vm.togglePassword()" /> Ocultar contraseña
+                </label>
             </div>
         </div>
 
@@ -79,4 +82,3 @@
       </form>
     </div>
   </div>
-</div>
