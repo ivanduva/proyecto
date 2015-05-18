@@ -13,55 +13,18 @@
       <div class="navbar-header">
         <a class="navbar-brand" href="#">icono</a>
       </div>
-      <div class="collapse navbar-collapse" id="navbar-collapse-01">
+      <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
           <li><a href="#/dashboard">Home</a></li>
         </ul>
-          <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right">
               <li><a href="#/login">Login</a></li>
               <li><a href="#/public/clientes/new">Registrarse</a></li>
-          </ul>
+        </ul>
       </div><!-- /.navbar-collapse -->
     </nav><!-- /navbar -->
 
-    <div class="col-sm-3">
-        <!-- Left column -->
-        <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i> Herramientas</strong></a>
-
-        <hr>
-
-        <ul class="nav nav-stacked">
-            <li class="nav-header"> <a data-toggle="collapse" data-target="#userMenu">Opciones <i class="glyphicon glyphicon-chevron-down"></i></a>
-                <ul class="nav nav-stacked collapse in" id="userMenu">
-                    <li class="active"> <a href="#/admin/dashboard"><i class="glyphicon glyphicon-home"></i> Home</a></li>
-                    <li><a href="#"><i class="glyphicon glyphicon-road"></i> Servicios</a></li>
-                    <li><a href="#/admin/personas"><i class="glyphicon glyphicon-user"></i> Personas</a></li>
-                    <li><a href="#/admin/punto_venta"><i class="glyphicon glyphicon-flag" ng-controller="PuntoVentaListController as puntoCtrl"></i> Puntos de Venta</a></li>
-                    <li><a href="#"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
-                </ul>
-            </li>
-            <li class="nav-header"> <a data-toggle="collapse" data-target="#menu2"> Ayuda <i class="glyphicon glyphicon-chevron-right"></i></a>
-
-                <ul class="nav nav-stacked collapse" id="menu2">
-                    <li><a href="#"><i class="glyphicon glyphicon-exclamation-sign"></i> FAQs</a>
-                    </li>
-                    <li><a href="#"><i class="glyphicon glyphicon-book"></i> Manual de Usuario</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-header">
-                <a data-toggle="collapse" data-target="#menu3"> Redes Sociales <i class="glyphicon glyphicon-chevron-right"></i></a>
-                <ul class="nav nav-stacked collapse" id="menu3">
-                    <li><a href="#"><i class="glyphicon glyphicon-triangle-right"></i> Facebook</a></li>
-                    <li><a href="#"><i class="glyphicon glyphicon-triangle-right"></i> Twitter</a></li>
-                </ul>
-            </li>
-        </ul>
-
-        <hr>
-    </div>
-
-    <div ng-view></div>
+    <div class="container" ng-view></div>
 
     <script src='@routes.Assets.at("front/bower_components/jquery/dist/jquery.js")'></script>
     <script src='@routes.Assets.at("front/bower_components/flat-ui/dist/js/flat-ui.js")'></script>
