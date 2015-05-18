@@ -11,50 +11,91 @@
     function ClienteListController($location, dataservice) {
         var vm = this;
 
-        vm.clientes = dataservice.Clientes().query();
+        dataservice.Clientes().query(onSuccessQuery, onFail);
 
         vm.edit = function (personaId) {
             $location.path('/admin/clientes/' + personaId + '/edit');
         };
 
         vm.delete = function (personaId) {
-            dataservice.Clientes().delete({id: parseInt(personaId)});
-
+            dataservice.Clientes().delete({id: parseInt(personaId)}, onSuccessDelete, onFail);
         };
+
+        function onSuccessDelete(data) {
+            console.log(data);
+        }
+
+        function onSuccessQuery(data) {
+            vm.clientes = data;
+        }
+
     }
 
-    ClienteCreateController.$inject = ['$scope', '$routeParams', '$location', 'dataservice'];
-    function ClienteCreateController($scope, $routeParams, $location, dataservice) {
+    ClienteCreateController.$inject = ['$routeParams', '$location', 'dataservice'];
+    function ClienteCreateController($routeParams, $location, dataservice) {
         var vm = this;
 
-        $scope.inputType = 'password';
+        vm.inputType = 'password';
+        vm.showPassText = "Mostrar";
 
-        $scope.hideShowPassword = function(){
-            if ($scope.inputType == 'password')
-              $scope.inputType = 'text';
-            else
-              $scope.inputType = 'password';
-          };
+        vm.togglePassword = function() {
+            if (vm.inputType == 'password') {
+                vm.inputType = 'text';
+                vm.showPassText = "Ocultar";
+            } else {
+                vm.inputType = 'password';
+                vm.showPassText = "Mostrar";
+            }
+        };
 
-        vm.localidades = dataservice.Localidades().query();
-        vm.cliente = null;
+        dataservice.Localidades().query(onLocalidadesLoad, onFail);
+        vm.cliente = {};
 
         if ($routeParams.id !== undefined) {
             var id = parseInt($routeParams.id);
-            vm.cliente = dataservice.Clientes().show({id: id});
+            dataservice.Clientes().show({id: id}, onSuccessGet, onFail);
             vm.title = "Editar Cliente";
         } else {
+            vm.cliente.puedeReservar = "NO";
             vm.title = "Nuevo Cliente";
         }
 
         vm.save = function () {
-            console.log(vm.cliente);
+            var index = searchById(vm.localidad, localidades, 'localidadId');
+            vm.cliente.localidad = vm.localidades[index];
             if (vm.cliente.personaId === undefined) {
-                dataservice.Clientes().create(vm.cliente);
+                dataservice.Clientes().save(vm.cliente, onSuccessSave, onFail);
             } else {
-                dataservice.Clientes().update({id: vm.cliente.personaId}, vm.cliente);
+                dataservice.Clientes().update({id: vm.cliente.personaId}, vm.cliente, onSuccessUpdate, onFail);
             }
             $location.path('/admin/clientes');
         };
+
+        function onLocalidadesLoad(data) {
+            vm.localidades = data;
+            vm.localidad = data[0].localidadId;
+        }
+
+        function onSuccessGet (data) {
+            vm.cliente = data;
+        }
+
+        function onSuccessSave (data) {
+            console.log(data);
+        }
+
+        function onSuccessUpdate(data) {
+            console.log(data);
+        }
+    }
+
+    function onFail(data) {
+        console.log(data);
+    }
+
+    function searchById(id, array, idAttr) {
+        return array.map(function getIds(entity) {
+            return entity[idAttr];
+        }).indexOf(id);
     }
 }());
