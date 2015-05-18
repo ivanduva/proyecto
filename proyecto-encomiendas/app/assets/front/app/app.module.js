@@ -3,7 +3,16 @@
     'use strict';
 
     angular
-        .module('app', ['ngRoute', 'ngResource', 'ngRoute', 'app.punto_venta', 'app.clientes', 'app.empleados', 'app.encomiendas', 'app.ventas'])
+        .module('app', [
+            'ngRoute',
+            'ngResource',
+            'ngRoute',
+            'app.punto_venta',
+            'app.clientes',
+            'app.empleados',
+            'app.encomiendas',
+            'app.ventas'
+        ])
         .config(['$routeProvider', routeConfiguration])
         .config(['$httpProvider', httpProviderConfiguration]);
 
@@ -22,20 +31,8 @@
                 templateUrl: 'assets/front/app/dashboard/public_dashboard.html'
             }).
 
-            when('/emp/dashboard', {
+            when('/empleado/dashboard', {
                 templateUrl: 'assets/front/app/dashboard/emp_dashboard.html'
-            }).
-
-            when('/admin/personas', {
-                templateUrl: 'assets/front/app/dashboard/admin_personas_dashboard.html'
-            }).
-
-            when('/emp/encomiendas', {
-                templateUrl: 'assets/front/app/dashboard/emp_encomiendas_dashboard.html'
-            }).
-
-            when('/emp/ventas', {
-                templateUrl: 'assets/front/app/dashboard/emp_ventas_dashboard.html'
             }).
 
             when('/login', {
@@ -43,6 +40,8 @@
                 /*controller: "LoginCreateController",
                 controllerAs: "vm"*/
             }).
+
+            /*PDV*/
 
             when('/admin/punto_venta', {
                 templateUrl: 'assets/front/app/punto_venta/punto_venta.html',
@@ -53,7 +52,7 @@
             when('/admin/punto_venta/:id/edit', {
                 templateUrl: 'assets/front/app/punto_venta/punto_venta_add.html',
                 controller: "PuntoVentaCreateController",
-                controllerAs: "vm"
+                controllerAs: "vm",
             }).
 
             when('/admin/punto_venta/new', {
@@ -110,7 +109,7 @@
 
             /*VENTAS*/
 
-            when('/emp/ventas/new', {
+            when('/empleado/ventas/new', {
                 templateUrl: '/assets/front/app/ventas/ventas_add.html',
                 controller: "VentaCreateController",
                 controllerAs: "vm"
