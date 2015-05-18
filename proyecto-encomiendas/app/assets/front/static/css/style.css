@@ -17,10 +17,32 @@ body {
   vertical-align: middle;
 }
 
-.ng-invalid.ng-dirty{
+.ng-invalid.ng-dirty {
  border-color: red
 }
 
-.ng-valid.ng-dirty{
+.ng-valid.ng-dirty {
   border-color:green
+}
+
+.principal-buttons {
+  list-style-type: none;
+}
+
+.principal-buttons button {
+  width: 100%;
+  height: 100px;
+  max-width: 320px;
+  display: inline-block;
+  float: left;
+  margin: 10px 10px;
+}
+
+.principal-buttons button span {
+  margin-right: 10px;
+}
+
+hr {
+  border-width: 10px 0 0;
+  border-style: dashed none none;
 }
