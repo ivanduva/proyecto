@@ -19,7 +19,7 @@ public abstract class Persona extends Model {
     @Column (name = "id_persona")
     private Long personaId;
 
-    @Column (name = "email")
+    @Column (name = "email", unique=true)
     private String email;
 
     @Column (name = "fecha_nacimiento")
