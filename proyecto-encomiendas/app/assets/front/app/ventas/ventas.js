@@ -52,6 +52,9 @@
         }
 
         vm.getTotal = function () {
+            if (vm.venta.encomiendas.length === 0) {
+                return 0;
+            }
             return vm.venta.encomiendas
                 .map(function (encomienda) {
                     return encomienda.tarifa;
