@@ -30,5 +30,29 @@
             </tbody>
         </table>
         <button class="btn btn-embossed btn-success" type="submit" ng-click="vm.generar()">Generar Orden</button>
+
+        <hr>
+
+        <span class="title-with-button">Orden de Reparto</span>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Número</th>
+                <th>Destino</th>
+                <th>Dirección</th>
+                <th>Remitente</th>
+                <th>Destinatario</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="encomienda in vm.encomiendas">
+                <td>{{ encomienda.encomiendaId }}</td>
+                <td>{{ encomienda.localidad.nombre }}</td>
+                <td>{{ encomienda.direccionDestino }}</td>
+                <td>{{ encomienda.remitente.nombre }}</td>
+                <td>{{ encomienda.destinatario }}</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>

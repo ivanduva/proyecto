@@ -44,6 +44,8 @@
     function EncomiendaOrdenController($routeParams, $location, dataservice) {
         var vm = this;
 
+        vm.ordenes = [];
+
         dataservice.PuntosVenta().query(onPuntosDeVentaLoad, onFail);
 
         vm.buscar = function(idPunto) {
