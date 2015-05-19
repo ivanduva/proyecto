@@ -16,6 +16,9 @@
             Empleados: empleados,
             EmpleadosCesados: empleadosCesados,
             Ventas: ventas,
+            Encomiendas: encomiendas,
+            Estados: estados,
+            PuntoEncomiendas: puntoEncomiendas,
             /*Login: login*/
         };
 
@@ -59,6 +62,24 @@
 
         function ventas() {
             return $resource('http://localhost:9000/ventas/:id', {}, {
+                update: {method: 'PUT', params: {id: '@id'}}
+            });
+        }
+
+        function encomiendas() {
+            return $resource('http://localhost:9000/ventas/encomiendas/:id', {}, {
+                update: {method: 'PUT', params: {id: '@id'}}
+            });
+        }
+
+        function estados() {
+            return $resource('http://localhost:9000/ventas/encomiendas/estados/:id', {}, {
+                update: {method: 'PUT', params: {id: '@id'}}
+            });
+        }
+
+        function puntoEncomiendas() {
+            return $resource('http://localhost:9000/ventas/encomiendas/punto-de-venta/:id', {}, {
                 update: {method: 'PUT', params: {id: '@id'}}
             });
         }

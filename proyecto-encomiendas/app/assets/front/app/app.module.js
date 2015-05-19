@@ -32,7 +32,9 @@
             }).
 
             when('/empleado/dashboard', {
-                templateUrl: 'assets/front/app/dashboard/emp_dashboard.html'
+                templateUrl: 'assets/front/app/dashboard/emp_dashboard.html',
+                controller: "EncomiendaEstadosController",
+                controllerAs: "vm"
             }).
 
             when('/login', {
@@ -112,6 +114,44 @@
             when('/empleado/ventas/new', {
                 templateUrl: '/assets/front/app/ventas/ventas_add.html',
                 controller: "VentaCreateController",
+                controllerAs: "vm"
+            }).
+
+            /*ENCOMIENDAS*/
+
+            when('/public/estado-encomienda', {
+                templateUrl: '/assets/front/app/encomiendas/ver_estados.html',
+                controller: "EncomiendaEstadosController",
+                controllerAs: "vm"
+            }).
+
+            when('/empleado/estado-encomienda', {
+                templateUrl: '/assets/front/app/encomiendas/ver_estados.html',
+                controller: "EncomiendaEstadosController",
+                controllerAs: "vm"
+            }).
+
+            when('/empleado/cambiar-estado-encomienda', {
+                templateUrl: '/assets/front/app/encomiendas/cambiar_estados.html',
+                controller: "EncomiendaEstadosController",
+                controllerAs: "vm"
+            }).
+
+            /*when('/empleado/recibir-encomienda', {
+                templateUrl: '/assets/front/app/encomiendas/ver_estados.html',
+                controller: "EncomiendaEstadosController",
+                controllerAs: "vm"
+            }).
+
+            when('/empleado/entregar-encomienda', {
+                templateUrl: '/assets/front/app/encomiendas/ver_estados.html',
+                controller: "EncomiendaEstadosController",
+                controllerAs: "vm"
+            }).*/
+
+            when('/empleado/generar-orden', {
+                templateUrl: '/assets/front/app/encomiendas/orden_reparto.html',
+                controller: "EncomiendaOrdenController",
                 controllerAs: "vm"
             }).
 

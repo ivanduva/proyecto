@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('app.clientes')
+        .module('app.ventas')
         .controller('VentaCreateController', VentaCreateController);
 
     VentaCreateController.$inject = ['$routeParams', '$location', 'dataservice'];

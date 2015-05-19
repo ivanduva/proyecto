@@ -215,19 +215,19 @@ public class EncomiendaController extends Controller {
     //    }
   //  }
 
-    public static Result generarOrden(Long punto) {
+    public static Result generarOrden(Long id) {
 
         List<Venta> ventas = repositorioVenta.listarTodo();
         List<Encomienda> encomiendas = new ArrayList<Encomienda>();
         int k = 0;
 
         for (int i = 0; i<ventas.size(); i++) {
-            if (ventas.get(i).getPuntoDeVenta().getPuntoId() == punto) {
+            if (ventas.get(i).getPuntoDeVenta().getPuntoId() == id) {
                 for (int j = 0; j<ventas.get(i).getEncomiendas().size(); j++) {
                     for (k = 0; k<ventas.get(i).getEncomiendas().get(j).getEstados().size()-1; k++);
                         if ((ventas.get(i).getEncomiendas().get(j).getEstados().get(k).getNombre()
                                 == NombreEstadoEncomienda.EN_SUCURSAL) &&
-                                (ventas.get(i).getEncomiendas().get(j).getEstados().get(k).getPuntoDeVenta().getPuntoId() == punto)) {
+                                (ventas.get(i).getEncomiendas().get(j).getEstados().get(k).getPuntoDeVenta().getPuntoId() == id)) {
                             encomiendas.add(ventas.get(i).getEncomiendas().get(j));
                         }
                 }

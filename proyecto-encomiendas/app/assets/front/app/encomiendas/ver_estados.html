@@ -1,0 +1,35 @@
+<div class="col-md-6">
+    <div class="container">
+        <span class="title-with-button">Ingrese Número de Encomienda</span>
+        <div class="input-group collapse" id="busqueda" style="max-width:470px;">
+            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term" ng-model="vm.encomiendaId">
+            <div class="input-group-btn">
+                <button class="btn btn-default btn-primary" ng-click="vm.buscar(vm.encomiendaId)">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </div>
+            <hr>
+        </div>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Sucursal</th>
+                <th>Localidad</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="estado in vm.estados">
+                <td>{{ estado.estadoEncomiendaId }}</td>
+                <td>{{ estado.nombre }}</td>
+                <td>{{ estado.fecha }}</td>
+                <td>{{ estado.puntoDeVenta.nombre }}</td>
+                <td>{{ estado.puntoDeVenta.localidad.nombre }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

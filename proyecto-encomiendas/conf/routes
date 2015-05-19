@@ -73,7 +73,7 @@ POST    /ventas                             controllers.EncomiendaController.cre
 
 GET     /ventas/:id                         controllers.EncomiendaController.getVenta(id: Long)
 
-GET     /ventas/encomiendas/orden/:punto    controllers.EncomiendaController.generarOrden(punto: Long)
+GET     /ventas/encomiendas/punto-de-venta/:id    controllers.EncomiendaController.generarOrden(id: Long)
 
 GET     /ventas/encomiendas/:id             controllers.EncomiendaController.getEncomienda(id: Long)
 
