@@ -27,6 +27,7 @@
 
         function onSuccessQuery(data) {
             vm.clientes = data;
+            console.log(data);
         }
 
     }
@@ -53,7 +54,7 @@
 
         if ($routeParams.id !== undefined) {
             var id = parseInt($routeParams.id);
-            dataservice.Clientes().show({id: id}, onSuccessGet, onFail);
+            dataservice.Clientes().get({id: id}, onSuccessGet, onFail);
             vm.title = "Editar Cliente";
         } else {
             vm.cliente.puedeReservar = "NO";
@@ -61,7 +62,7 @@
         }
 
         vm.save = function () {
-            var index = searchById(vm.localidad, localidades, 'localidadId');
+            var index = searchById(vm.localidad, vm.localidades, 'localidadId');
             vm.cliente.localidad = vm.localidades[index];
             if (vm.cliente.personaId === undefined) {
                 dataservice.Clientes().save(vm.cliente, onSuccessSave, onFail);
@@ -78,6 +79,7 @@
 
         function onSuccessGet (data) {
             vm.cliente = data;
+            vm.cliente.fechaNacimiento = new Date(vm.cliente.fechaNacimiento);
         }
 
         function onSuccessSave (data) {
