@@ -5,11 +5,11 @@
       <input type="text" class="hidden" ng-model="vm.venta.ventaId"/>
       <div class="form-group col-md-6">
         <label for="puntoDeVenta" class=" control-label">Punto de Venta</label>
-        <select style="width:100%" type="text" class="form-control" id="puntoDeVenta" ng-model="vm.venta.puntoDeVenta" ng-options="puntoDeVenta as puntoDeVenta.nombre for puntoDeVenta in vm.puntos" required></select>
+        <select type="text" class="form-control expand" id="puntoDeVenta" ng-model="vm.venta.puntoDeVenta" ng-options="puntoDeVenta as puntoDeVenta.nombre for puntoDeVenta in vm.puntos" required></select>
       </div>
       <div class="form-group col-md-6">
         <label for="cliente" class=" control-label">Cliente</label>
-        <select type="text" style="width:100%" class="form-control" id="cliente" ng-model="vm.venta.cliente" ng-options="cliente as cliente.nombre for cliente in vm.clientes" required></select>
+        <select type="text" class="form-control expand" id="cliente" ng-model="vm.venta.cliente" ng-options="cliente as cliente.nombre for cliente in vm.clientes" required></select>
       </div>
     </form>
   </div>
