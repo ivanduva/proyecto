@@ -34,36 +34,35 @@
 </div>
 
 <div class="row">
-  <div ng-show="vm.load" class="col-xs-12 text-center">
-    <span class="fa fa-spinner fa-5x fa-pulse"></span>
+  <div class="col-xs-8 col-xs-offset-2 text-center">
+    <span class="fa fa-spinner fa-5x fa-pulse" ng-show="vm.load" ></span>
+    <span class="alert alert-danger center-block" ng-show="vm.error">{{ vm.error }}</span>
   </div>
 </div>
 
 <div class="row">
-<table class="table table-hover" ng-show="vm.estados.length > 0">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Estado</th>
-      <th>Fecha</th>
-      <th>Sucursal</th>
-      <th>Localidad</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="estado in vm.estados">
-      <td>{{ estado.estadoEncomiendaId }}</td>
-      <td>{{ vm.makeReadable(estado.nombre) }}</td>
-      <td>{{ estado.fecha | date: 'd/M/yy h:mm a'}}</td>
-      <td>{{ estado.puntoDeVenta.nombre }}</td>
-      <td>{{ estado.puntoDeVenta.localidad.nombre }}</td>
-    </tr>
-  </tbody>
-</table>
-<div class="col-md-8 col-md-offset-2" ng-show="vm.error">
-  <span class="alert alert-danger center-block text-center">{{ vm.error }}</span>
+  <table class="table table-hover" ng-show="vm.estados.length > 0">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Estado</th>
+        <th>Fecha</th>
+        <th>Sucursal</th>
+        <th>Localidad</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="estado in vm.estados">
+        <td>{{ estado.estadoEncomiendaId }}</td>
+        <td>{{ vm.makeReadable(estado.nombre) }}</td>
+        <td>{{ estado.fecha | date: 'd/M/yy h:mm a'}}</td>
+        <td>{{ estado.puntoDeVenta.nombre }}</td>
+        <td>{{ estado.puntoDeVenta.localidad.nombre }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-</div>
+
 <div class="row">
 <div class="col-md-8 col-md-offset-2" ng-show="vm.estados.length > 0">
   <button class="btn btn-embossed btn-info" ng-show="vm.display == 'recibir'" ng-click="vm.addNewState()">Recibir</button>
