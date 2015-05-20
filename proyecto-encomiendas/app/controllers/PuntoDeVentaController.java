@@ -24,21 +24,20 @@ import static play.libs.Json.toJson;
  */
 public class PuntoDeVentaController extends Controller {
 
-    static PuntoDeVentaRepositorio repositorioPdv = new PuntoDeVentaRepositorio(new PersistenciaDBPuntoDeVenta());
-    //static UsuarioRepositorio repositorioUsuario = new UsuarioRepositorio(new PersistenciaDBUsuario());
-    static LocalidadRepositorio repositorioLocalidad = new LocalidadRepositorio(new PersistenciaDBLocalidad());
+    private static PuntoDeVentaRepositorio repositorioPdv = new PuntoDeVentaRepositorio(new PersistenciaDBPuntoDeVenta());
+    private static LocalidadRepositorio repositorioLocalidad = new LocalidadRepositorio(new PersistenciaDBLocalidad());
 
     public static Result agregarPunto() {
 
+
+        JsonNode json = request().body().asJson();
+        PuntoDeVenta puntoDeVenta = Json.fromJson(json, PuntoDeVenta.class);
+        puntoDeVenta.getUsuario().setFechaCreacion(new Date());
+
         try {
-            JsonNode json = request().body().asJson();
-            Logger.info(json.toString() + "\n");
-            PuntoDeVenta puntoDeVenta = Json.fromJson(json, PuntoDeVenta.class);
-            puntoDeVenta.getUsuario().setFechaCreacion(new Date());
             repositorioPdv.crear(puntoDeVenta);
             return ok(toJson(puntoDeVenta));
         } catch (PersistenceException e) {
-
             return badRequest(toJson("{status: 400, mensaje: 'Datos duplicados'}"));
         }
     }
@@ -50,50 +49,47 @@ public class PuntoDeVentaController extends Controller {
 
     public static Result getPunto(Long id) {
 
-        try {
-            Logger.info("GEEEEEEEEEEEEET\n");
-            PuntoDeVenta puntoDeVenta = repositorioPdv.buscarPorId(id);
 
-            //geLogger.info(toJson(puntoDeVenta).toString());
+
+        PuntoDeVenta puntoDeVenta = repositorioPdv.buscarPorId(id);
+        if (puntoDeVenta != null) {
             return ok(toJson(puntoDeVenta));
-
-        } catch (NullPointerException e) {
+        } else {
             return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
     }
 
     public static Result modificarPunto(Long id) {
 
-        try {
-            PuntoDeVenta puntoDeVenta = repositorioPdv.buscarPorId(id);
+
+        PuntoDeVenta puntoDeVenta = repositorioPdv.buscarPorId(id);
+        if (puntoDeVenta != null) {
             JsonNode json = request().body().asJson();
+
             PuntoDeVenta puntoDeVentaJson = Json.fromJson(json, PuntoDeVenta.class);
+            puntoDeVentaJson.setPuntoId(id);
 
-            puntoDeVenta.setDireccion(puntoDeVentaJson.getDireccion());
-            puntoDeVenta.setEmail(puntoDeVentaJson.getEmail());
-            puntoDeVenta.setNombre(puntoDeVentaJson.getNombre());
-            puntoDeVenta.setNombreResponsable(puntoDeVentaJson.getNombreResponsable());
-            puntoDeVenta.setTipo(puntoDeVentaJson.getTipo());
-            puntoDeVenta.setTelefono(puntoDeVentaJson.getTelefono());
-            puntoDeVenta.setLocalidad(puntoDeVentaJson.getLocalidad());
+            try {
+                repositorioPdv.modificar(puntoDeVentaJson);
+                return ok(toJson(puntoDeVentaJson));
+            } catch (PersistenceException e) {
+                return badRequest(toJson("{status: 400, mensaje: 'Datos duplicados'}"));
+            }
 
-            repositorioPdv.modificar(puntoDeVenta);
-            return ok(toJson(puntoDeVenta));
-
-        } catch (NullPointerException e) {
+        } else {
             return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
     }
 
     public static Result eliminarPunto(Long id) {
 
-        try {
-            Logger.info("ELIMINAAAAAAAAAAAAAAAAAAAR");
-            PuntoDeVenta punto = repositorioPdv.buscarPorId(id);
+
+        PuntoDeVenta punto = repositorioPdv.buscarPorId(id);
+
+        if (punto != null) {
             repositorioPdv.eliminar(punto);
             return ok(toJson(punto));
-
-        } catch (NullPointerException e) {
+        } else {
             return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
     }

@@ -6,6 +6,7 @@ import dao.PersistenciaDBSecurityRole;
 import model.Cliente;
 import model.Empleado;
 import model.Persona;
+import model.SecurityRole;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -25,117 +26,95 @@ import static play.libs.Json.toJson;
 public class PersonaController extends Controller {
 
     //static UsuarioRepositorio repositorioUsuario = new UsuarioRepositorio(new PersistenciaDBUsuario());
-    static PersonaRepositorio repositorioPersona = new PersonaRepositorio(new PersistenciaDBPersona());
-    static SecurityRoleRepositorio repositorioRol = new SecurityRoleRepositorio(new PersistenciaDBSecurityRole());
+    private static PersonaRepositorio repositorioPersona = new PersonaRepositorio(new PersistenciaDBPersona());
+    private static SecurityRoleRepositorio repositorioRol = new SecurityRoleRepositorio(new PersistenciaDBSecurityRole());
 
-    //Lo usamos para cuando se registra el cliente por su cuenta y cuando lo registra el ADMIN o el VENDEDOR. Cuando lo
-    //registra el ADMIN o el VENDEDOR, puede elegir si "Puede reservar". Si se registra el cliente por su cuenta, no.
+
     public static Result crearCliente() {
 
+
+        JsonNode json = request().body().asJson();
+        Cliente cliente = Json.fromJson(json, Cliente.class);
+
+        cliente.setPuntosViajero(0);
+        cliente.getUsuario().setFechaCreacion(new Date());
+        cliente.getUsuario().agregarRol(repositorioRol.buscarPorId(1L));
+
+        if (cliente.getPuedeReservar() == null) {
+            cliente.setPuedeReservar("NO");
+        }
+
         try {
-            JsonNode json = request().body().asJson();
-            Cliente cliente = Json.fromJson(json, Cliente.class);
-            //Usuario usuario = Json.fromJson(json, Usuario.class);
-            cliente.getUsuario().setFechaCreacion(new Date());
-            cliente.getUsuario().agregarRol(repositorioRol.buscarPorId((long) 1));
-
-            if (cliente.getPuedeReservar() == null) {
-                cliente.setPuedeReservar("NO");
-            }
-            cliente.setPuntosViajero(0);
-            //cliente.setUsuario(usuario);
-
             repositorioPersona.crear(cliente);
-            //repositorioUsuario.crear(usuario);
-
             return ok(toJson(cliente));
         } catch (PersistenceException e) {
-
             return badRequest(toJson("{status: 400, mensaje: 'Datos duplicados'}"));
         }
     }
 
     public static Result crearEmpleado() {
+        JsonNode json = request().body().asJson();
+        Empleado empleado = Json.fromJson(json, Empleado.class);
+        empleado.getUsuario().setFechaCreacion(new Date());
+        empleado.getUsuario().agregarRol(repositorioRol.buscarPorId((long) 4));
+        empleado.setCesadoFalse();
 
         try {
-            JsonNode json = request().body().asJson();
-            Empleado empleado = Json.fromJson(json, Empleado.class);
-            //Usuario usuario = Json.fromJson(json, Usuario.class);
-            empleado.getUsuario().setFechaCreacion(new Date());
-            empleado.getUsuario().agregarRol(repositorioRol.buscarPorId((long) 4));
-            empleado.setCesadoFalse();
-            //empleado.setUsuario(usuario);
-
             repositorioPersona.crear(empleado);
-            //repositorioUsuario.crear(usuario);
-
             return ok(toJson(empleado));
         } catch (PersistenceException e) {
-
             return badRequest(toJson("{status: 400, mensaje: 'Datos duplicados'}"));
         }
     }
 
     public static Result getPersona(Long id) {
+        Persona persona = repositorioPersona.buscarPorId(id);
 
-        try {
-            Persona persona = repositorioPersona.buscarPorId(id);
-
+        if (persona != null) {
             return ok(toJson(persona));
-
-        } catch (NullPointerException e) {
+        } else {
             return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
     }
 
     public static Result modificarCliente(Long id) {
 
-        try {
-            Cliente cliente = (Cliente) repositorioPersona.buscarPorId(id);
+        Cliente cliente = (Cliente) repositorioPersona.buscarPorId(id);
+        if (cliente != null) {
             JsonNode json = request().body().asJson();
             Cliente clienteJson = Json.fromJson(json, Cliente.class);
 
-            cliente.setEmail(clienteJson.getEmail());
-            cliente.setFechaNacimiento(clienteJson.getFechaNacimiento());
-            cliente.setLocalidad(clienteJson.getLocalidad());
-            cliente.setNombre(clienteJson.getNombre());
-            cliente.setTelefono(clienteJson.getTelefono());
-            cliente.setCategoria(clienteJson.getCategoria());
-            cliente.setPuedeReservar(clienteJson.getPuedeReservar());
-            cliente.setPuntosViajero(clienteJson.getPuntosViajero());
-            cliente.setUsuario(clienteJson.getUsuario());
+            clienteJson.setPersonaId(id);
 
-            repositorioPersona.modificar(cliente);
+            try {
+                repositorioPersona.modificar(clienteJson);
+                return ok(toJson(clienteJson));
+            } catch (PersistenceException e) {
+                return badRequest(toJson("{status: 400, mensaje: 'Datos duplicados'}"));
+            }
 
-            return ok(toJson(cliente));
-
-        } catch (NullPointerException e) {
+        } else {
             return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
     }
 
     public static Result modificarEmpleado(Long id) {
 
-        try {
-            Empleado empleado = (Empleado) repositorioPersona.buscarPorId(id);
+
+        Empleado empleado = (Empleado) repositorioPersona.buscarPorId(id);
+        if (empleado != null) {
             JsonNode json = request().body().asJson();
             Empleado empleadoJson = Json.fromJson(json, Empleado.class);
 
-            empleado.setEmail(empleadoJson.getEmail());
-            empleado.setFechaNacimiento(empleadoJson.getFechaNacimiento());
-            empleado.setLocalidad(empleadoJson.getLocalidad());
-            empleado.setNombre(empleadoJson.getNombre());
-            empleado.setTelefono(empleadoJson.getTelefono());
-            empleado.setCuit(empleadoJson.getCuit());
-            empleado.setDni(empleadoJson.getDni());
-            empleado.setHorario(empleadoJson.getHorario());
-            empleado.setUsuario(empleado.getUsuario());
+            empleadoJson.setPersonaId(id);
 
-            repositorioPersona.modificar(empleado);
-
-            return ok(toJson(empleado));
-
-        } catch (NullPointerException e) {
+            try {
+                repositorioPersona.modificar(empleadoJson);
+                return ok(toJson(empleadoJson));
+            } catch (PersistenceException e) {
+                return badRequest(toJson("{status: 400, mensaje: 'Datos duplicados'}"));
+            }
+        } else {
             return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
     }
@@ -151,54 +130,49 @@ public class PersonaController extends Controller {
 
         //Ya se qué esto no es lo mejor, pero es una solución por ahora
         List<Persona> empleados = repositorioPersona.listarAlgunos("tipo", "E");
-        List empleadosNoCesados = new ArrayList<Persona>();
-        for (int i = 0; i< empleados.size(); i++) {
-            Empleado empleado = (Empleado) empleados.get(i);
-            if (!( empleado.isCesado())){
+        List<Persona> empleadosNoCesados = new ArrayList<Persona>();
+
+        for (Persona empleado: empleados) {
+            if (! ((Empleado) empleado).isCesado()) {
                 empleadosNoCesados.add(empleado);
             }
         }
+
         return ok(toJson(empleadosNoCesados));
     }
 
     public static Result eliminarCliente(Long id) {
 
-        try {
-            Cliente cliente = (Cliente) repositorioPersona.buscarPorId(id);
+
+        Cliente cliente = (Cliente) repositorioPersona.buscarPorId(id);
+        if (cliente != null) {
             repositorioPersona.eliminar(cliente);
             return ok(toJson(cliente));
-
-        } catch (NullPointerException e) {
+        } else {
             return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
     }
 
-    public static Result cesarEmpleado(Long id) {
-
-        try {
-            Empleado empleado = (Empleado) repositorioPersona.buscarPorId(id);
-            empleado.setCesadoTrue();
-            repositorioPersona.modificar(empleado);
-
-            return ok(toJson(empleado));
-
-        } catch (NullPointerException e) {
-            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
-        }
-    }
-
-    public static Result rehabilitarEmpleado(Long id) {
-
-        try {
-            Empleado empleado = (Empleado) repositorioPersona.buscarPorId(id);
-            empleado.setCesadoFalse();
-            repositorioPersona.modificar(empleado);
-
-            return ok(toJson(empleado));
-
-        } catch (NullPointerException e) {
-            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
-        }
-    }
+//    public static Result cesarEmpleado(Long id) {
+//        Empleado empleado = (Empleado) repositorioPersona.buscarPorId(id);
+//        if (empleado != null) {
+//            empleado.setCesadoTrue();
+//            repositorioPersona.modificar(empleado);
+//            return ok(toJson(empleado));
+//        } else {
+//            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
+//        }
+//    }
+//
+//    public static Result rehabilitarEmpleado(Long id) {
+//        Empleado empleado = (Empleado) repositorioPersona.buscarPorId(id);
+//        if (empleado != null) {
+//            empleado.setCesadoFalse();
+//            repositorioPersona.modificar(empleado);
+//            return ok(toJson(empleado));
+//        } else {
+//            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
+//        }
+//    }
 
 }

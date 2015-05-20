@@ -19,11 +19,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static play.libs.Json.fromJson;
 import static play.libs.Json.toJson;
 
-/**
- * Created by Ivan on 12/05/2015.
- */
+
 public class EncomiendaController extends Controller {
 
     static EncomiendaRepositorio repositorioEncomienda = new EncomiendaRepositorio(new PersistenciaDBEncomienda());
@@ -34,141 +33,92 @@ public class EncomiendaController extends Controller {
 
     public static Result crearVenta() {
 
-        Long monto = (long) 0;
+        long monto = 0L;
         JsonNode json = request().body().asJson();
         Venta venta = Json.fromJson(json, Venta.class);
         venta.setFecha(new Date());
-        //venta.getCliente().aumentarPuntosViajero(10);
-        for (int i=0; i<venta.getEncomiendas().size(); i++) {
+        for (Encomienda encomienda : venta.getEncomiendas()) {
             EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date(), venta.getPuntoDeVenta());
             estadoEncomienda.setNombreEnSucursal();
-            venta.getEncomiendas().get(i).agregarEstado(estadoEncomienda);
-            venta.getEncomiendas().get(i).setRemitente(venta.getCliente());
-            monto += venta.getEncomiendas().get(i).getTarifa();
+            encomienda.agregarEstado(estadoEncomienda);
+            encomienda.setRemitente(venta.getCliente());
+            monto += encomienda.getTarifa();
         }
 
         venta.setValorFinal(monto);
-
         repositorioVenta.crear(venta);
 
         return ok(toJson(venta));
     }
 
+    public static Result getVentas() {
+        List<Venta> ventas = repositorioVenta.listarTodo();
+        return ok(toJson(ventas));
+    }
+
     public static Result getVenta(Long id) {
 
-
-        try {
-            Venta venta = repositorioVenta.buscarPorId(id);
+        Venta venta = repositorioVenta.buscarPorId(id);
+        if (venta != null) {
             return ok(toJson(venta));
-
-        } catch (NullPointerException e) {
+        } else {
             return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
 
     }
 
-    //public static Result registrarEncomienda (Long id) {
+    public static Result getEncomienda(Long id) {
 
-        //JsonNode json = request().body().asJson();
-        //Encomienda encomienda = Json.fromJson(json, Encomienda.class);
+        Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
 
-        //try {
-        //    Venta venta = repositorioVenta.buscarPorId(id);
-      //      EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date(), venta.getPuntoDeVenta());
-    //        estadoEncomienda.setNombreEnSucursal();
-  //          encomienda.agregarEstado(estadoEncomienda);
-//
-    //        if (venta.getCliente() != null) {
-  //              encomienda.setRemitente(venta.getCliente());
-//            }
-
-            //venta.setFinalizadaFalse();
-
-            //venta.agregarEncomienda(encomienda);
-            //repositorioVenta.modificar(venta);
-
-          //  return ok(toJson(encomienda));
-
-        //} catch (NullPointerException e) {
-        //    return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
-      //  }
-
-
-    //}
-
-    public static Result getEncomienda (Long id) {
-
-
-        try {
-            Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
-            Logger.info(toJson(encomienda).toString());
+        if (encomienda != null) {
             return ok(toJson(encomienda));
-
-        } catch (NullPointerException e) {
+        } else {
             return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
-
-
-
     }
 
-    public static Result despacharEncomienda (Long id) {
+    public static Result modificarEncomienda(Long id) {
+        Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
 
-        try {
-            Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
-            EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date());
+        if (encomienda != null) {
+            JsonNode json = request().body().asJson();
+            JsonNode siguienteEstadoJson = json.get("siguienteEstado");
+            Encomienda encomiendaJson = fromJson(json.get("encomienda"), Encomienda.class);
+
+            if (!siguienteEstadoJson.isNull()) {
+                EstadoEncomienda siguienteEstado = getNextEstado(siguienteEstadoJson);
+                encomiendaJson.agregarEstado(siguienteEstado);
+            }
+
+            repositorioEncomienda.modificar(encomiendaJson);
+            return ok(toJson(encomiendaJson));
+        } else {
+            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
+        }
+    }
+
+    private static EstadoEncomienda getNextEstado(JsonNode siguienteEstado) {
+        EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date());
+
+        String estado = siguienteEstado.get("tipoCambio").asText();
+
+        if (estado.trim().equals("despachar")) {
             estadoEncomienda.setNombreEnCamino();
-
-            encomienda.agregarEstado(estadoEncomienda);
-            repositorioEncomienda.modificar(encomienda);
-
-            return ok(toJson(encomienda));
-
-        } catch (NullPointerException e) {
-            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
-        }
-
-
-    }
-
-    public static Result recibirEncomienda (Long id, Long punto) {
-
-        try {
-            Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
-            EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date());
+        } else if (estado.equals("entregar")) {
+            estadoEncomienda.setNombreEntregada();
+        } else if (estado.equals("recibir")) {
+            PuntoDeVenta puntoDeVenta = Json.fromJson(siguienteEstado.path("puntoDeVenta"), PuntoDeVenta.class);
             estadoEncomienda.setNombreEnSucursal();
-            PuntoDeVenta puntoDeVenta = repositorioPunto.buscarPorId(punto);
             estadoEncomienda.setPuntoDeVenta(puntoDeVenta);
-
-            encomienda.agregarEstado(estadoEncomienda);
-            repositorioEncomienda.modificar(encomienda);
-            return ok(toJson(encomienda));
-
-        } catch (NullPointerException e) {
-            return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
+
+        estadoEncomienda.setFecha(new Date());
+        return estadoEncomienda;
 
     }
 
-   public static Result entregarEncomienda (Long id) {
-
-       try {
-           Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
-           EstadoEncomienda estadoEncomienda = new EstadoEncomienda(new Date());
-           estadoEncomienda.setNombreEntregada();
-
-
-           encomienda.agregarEstado(estadoEncomienda);
-           repositorioEncomienda.modificar(encomienda);
-
-           return ok(toJson(encomienda));
-
-       } catch (NullPointerException e) {
-           return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
-       }
-   }
-
-    public static Result eliminarEncomienda (Long id) {
+    public static Result eliminarEncomienda(Long id) {
 
         Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
         repositorioEncomienda.eliminar(encomienda);
@@ -183,53 +133,25 @@ public class EncomiendaController extends Controller {
 
     public static Result listarHistoricoEstados(Long id) {
 
-        try {
-            Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
+        Encomienda encomienda = repositorioEncomienda.buscarPorId(id);
+        if (encomienda != null) {
             List<EstadoEncomienda> historico = encomienda.getEstados();
             return ok(toJson(historico));
-
-        } catch (NullPointerException e) {
+        } else {
             return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
         }
     }
 
-    //public static Result finalizarVenta(Long id) {
-
-        //try {
-            //Long monto = (long) 0;
-            //Venta venta = repositorioVenta.buscarPorId(id);
-            //venta.setFecha(new Date());
-
-            //for (int i = 0; i < venta.getEncomiendas().size(); i++) {
-              //  monto += venta.getEncomiendas().get(i).getTarifa();
-            //}
-            //venta.setValorFinal(monto);
-            //venta.setFinalizadaTrue();
-
-            //repositorioVenta.modificar(venta);
-
-          //  return ok(toJson(venta));
-
-        //} catch (NullPointerException e) {
-      //      return notFound(toJson("{status: 404, mensaje: 'Entidad no encontrada'}"));
-    //    }
-  //  }
-
-    public static Result generarOrden(Long id) {
-
+    public static Result generarOrden(Long puntoId) {
         List<Venta> ventas = repositorioVenta.listarTodo();
         List<Encomienda> encomiendas = new ArrayList<Encomienda>();
-        int k = 0;
 
-        for (int i = 0; i<ventas.size(); i++) {
-            if (ventas.get(i).getPuntoDeVenta().getPuntoId() == id) {
-                for (int j = 0; j<ventas.get(i).getEncomiendas().size(); j++) {
-                    for (k = 0; k<ventas.get(i).getEncomiendas().get(j).getEstados().size()-1; k++);
-                        if ((ventas.get(i).getEncomiendas().get(j).getEstados().get(k).getNombre()
-                                == NombreEstadoEncomienda.EN_SUCURSAL) &&
-                                (ventas.get(i).getEncomiendas().get(j).getEstados().get(k).getPuntoDeVenta().getPuntoId() == id)) {
-                            encomiendas.add(ventas.get(i).getEncomiendas().get(j));
-                        }
+        for (Venta venta : ventas) {
+            if (venta.getPuntoDeVenta().getPuntoId().equals(puntoId)) {
+                for (Encomienda encomienda : venta.getEncomiendas()) {
+                    if (encomienda.isInThisPdv(puntoId)) {
+                        encomiendas.add(encomienda);
+                    }
                 }
             }
         }
