@@ -47,7 +47,14 @@ hr {
   border-style: dashed none none;
 }
 
+.equal-tab {
+  width: 33%;
+  text-align: center;
+}
 
+.expand {
+  width: 100% !important;
+}
 
 .animate-show.ng-hide-add.ng-hide-add-active,
 .animate-show.ng-hide-remove.ng-hide-remove-active {
@@ -61,42 +68,22 @@ hr {
   padding: 0 10px;
 }
 
-
-
-@media screen {
-
-    #printSection {
-
-        display: none;
-
-    }
-
-}
-
 @media print {
 
     body * {
-
-        visibility:hidden;
-
+        visibility: hidden;
     }
 
     #printSection, #printSection * {
-
-        visibility:visible;
-
+        visibility: visible;
     }
 
     #printSection {
-
-        position:absolute;
-
-        left:0;
-
-        top:0;
-
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
     }
-
 }
 
 
