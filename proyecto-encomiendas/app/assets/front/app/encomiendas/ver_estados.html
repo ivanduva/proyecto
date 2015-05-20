@@ -1,17 +1,19 @@
-<div class="col-md-6">
-    <div class="container">
-        <span class="title-with-button">Ingrese Número de Encomienda</span>
-        <div class="input-group collapse" id="busqueda" style="max-width:470px;">
-            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term" ng-model="vm.encomiendaId">
-            <div class="input-group-btn">
-                <button class="btn btn-default btn-primary" ng-click="vm.buscar(vm.encomiendaId)">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </div>
-            <hr>
+<div class="row">
+   <div class="col-md-8 col-md-offset-2">
+        <h3>Estado de Encomienda</h3>
+        <div class="col-md-8 col-md-offset-2">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Buscar..." ng-model="id">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button" ng-click="vm.buscar(id)">
+                <span class="glyphicon glyphicon-search" ></span>
+              </button>
+            </span>
+          </div>
         </div>
-
-        <table class="table table-hover">
+      <br>
+      <hr>
+        <table class="table table-hover" ng-show="vm.estados">
             <thead>
             <tr>
                 <th>#</th>
@@ -24,12 +26,15 @@
             <tbody>
             <tr ng-repeat="estado in vm.estados">
                 <td>{{ estado.estadoEncomiendaId }}</td>
-                <td>{{ estado.nombre }}</td>
-                <td>{{ estado.fecha }}</td>
+                <td>{{ vm.makeReadable(estado.nombre) }}</td>
+                <td>{{ estado.fecha | date: 'd/M/yy h:mm a' }}</td>
                 <td>{{ estado.puntoDeVenta.nombre }}</td>
                 <td>{{ estado.puntoDeVenta.localidad.nombre }}</td>
             </tr>
             </tbody>
         </table>
+        <div class="col-md-8 col-md-offset-2" ng-show="vm.error">
+          <span class="alert alert-danger center-block text-center">{{ vm.error }}</span>
+        </div>
     </div>
 </div>

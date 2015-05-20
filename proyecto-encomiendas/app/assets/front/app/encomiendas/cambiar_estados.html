@@ -1,60 +1,73 @@
-<div class="col-md-6">
-    <div class="container">
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <ul class="nav nav-tabs">
+      <li role="presentation" class="equal-tab" ng-click="vm.active($event, 'despachar')">
+        <a href=""><span class="glyphicon glyphicon-open-file"></span> Despachar</a>
+      </li>
+      <li role="presentation" class="equal-tab active" ng-click="vm.active($event, 'recibir')">
+        <a href=""><span class="glyphicon glyphicon-save-file"></span> Recibir</a>
+      </li>
+      <li role="presentation" class="equal-tab take-all-space" ng-click="vm.active($event, 'entregar')">
+        <a href=""><span class="glyphicon glyphicon-ok"></span> Entregar</a>
+      </li>
+    </ul>
+  </div>
+</div>
 
-        <div class="col-md-12 block-center">
-            <ul class="principal-buttons">
-                <li>
-                    <button class="btn btn-embossed btn-info btn-hg" ng-click="vm.despacharDisplay=1; vm.recibirDisplay=0; vm.entregarDisplay=0">
-                        <span class="glyphicon glyphicon-send"></span> Despachar Encomienda
-                    </button>
-                </li>
-                <li>
-                    <button class="btn btn-embossed btn-info btn-hg" ng-click="vm.despacharDisplay=0; vm.recibirDisplay=1; vm.entregarDisplay=0">
-                        <span class="glyphicon glyphicon-tent"></span> Recibir Encomienda
-                    </button>
-                </li>
-                <li>
-                    <button class="btn btn-embossed btn-info btn-hg" ng-click="vm.despacharDisplay=0; vm.entregarDisplay=1; vm.recibirDisplay=0">
-                        <span class="glyphicon glyphicon-flag"></span> Entregar Encomienda
-                    </button>
-                </li>
-            </ul>
-        </div>
+<div class="row">
+  <div class="form-group col-md-4 col-md-offset-4" ng-show="vm.display == 'recibir'">
+    <label for="puntoDeVenta col-sm-3" class=" control-label">Seleccione Punto de Venta</label>
+      <select type="text" class="form-control" id="puntoDeVenta" ng-model="vm.puntoDeVenta" ng-options="puntoDeVenta as puntoDeVenta.nombre for puntoDeVenta in vm.puntos" required></select>
+  </div>
+</div>
 
-        <div class="form-group col-md-6 animate-show" ng-show="vm.despacharDisplay == 1 || vm.recibirDisplay ==1 || vm.entregarDisplay == 1">
-            <label for="puntoDeVenta" class=" control-label">Ingrese Número de Encomienda</label>
-                <input style="width:100%" type="text" class="form-control" placeholder="Número" name="srch-term" id="srch-term" ng-model="vm.encomiendaId">
-        </div>
-
-        <div class="form-group col-md-6 animate-show" ng-show="vm.recibirDisplay ==1">
-            <label for="puntoDeVenta" class=" control-label">Ingrese Punto de Venta</label>
-            <select style="width:100%" type="text" class="form-control" id="puntoDeVenta" ng-model="vm.puntoDeVenta" ng-options="puntoDeVenta as puntoDeVenta.nombre for puntoDeVenta in vm.puntos" required></select>
-        </div>
-
-        <div class="col-md-12">
-            <button class="btn btn-embossed btn-info pull-left animate-show" ng-show="vm.despacharDisplay == 1" ng-click="vm.buscar(vm.encomiendaId); vm.despachar(vm.encomiendaId)">Despachar</button>
-            <button class="btn btn-embossed btn-info pull-left animate-show" ng-show="vm.recibirDisplay == 1" ng-click="vm.buscar(vm.encomiendaId); vm.recibir(vm.encomiendaId, vm.puntoDeVenta.puntoId)">Recibir</button>
-            <button class="btn btn-embossed btn-info pull-left animate-show" ng-show="vm.entregarDisplay == 1" ng-click="vm.buscar(vm.encomiendaId); vm.entregar(vm.encomiendaId)">Entregar</button>
-        </div>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Estado</th>
-                <th>Fecha</th>
-                <th>Sucursal</th>
-                <th>Localidad</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="estado in vm.estados">
-                <td>{{ estado.estadoEncomiendaId }}</td>
-                <td>{{ estado.nombre }}</td>
-                <td>{{ estado.fecha }}</td>
-                <td>{{ estado.puntoDeVenta.nombre }}</td>
-                <td>{{ estado.puntoDeVenta.localidad.nombre }}</td>
-            </tr>
-            </tbody>
-        </table>
+ <div class="row">
+  <div class="form-group col-md-4 col-md-offset-4">
+   <label for="puntoDeVenta col-sm-3" class=" control-label">Ingrese Número de Encomienda</label>
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Numero de Encomienda" ng-model="vm.id" ng-keyup="$event.keyCode == 13 && vm.buscar(vm.id)">
+      <span class="input-group-btn">
+      <button type="submit" class="btn" ng-click="vm.buscar(vm.id)"><span class="fui-search"></span></button>
+      </span>
     </div>
+  </div>
+</div>
+
+<div class="row">
+  <div ng-show="vm.load" class="col-xs-12 text-center">
+    <span class="fa fa-spinner fa-5x fa-pulse"></span>
+  </div>
+</div>
+
+<div class="row">
+<table class="table table-hover" ng-show="vm.estados.length > 0">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Estado</th>
+      <th>Fecha</th>
+      <th>Sucursal</th>
+      <th>Localidad</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="estado in vm.estados">
+      <td>{{ estado.estadoEncomiendaId }}</td>
+      <td>{{ vm.makeReadable(estado.nombre) }}</td>
+      <td>{{ estado.fecha | date: 'd/M/yy h:mm a'}}</td>
+      <td>{{ estado.puntoDeVenta.nombre }}</td>
+      <td>{{ estado.puntoDeVenta.localidad.nombre }}</td>
+    </tr>
+  </tbody>
+</table>
+<div class="col-md-8 col-md-offset-2" ng-show="vm.error">
+  <span class="alert alert-danger center-block text-center">{{ vm.error }}</span>
+</div>
+</div>
+<div class="row">
+<div class="col-md-8 col-md-offset-2" ng-show="vm.estados.length > 0">
+  <button class="btn btn-embossed btn-info" ng-show="vm.display == 'recibir'" ng-click="vm.addNewState()">Recibir</button>
+  <button class="btn btn-embossed btn-info" ng-show="vm.display == 'despachar'" ng-click="vm.addNewState()">Despachar</button>
+  <button class="btn btn-embossed btn-info" ng-show="vm.display == 'entregar'" ng-click="vm.addNewState()">Entregar</button>
+</div>
 </div>

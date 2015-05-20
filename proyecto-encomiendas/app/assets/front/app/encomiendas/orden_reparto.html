@@ -1,58 +1,88 @@
-<div class="col-md-6">
-    <div class="container">
-        <div>
-            <span class="title-with-button">Ingrese Punto de Venta</span>
-            <select style="width:100%" type="text" class="form-control" id="puntoDeVenta" ng-model="vm.puntoDeVenta" ng-options="puntoDeVenta as puntoDeVenta.nombre for puntoDeVenta in vm.puntos" required></select>
+<div class="row">
+  <div class="form-group col-md-4 col-md-offset-4">
+    <label for="puntoDeVenta col-sm-3" class=" control-label">Seleccione Punto de Venta</label>
+      <select type="text" class="form-control" id="puntoDeVenta" ng-model="vm.puntoDeVenta" ng-options="puntoDeVenta as puntoDeVenta.nombre for puntoDeVenta in vm.puntos" required></select>
+  </div>
+</div>
+<div class="row">
+  <div class="text-center">
+  <button class="btn btn-embossed btn-success btn-lg" type="submit" ng-click="vm.buscar(vm.puntoDeVenta.puntoId)">Mostrar Encomiendas</button>
+  </div>
+</div>
 
-            <button class="btn btn-embossed btn-success" type="submit" ng-click="vm.buscar(vm.puntoDeVenta.puntoId)">Ingresar</button>
-        </div>
-        <span class="title-with-button">Encomiendas</span>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>Número</th>
-                <th>Destino</th>
-                <th>Dirección</th>
-                <th>Remitente</th>
-                <th>Destinatario</th>
-                <th>Seleccionar</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="encomienda in vm.encomiendas">
-                <td>{{ encomienda.encomiendaId }}</td>
-                <td>{{ encomienda.localidad.nombre }}</td>
-                <td>{{ encomienda.direccionDestino }}</td>
-                <td>{{ encomienda.remitente.nombre }}</td>
-                <td>{{ encomienda.destinatario }}</td>
-                <td><input name = "cb" id="cb" type="checkbox"></td>
-            </tr>
-            </tbody>
-        </table>
-        <button class="btn btn-embossed btn-success" type="submit" ng-click="vm.generar()">Generar Orden</button>
+<br>
 
-        <hr>
+<div class="row" ng-show="vm.error">
+ <div class="col-xs-12 text-center">
+  <span class="alert alert-danger">{{ vm.error }}</span>
+  </div>
+</div>
 
-        <span class="title-with-button">Orden de Reparto</span>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>Número</th>
-                <th>Destino</th>
-                <th>Dirección</th>
-                <th>Remitente</th>
-                <th>Destinatario</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="encomienda in vm.encomiendas">
-                <td>{{ encomienda.encomiendaId }}</td>
-                <td>{{ encomienda.localidad.nombre }}</td>
-                <td>{{ encomienda.direccionDestino }}</td>
-                <td>{{ encomienda.remitente.nombre }}</td>
-                <td>{{ encomienda.destinatario }}</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+<div class="row" ng-show="vm.load">
+  <div class="col-xs-12 text-center">
+    <span class="fa fa-spinner fa-5x fa-pulse"></span>
+  </div>
+</div>
+
+<div class="row" ng-show="vm.encomiendas.length > 0">
+  <hr>
+  <table class="table table-hover">
+      <thead>
+      <tr>
+          <th>Número</th>
+          <th>Destino</th>
+          <th>Dirección</th>
+          <th>Remitente</th>
+          <th>Destinatario</th>
+          <th>Listo para despachar?</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="encomienda in vm.encomiendas">
+          <td>{{ encomienda.encomiendaId }}</td>
+          <td>{{ encomienda.localidad.nombre }}</td>
+          <td>{{ encomienda.direccionDestino }}</td>
+          <td>{{ encomienda.remitente.nombre }}</td>
+          <td>{{ encomienda.destinatario }}</td>
+          <td>
+            <div class="onoffswitch">
+              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" ng-model="encomienda.isReadyToDispatch">
+              <label class="onoffswitch-label" for="myonoffswitch">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+              </label>
+            </div>
+          </td>
+      </tr>
+      </tbody>
+  </table>
+  <button class="btn btn-embossed btn-info" type="submit" ng-click="vm.generar()">Generar Orden</button>
+</div>
+
+<div class="row" ng-show="vm.order.length > 0">
+ <hr>
+  <div id="printSection">
+    <h5>Orden de Despacho</h5>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Número</th>
+          <th>Destino</th>
+          <th>Dirección</th>
+          <th>Remitente</th>
+          <th>Destinatario</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="encomienda in vm.encomiendas">
+          <td>{{ encomienda.encomiendaId }}</td>
+          <td>{{ encomienda.localidad.nombre }}</td>
+          <td>{{ encomienda.direccionDestino }}</td>
+          <td>{{ encomienda.remitente.nombre }}</td>
+          <td>{{ encomienda.destinatario }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button class="btn btn-embossed btn-success" type="submit" ng-click="vm.print()"><span class="fa fa-print"></span> Imprimir Orden</button>
 </div>
