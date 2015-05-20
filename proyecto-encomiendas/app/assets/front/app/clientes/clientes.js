@@ -57,13 +57,14 @@
             dataservice.Clientes().get({id: id}, onSuccessGet, onFail);
             vm.title = "Editar Cliente";
         } else {
-            vm.cliente.puedeReservar = "NO";
             vm.title = "Nuevo Cliente";
         }
 
         vm.save = function () {
             var index = searchById(vm.localidad, vm.localidades, 'localidadId');
             vm.cliente.localidad = vm.localidades[index];
+            vm.cliente.puedeReservar = vm.cliente.puedeReservar ? "SI" : "NO";
+
             if (vm.cliente.personaId === undefined) {
                 dataservice.Clientes().save(vm.cliente, onSuccessSave, onFail);
             } else {
@@ -79,6 +80,7 @@
 
         function onSuccessGet (data) {
             vm.cliente = data;
+            vm.cliente.puedeReservar = vm.cliente.puedeReservar === "SI";
             vm.cliente.fechaNacimiento = new Date(vm.cliente.fechaNacimiento);
         }
 

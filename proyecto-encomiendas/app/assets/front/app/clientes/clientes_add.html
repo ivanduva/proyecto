@@ -2,7 +2,6 @@
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <span class="title-with-button">{{ vm.title }}</span>
-      {{ vm.cliente }}
 
         <form name="addCliente" class="form-horizontal" action="" ng-submit="addCliente.$valid && vm.save()" novalidate>
 
@@ -53,10 +52,14 @@
             <div class="form-group">
                 <label for="puedeReservar" class="col-sm-3 control-label">¿Puede Reservar?</label>
                 <div class="col-sm-8">
-                    <select type="text" class="form-control" id="puedeReservar" ng-model="vm.cliente.puedeReservar" required>
-                        <option>SI</option>
-                        <option selected="selected">NO</option>
-                    </select>
+                   <div class="onoffswitch">
+                      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" ng-model="vm.cliente.puedeReservar" required>
+                      <label class="onoffswitch-label" for="myonoffswitch">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                      </label>
+                    </div>
+
                 </div>
             </div>
 
