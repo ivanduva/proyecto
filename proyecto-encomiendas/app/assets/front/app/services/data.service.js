@@ -14,7 +14,6 @@
             Localidades: localidades,
             Clientes: clientes,
             Empleados: empleados,
-            EmpleadosCesados: empleadosCesados,
             Ventas: ventas,
             Encomiendas: encomiendas,
             Estados: estados,
@@ -23,7 +22,7 @@
         };
 
         function puntosVenta() {
-            return $resource('http://localhost:9000/admin/puntos-de-venta/:id', {}, {
+            return $resource('http://localhost:9000/api/v1.0/puntos-de-venta/:id', {}, {
                 update: {method: 'PUT', params: {id: '@id'}},
             });
         }
@@ -35,51 +34,45 @@
         }*/
 
         function tipoPuntoVenta() {
-            return $resource('http://localhost:9000/admin/tipo-puntos-de-venta');
+            return $resource('http://localhost:9000/api/v1.0/tipo-puntos-de-venta');
         }
 
         function localidades() {
-            return $resource('http://localhost:9000/admin/localidad');
+            return $resource('http://localhost:9000/api/v1.0/localidad');
         }
 
         function clientes() {
-            return $resource('http://localhost:9000/admin/clientes/:id', {}, {
+            return $resource('http://localhost:9000/api/v1.0/cliente/:id', {}, {
                 update: {method: 'PUT', params: {id: '@id'}}
             });
         }
 
         function empleados() {
-            return $resource('http://localhost:9000/admin/empleados/:id', {}, {
-                update: {method: 'PUT', params: {id: '@id'}}
-            });
-        }
-
-        function empleadosCesados() {
-            return $resource('http://localhost:9000/admin/empleados/cesar/:id', {}, {
+            return $resource('http://localhost:9000/api/v1.0/empleado/:id', {}, {
                 update: {method: 'PUT', params: {id: '@id'}}
             });
         }
 
         function ventas() {
-            return $resource('http://localhost:9000/ventas/:id', {}, {
+            return $resource('http://localhost:9000/api/v1.0/venta/:id', {}, {
                 update: {method: 'PUT', params: {id: '@id'}}
             });
         }
 
         function encomiendas() {
-            return $resource('http://localhost:9000/ventas/encomiendas/:id', {}, {
+            return $resource('http://localhost:9000/api/v1.0/encomienda/:id', {}, {
                 update: {method: 'PUT', params: {id: '@id'}}
             });
         }
 
         function estados() {
-            return $resource('http://localhost:9000/ventas/encomiendas/estados/:id', {}, {
+            return $resource('http://localhost:9000/api/v1.0/encomienda/:id/estados', {}, {
                 update: {method: 'PUT', params: {id: '@id'}}
             });
         }
 
         function puntoEncomiendas() {
-            return $resource('http://localhost:9000/ventas/encomiendas/punto-de-venta/:id', {}, {
+            return $resource('http://localhost:9000/api/v1.0/puntos-de-venta/:id/encomienda', {}, {
                 update: {method: 'PUT', params: {id: '@id'}}
             });
         }
