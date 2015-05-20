@@ -22,7 +22,7 @@ public class Venta {
     @Column (name = "valor_final")
     private Long valorFinal;
 
-    @OneToMany (cascade = CascadeType.ALL)
+    @OneToMany (fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Encomienda> encomiendas;
 
     @ManyToOne
@@ -31,6 +31,14 @@ public class Venta {
 
     @ManyToOne
     private PuntoDeVenta puntoDeVenta;
+
+    public Venta(Date fecha, Long valorFinal, List<Encomienda> encomiendas, Cliente cliente, PuntoDeVenta puntoDeVenta) {
+        this.fecha = fecha;
+        this.valorFinal = valorFinal;
+        this.encomiendas = encomiendas;
+        this.cliente = cliente;
+        this.puntoDeVenta = puntoDeVenta;
+    }
 
     public Venta(Long ventaId, Date fecha, Long valorFinal, List<Encomienda> encomiendas, Cliente cliente) {
         this.ventaId = ventaId;

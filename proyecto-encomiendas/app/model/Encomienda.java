@@ -25,7 +25,7 @@ public class Encomienda {
     @Column (name = "fecha_entrega")
     private Date fechaEntrega;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "encomienda")
     private List<EstadoEncomienda> estados;
 
     @ManyToOne
@@ -37,6 +37,18 @@ public class Encomienda {
 
     @Column (name = "tarifa")
     private Long tarifa;
+
+    public Encomienda(String destinatario, String direccionDestino, Date fechaEntrega,
+                      List<EstadoEncomienda> estados, Cliente remitente, Localidad localidad, Long tarifa) {
+
+        this.destinatario = destinatario;
+        this.direccionDestino = direccionDestino;
+        this.fechaEntrega = fechaEntrega;
+        this.estados = estados;
+        this.remitente = remitente;
+        this.localidad = localidad;
+        this.tarifa = tarifa;
+    }
 
     public Encomienda(Long encomiendaId, String destinatario, String direccionDestino, Date fechaEntrega,
                       List<EstadoEncomienda> estados, Cliente remitente, Localidad localidad, Long tarifa) {
@@ -115,4 +127,21 @@ public class Encomienda {
     }
 
     public void agregarEstado(EstadoEncomienda estado) { this.estados.add(estado); }
+
+    private EstadoEncomienda getLastEstado() {
+        if (!this.estados.isEmpty()) {
+            return this.estados.get(this.estados.size() - 1);
+        }
+        return null;
+    }
+
+    public boolean isInThisPdv(long puntoId) {
+        EstadoEncomienda estadoEncomienda = getLastEstado();
+        if (estadoEncomienda != null) {
+            return estadoEncomienda.getNombre() == NombreEstadoEncomienda.EN_SUCURSAL &&
+                    estadoEncomienda.getPuntoDeVenta().getPuntoId() == puntoId;
+        }
+
+        return false;
+    }
 }

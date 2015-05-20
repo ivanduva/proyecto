@@ -26,6 +26,16 @@ public class Cliente extends Persona {
    // @OneToMany (cascade = CascadeType.ALL)
     //private List<Venta> compras;
 
+
+    public Cliente(String email, Date fechaNacimiento, Localidad localidad, String nombre, String telefono,
+                   String categoria, String puedeReservar, int puntosViajero) {
+
+        super(email, fechaNacimiento, localidad, nombre, telefono);
+        this.categoria = categoria;
+        this.puedeReservar = puedeReservar;
+        this.puntosViajero = puntosViajero;
+    }
+
     public Cliente(Long personaId, String email, Date fechaNacimiento, Localidad localidad, String nombre,
                    String telefono, String categoria, String puedeReservar, int puntosViajero) {
         super(personaId, email, fechaNacimiento, localidad, nombre, telefono);

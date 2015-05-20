@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
@@ -27,8 +28,10 @@ public class EstadoEncomienda extends Model{
     @ManyToOne
     private PuntoDeVenta puntoDeVenta;
 
-    //@ManyToOne
-    //private Encomienda encomienda;
+    @ManyToOne
+    @JsonIgnore
+    private Encomienda encomienda;
+
 
     public EstadoEncomienda (Date fecha) {
         this.fecha = fecha;
@@ -85,11 +88,11 @@ public class EstadoEncomienda extends Model{
         this.puntoDeVenta = puntoDeVenta;
     }
 
-    //public Encomienda getEncomienda() {
-      //  return encomienda;
-    //}
+    public Encomienda getEncomienda() {
+        return encomienda;
+    }
 
-    //public void setEncomienda(Encomienda encomienda) {
-      //  this.encomienda = encomienda;
-    //}
+    public void setEncomienda(Encomienda encomienda) {
+        this.encomienda = encomienda;
+    }
 }
