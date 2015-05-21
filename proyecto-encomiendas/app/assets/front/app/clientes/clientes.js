@@ -56,8 +56,10 @@
             var id = parseInt($routeParams.id);
             dataservice.Clientes().get({id: id}, onSuccessGet, onFail);
             vm.title = "Editar Cliente";
+            vm.ocultarUsuario=1;
         } else {
             vm.title = "Nuevo Cliente";
+            vm.ocultarUsuario=0;
         }
 
         vm.save = function () {

@@ -6,7 +6,6 @@ import dao.PersistenciaDBSecurityRole;
 import model.Cliente;
 import model.Empleado;
 import model.Persona;
-import model.SecurityRole;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -84,10 +83,19 @@ public class PersonaController extends Controller {
             JsonNode json = request().body().asJson();
             Cliente clienteJson = Json.fromJson(json, Cliente.class);
 
-            clienteJson.setPersonaId(id);
+            cliente.setCategoria(clienteJson.getCategoria());
+            cliente.setPuedeReservar(clienteJson.getPuedeReservar());
+            cliente.setPuntosViajero(clienteJson.getPuntosViajero());
+            cliente.setEmail(clienteJson.getEmail());
+            cliente.setFechaNacimiento(clienteJson.getFechaNacimiento());
+            cliente.setLocalidad(clienteJson.getLocalidad());
+            cliente.setNombre(clienteJson.getNombre());
+            cliente.setTelefono(clienteJson.getTelefono());
+            //cliente.setUsuario(clienteJson.getUsuario());
+
 
             try {
-                repositorioPersona.modificar(clienteJson);
+                repositorioPersona.modificar(cliente);
                 return ok(toJson(clienteJson));
             } catch (PersistenceException e) {
                 return badRequest(toJson("{status: 400, mensaje: 'Datos duplicados'}"));
@@ -106,10 +114,19 @@ public class PersonaController extends Controller {
             JsonNode json = request().body().asJson();
             Empleado empleadoJson = Json.fromJson(json, Empleado.class);
 
-            empleadoJson.setPersonaId(id);
+            empleado.setCuit(empleadoJson.getCuit());
+            empleado.setDni(empleadoJson.getDni());
+            empleado.setHorario(empleadoJson.getHorario());
+            empleado.setEmail(empleadoJson.getEmail());
+            empleado.setFechaNacimiento(empleadoJson.getFechaNacimiento());
+            empleado.setLocalidad(empleadoJson.getLocalidad());
+            empleado.setNombre(empleadoJson.getNombre());
+            empleado.setTelefono(empleadoJson.getTelefono());
+            //empleado.setUsuario(empleadoJson.getUsuario());
+            empleado.setCesado(empleadoJson.isCesado());
 
             try {
-                repositorioPersona.modificar(empleadoJson);
+                repositorioPersona.modificar(empleado);
                 return ok(toJson(empleadoJson));
             } catch (PersistenceException e) {
                 return badRequest(toJson("{status: 400, mensaje: 'Datos duplicados'}"));

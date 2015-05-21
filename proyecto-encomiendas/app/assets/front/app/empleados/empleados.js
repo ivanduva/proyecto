@@ -60,8 +60,10 @@
             var id = parseInt($routeParams.id);
             dataservice.Empleados().get({id: id}, onSuccessGet, onFail);
             vm.title = "Editar Empleado";
+            vm.ocultarUsuario=1;
         } else {
             vm.title = "Nuevo Empleado";
+            vm.ocultarUsuario=0;
         }
 
         vm.save = function () {

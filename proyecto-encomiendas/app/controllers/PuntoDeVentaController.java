@@ -6,7 +6,6 @@ import dao.PersistenciaDBPuntoDeVenta;
 import model.Localidad;
 import model.PuntoDeVenta;
 import model.TipoPunto;
-import play.Logger;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -67,11 +66,19 @@ public class PuntoDeVentaController extends Controller {
             JsonNode json = request().body().asJson();
 
             PuntoDeVenta puntoDeVentaJson = Json.fromJson(json, PuntoDeVenta.class);
-            puntoDeVentaJson.setPuntoId(id);
+
+            puntoDeVenta.setNombre(puntoDeVentaJson.getNombre());
+            puntoDeVenta.setDireccion(puntoDeVentaJson.getDireccion());
+            puntoDeVenta.setEmail(puntoDeVentaJson.getEmail());
+            puntoDeVenta.setLocalidad(puntoDeVentaJson.getLocalidad());
+            puntoDeVenta.setNombreResponsable(puntoDeVentaJson.getNombreResponsable());
+            puntoDeVenta.setTelefono(puntoDeVentaJson.getTelefono());
+            puntoDeVenta.setTipo(puntoDeVentaJson.getTipo());
+            //puntoDeVenta.setUsuario(puntoDeVentaJson.getUsuario());
 
             try {
-                repositorioPdv.modificar(puntoDeVentaJson);
-                return ok(toJson(puntoDeVentaJson));
+                repositorioPdv.modificar(puntoDeVenta);
+                return ok(toJson(puntoDeVenta));
             } catch (PersistenceException e) {
                 return badRequest(toJson("{status: 400, mensaje: 'Datos duplicados'}"));
             }

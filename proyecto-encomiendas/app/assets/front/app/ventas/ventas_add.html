@@ -14,7 +14,7 @@
     </form>
   </div>
 </div>
-<div class="row"  ng-show="vm.venta.encomiendas.length > 0">
+<div class="row"  ng-show="vm.venta.encomiendas.length > 0" id="printSection">
   <div class="col-md-10 col-md-offset-1">
     <hr>
     <table class="table table-hover">
@@ -25,8 +25,8 @@
           <th>Localidad</th>
           <th>Fecha De Entrega</th>
           <th>Tarifa</th>
-          <th></th>
-          <th></th>
+          <th ng-hide="vm.ocultarImprimir==1"></th>
+          <th ng-hide="vm.ocultarImprimir==1"></th>
         </tr>
       </thead>
       <tbody>
@@ -36,12 +36,12 @@
           <td>{{ encomienda.localidad.nombre }}</td>
           <td>{{ encomienda.fechaEntrega | date:"yyyy/mm/dd ' a las ' HH:MM" }}</td>
           <td>{{ encomienda.tarifa | currency }}</td>
-          <td>
+          <td ng-hide="vm.ocultarImprimir==1">
             <button class="btn btn-embossed btn-info btn-lg" ng-click="vm.editEncomienda($index)">
             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
             </button>
           </td>
-          <td>
+          <td ng-hide="vm.ocultarImprimir==1">
             <button class="btn btn-embossed btn-danger btn-lg" ng-click="vm.deleteEncomienda($index)">
             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
             </button>
@@ -63,7 +63,7 @@
     <hr>
   </div>
 </div>
-<div class="row">
+<div class="row" ng-hide="vm.ocultarImprimir==1">
   <div class="col-md-8 col-md-offset-2">
     <h4>Encomienda</h4>
     <form class="form-horizontal" novalidate>
@@ -99,7 +99,13 @@
       </div>
       <button class="btn btn-embossed btn-info pull-right" ng-click="vm.addEncomienda()">{{ vm.saveText }}</button>
     </form>
-    <br>
-    <button class="btn btn-embossed btn-success" type="submit" ng-click="vm.save()" ng-disabled="vm.venta.encomiendas.length <= 0 ">Finalizar</button>
   </div>
 </div>
+
+    <button class="btn btn-embossed btn-success" type="submit" ng-click="vm.finalizar()" ng-disabled="vm.venta.encomiendas.length <= 0 || vm.ocultarImprimir==1">Finalizar</button>
+
+    <button class="btn btn-embossed btn-success" type="submit" ng-click="vm.habilitar()" ng-hide="vm.ocultarImprimir==0">Habilitar Edición</button>
+
+    <button class="btn btn-embossed btn-success" type="submit" ng-click="vm.print(); vm.save()" ng-hide="vm.ocultarImprimir==0"><span class="fa fa-print"></span> Imprimir Recibo</button>
+
+    <!--<button class="btn btn-embossed btn-success" ng-click="vm.volver()" ng-hide="vm.ocultarImprimir=1">Volver</button>>

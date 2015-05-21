@@ -23,7 +23,7 @@
 
         function puntosVenta() {
             return $resource('http://localhost:9000/api/v1.0/puntos-de-venta/:id', {}, {
-                update: {method: 'PUT', params: {id: '@id'}},
+                update: {method: 'PUT', params: {id: '@id'}}
             });
         }
 

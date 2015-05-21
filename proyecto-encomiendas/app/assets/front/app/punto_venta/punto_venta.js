@@ -61,8 +61,10 @@
                 var id = parseInt($routeParams.id);
                 dataservice.PuntosVenta().get({id: id}, onPdvLoad, onFail);
                 vm.title = "Editar Punto de Venta";
+                vm.ocultarUsuario=1;
             } else {
                 vm.title = "Nuevo Punto de Venta";
+                vm.ocultarUsuario=0;
             }
             initialRequest();
         }

@@ -119,6 +119,12 @@
                 controllerAs: "vm"
             }).
 
+            when('/public/estado-encomienda', {
+                templateUrl: '/assets/front/app/encomiendas/ver_estados.html',
+                controller: "EncomiendaEstadosController",
+                controllerAs: "vm"
+            }).
+
             when('/empleado/cambiar-estado-encomienda', {
                 templateUrl: '/assets/front/app/encomiendas/cambiar_estados.html',
                 controller: "EncomiendaEstadosController",

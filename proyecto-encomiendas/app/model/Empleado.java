@@ -69,4 +69,6 @@ public class Empleado extends Persona {
     public void setCesadoFalse() {
         this.cesado = false;
     }
+
+    public void setCesado(boolean cesado) { this.cesado = cesado; }
 }
