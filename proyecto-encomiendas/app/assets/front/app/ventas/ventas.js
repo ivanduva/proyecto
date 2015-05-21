@@ -11,7 +11,7 @@
         var vm = this,
             encomiendaIdx;
 
-        vm.ocultarImprimir = 0;
+        vm.ocultarImprimir = false;
 
         dataservice.PuntosVenta().query(onPuntosDeVentaLoad, onFail);
         dataservice.Clientes().query(onClientesLoad, onFail);
@@ -76,11 +76,11 @@
         }
 
         vm.finalizar = function () {
-            vm.ocultarImprimir = 1;
+            vm.ocultarImprimir = true;
         }
 
         vm.habilitar = function () {
-            vm.ocultarImprimir = 0;
+            vm.ocultarImprimir = false;
         }
 
         function onPuntosDeVentaLoad (data) {
